@@ -11,7 +11,10 @@
     <div class="container">
         <header>
             <h1>Ipermela Store - Ordini</h1>
-            <div class="header-actions">
+            <div class="header-actions desktop-menu">
+                <button id="price-management-btn" class="header-btn" title="Gestione Prezzi">
+                    <span class="btn-icon">🏷️</span>
+                </button>
                 <button id="quick-add-btn" class="header-btn" title="Aggiungi prodotto">
                     <span class="btn-icon">➕</span>
                 </button>
@@ -19,6 +22,26 @@
                     <span class="btn-icon">🛒</span>
                     <span id="cart-count" class="cart-badge">0</span>
                 </button>
+            </div>
+            <div class="mobile-menu">
+                <button id="mobile-menu-btn" class="header-btn mobile-menu-toggle" title="Menu">
+                    <span class="btn-icon">☰</span>
+                </button>
+                <div id="mobile-dropdown" class="mobile-dropdown">
+                    <button class="mobile-menu-item" data-action="price-management">
+                        <span class="mobile-menu-icon">🏷️</span>
+                        <span class="mobile-menu-text">Gestione Prezzi</span>
+                    </button>
+                    <button class="mobile-menu-item" data-action="quick-add">
+                        <span class="mobile-menu-icon">➕</span>
+                        <span class="mobile-menu-text">Aggiungi Prodotto</span>
+                    </button>
+                    <button class="mobile-menu-item" data-action="quick-cart">
+                        <span class="mobile-menu-icon">🛒</span>
+                        <span class="mobile-menu-text">Vai al Carrello</span>
+                        <span id="cart-count-mobile" class="cart-badge-mobile">0</span>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -111,6 +134,63 @@
                 <input type="tel" id="customer-phone" placeholder="Telefono" />
                 <textarea id="order-notes" placeholder="Note ordine (opzionale)"></textarea>
                 <button id="confirm-order-btn" class="btn-primary">Conferma Ordine</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per Autenticazione Gestione Prezzi -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="auth-close">&times;</span>
+            <h2>🔒 Accesso Gestione Prezzi</h2>
+            <div class="modal-form">
+                <input type="password" id="auth-password" placeholder="Inserisci password" required />
+                <button id="auth-submit-btn" class="btn-primary">Accedi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sezione Gestione Prezzi (nascosta di default) -->
+    <div id="price-management-section" class="price-management-section" style="display: none;">
+        <div class="price-management-container">
+            <div class="price-management-header">
+                <h2>🏷️ Gestione Prezzi</h2>
+                <button id="close-price-management" class="btn-secondary">✕ Chiudi</button>
+            </div>
+
+            <div class="price-management-controls">
+                <div class="search-bar">
+                    <input type="text" id="price-search-input" placeholder="🔍 Cerca prodotto..." />
+                </div>
+                <div class="category-filters">
+                    <button class="price-category-btn active" data-category="all">Tutti</button>
+                    <button class="price-category-btn" data-category="iphone">iPhone</button>
+                    <button class="price-category-btn" data-category="mac">Mac</button>
+                    <button class="price-category-btn" data-category="ipad">iPad</button>
+                    <button class="price-category-btn" data-category="accessori">Accessori</button>
+                </div>
+            </div>
+
+            <div class="price-table-container">
+                <table id="price-table" class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Icona</th>
+                            <th>Prodotto</th>
+                            <th>Prezzo Originale</th>
+                            <th>Prezzo Attuale</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="price-table-body">
+                        <!-- Popolato dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="price-management-actions">
+                <button id="save-all-prices-btn" class="btn-primary">💾 Salva Tutte le Modifiche</button>
+                <button id="reset-all-prices-btn" class="btn-secondary">↩️ Ripristina Tutti gli Originali</button>
             </div>
         </div>
     </div>

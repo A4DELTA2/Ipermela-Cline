@@ -97,6 +97,11 @@ let currentSubcategory = 'all';
 let searchQuery = '';
 let savedOrders = [];
 let nextProductId = 400;
+let isAuthenticated = false;
+let priceFilter = 'all';
+let priceSearchQuery = '';
+let originalPrices = {};
+let modifiedPrices = {};
 
 // Inizializzazione
 document.addEventListener('DOMContentLoaded', async () => {
@@ -141,9 +146,84 @@ async function loadProducts() {
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // Pulsanti Header
+    // Pulsanti Header Desktop
+    document.getElementById('price-management-btn').addEventListener('click', openPriceManagement);
     document.getElementById('quick-add-btn').addEventListener('click', scrollToAddProduct);
     document.getElementById('quick-cart-btn').addEventListener('click', scrollToCart);
+
+    // Menu Mobile
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileDropdown = document.getElementById('mobile-dropdown');
+    
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileDropdown.classList.toggle('show');
+    });
+
+    // Chiudi menu mobile al click fuori
+    document.addEventListener('click', (e) => {
+        if (!mobileDropdown.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            mobileDropdown.classList.remove('show');
+        }
+    });
+
+    // Azioni menu mobile
+    document.querySelectorAll('.mobile-menu-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const action = item.dataset.action;
+            mobileDropdown.classList.remove('show');
+            
+            if (action === 'price-management') {
+                openPriceManagement();
+            } else if (action === 'quick-add') {
+                scrollToAddProduct();
+            } else if (action === 'quick-cart') {
+                scrollToCart();
+            }
+        });
+    });
+
+    // Modal autenticazione
+    const authModal = document.getElementById('auth-modal');
+    const authCloseBtn = document.getElementById('auth-close');
+    const authSubmitBtn = document.getElementById('auth-submit-btn');
+    const authPasswordInput = document.getElementById('auth-password');
+
+    authCloseBtn.addEventListener('click', closeAuthModal);
+    authSubmitBtn.addEventListener('click', checkPassword);
+    authPasswordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === authModal) closeAuthModal();
+    });
+
+    // Gestione Prezzi
+    document.getElementById('close-price-management').addEventListener('click', closePriceManagement);
+    document.getElementById('save-all-prices-btn').addEventListener('click', saveAllPrices);
+    document.getElementById('reset-all-prices-btn').addEventListener('click', resetAllPrices);
+
+    // Ricerca gestione prezzi
+    const priceSearchInput = document.getElementById('price-search-input');
+    if (priceSearchInput) {
+        priceSearchInput.addEventListener('input', (e) => {
+            priceSearchQuery = e.target.value.toLowerCase();
+            renderPriceTable();
+        });
+    }
+
+    // Filtri categoria gestione prezzi
+    document.querySelectorAll('.price-category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.price-category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            priceFilter = btn.dataset.category;
+            renderPriceTable();
+        });
+    });
 
     // Barra di ricerca
     const searchInput = document.getElementById('search-input');
@@ -223,6 +303,8 @@ function scrollToCart() {
 // Aggiorna Badge Carrello
 function updateCartBadge() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    
+    // Badge desktop
     const badge = document.getElementById('cart-count');
     if (badge) {
         badge.textContent = totalItems;
@@ -232,6 +314,12 @@ function updateCartBadge() {
                 badge.style.transform = 'scale(1)';
             }, 200);
         }
+    }
+    
+    // Badge mobile
+    const badgeMobile = document.getElementById('cart-count-mobile');
+    if (badgeMobile) {
+        badgeMobile.textContent = totalItems;
     }
 }
 
@@ -646,3 +734,336 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ===== GESTIONE PREZZI =====
+
+// Apri gestione prezzi
+function openPriceManagement() {
+    if (!isAuthenticated) {
+        document.getElementById('auth-modal').style.display = 'block';
+        document.getElementById('auth-password').focus();
+    } else {
+        showPriceManagement();
+    }
+}
+
+// Chiudi modal autenticazione
+function closeAuthModal() {
+    document.getElementById('auth-modal').style.display = 'none';
+    document.getElementById('auth-password').value = '';
+}
+
+// Verifica password
+async function checkPassword() {
+    const password = document.getElementById('auth-password').value;
+    const correctPassword = 'Ipermela-ordini';
+
+    if (password === correctPassword) {
+        isAuthenticated = true;
+        closeAuthModal();
+        await loadCustomPrices();
+        showPriceManagement();
+        showNotification('Accesso autorizzato! ✓');
+    } else {
+        alert('Password errata!');
+        document.getElementById('auth-password').value = '';
+        document.getElementById('auth-password').focus();
+    }
+}
+
+// Mostra sezione gestione prezzi
+async function showPriceManagement() {
+    await loadCustomPrices();
+    document.getElementById('price-management-section').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    renderPriceTable();
+}
+
+// Chiudi gestione prezzi
+function closePriceManagement() {
+    document.getElementById('price-management-section').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    priceFilter = 'all';
+    priceSearchQuery = '';
+    modifiedPrices = {};
+}
+
+// Carica prezzi personalizzati da Supabase
+async function loadCustomPrices() {
+    try {
+        const { data, error } = await supabase
+            .from('product_prices')
+            .select('*');
+
+        if (error) {
+            console.error('Errore caricamento prezzi:', error);
+            return;
+        }
+
+        // Salva i prezzi originali
+        products.forEach(p => {
+            if (!originalPrices[p.id]) {
+                originalPrices[p.id] = p.price;
+            }
+        });
+
+        // Applica i prezzi custom
+        if (data && data.length > 0) {
+            data.forEach(priceData => {
+                const product = products.find(p => p.id === priceData.product_id);
+                if (product) {
+                    product.price = parseFloat(priceData.custom_price);
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Errore:', err);
+    }
+}
+
+// Renderizza tabella prezzi
+function renderPriceTable() {
+    const tbody = document.getElementById('price-table-body');
+    
+    let filteredProducts = products.filter(p => !p.custom);
+    
+    // Filtro per categoria
+    if (priceFilter !== 'all') {
+        filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
+    }
+    
+    // Filtro per ricerca
+    if (priceSearchQuery) {
+        filteredProducts = filteredProducts.filter(p => 
+            p.name.toLowerCase().includes(priceSearchQuery)
+        );
+    }
+
+    if (filteredProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-message">Nessun prodotto trovato</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = filteredProducts.map(product => {
+        const originalPrice = originalPrices[product.id] || product.price;
+        const currentPrice = product.price;
+        const isModified = originalPrice !== currentPrice;
+        const pendingPrice = modifiedPrices[product.id];
+
+        return `
+            <tr data-product-id="${product.id}">
+                <td class="price-icon">${product.icon}</td>
+                <td class="price-product-name">${product.name}</td>
+                <td>
+                    <span class="price-original">€${originalPrice.toFixed(2)}</span>
+                </td>
+                <td>
+                    <input 
+                        type="number" 
+                        class="price-input ${pendingPrice !== undefined ? 'modified' : ''}" 
+                        value="${pendingPrice !== undefined ? pendingPrice : currentPrice.toFixed(2)}"
+                        min="0" 
+                        step="0.01"
+                        data-product-id="${product.id}"
+                        onchange="updatePriceInput(${product.id}, this.value)"
+                    />
+                </td>
+                <td class="price-actions">
+                    <button class="price-action-btn save-price-btn" onclick="savePrice(${product.id})">
+                        Salva
+                    </button>
+                    <button class="price-action-btn reset-price-btn" onclick="resetPrice(${product.id})">
+                        Reset
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// Aggiorna prezzo temporaneo
+function updatePriceInput(productId, value) {
+    const price = parseFloat(value);
+    if (!isNaN(price) && price >= 0) {
+        modifiedPrices[productId] = price;
+        renderPriceTable();
+    }
+}
+
+// Salva singolo prezzo
+async function savePrice(productId) {
+    const newPrice = modifiedPrices[productId];
+    
+    if (newPrice === undefined) {
+        const input = document.querySelector(`input[data-product-id="${productId}"]`);
+        if (input) {
+            const price = parseFloat(input.value);
+            if (!isNaN(price) && price >= 0) {
+                modifiedPrices[productId] = price;
+            } else {
+                alert('Inserisci un prezzo valido!');
+                return;
+            }
+        }
+    }
+
+    const finalPrice = modifiedPrices[productId];
+    
+    if (finalPrice === undefined || finalPrice < 0) {
+        alert('Inserisci un prezzo valido!');
+        return;
+    }
+
+    try {
+        showNotification('Salvataggio prezzo...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .upsert({
+                product_id: productId,
+                custom_price: finalPrice
+            }, {
+                onConflict: 'product_id'
+            });
+
+        if (error) {
+            console.error('Errore completo:', error);
+            alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
+            return;
+        }
+
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            product.price = finalPrice;
+        }
+
+        delete modifiedPrices[productId];
+        renderPriceTable();
+        renderProducts();
+        showNotification('Prezzo aggiornato! ✓');
+    } catch (err) {
+        console.error('Errore catch:', err);
+        alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
+    }
+}
+
+// Ripristina prezzo originale
+async function resetPrice(productId) {
+    if (!confirm('Ripristinare il prezzo originale per questo prodotto?')) {
+        return;
+    }
+
+    try {
+        showNotification('Ripristino prezzo...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .delete()
+            .eq('product_id', productId);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nel ripristino!');
+            return;
+        }
+
+        const product = products.find(p => p.id === productId);
+        if (product && originalPrices[productId]) {
+            product.price = originalPrices[productId];
+        }
+
+        delete modifiedPrices[productId];
+        renderPriceTable();
+        renderProducts();
+        showNotification('Prezzo ripristinato! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nel ripristino!');
+    }
+}
+
+// Salva tutti i prezzi modificati
+async function saveAllPrices() {
+    const modifiedCount = Object.keys(modifiedPrices).length;
+    
+    if (modifiedCount === 0) {
+        alert('Non ci sono modifiche da salvare!');
+        return;
+    }
+
+    if (!confirm(`Salvare ${modifiedCount} modifiche ai prezzi?`)) {
+        return;
+    }
+
+    try {
+        showNotification('Salvataggio modifiche...', 'info');
+
+        const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
+            product_id: parseInt(productId),
+            custom_price: price
+        }));
+
+        const { error } = await supabase
+            .from('product_prices')
+            .upsert(updates, {
+                onConflict: 'product_id'
+            });
+
+        if (error) {
+            console.error('Errore completo:', error);
+            alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
+            return;
+        }
+
+        Object.entries(modifiedPrices).forEach(([productId, price]) => {
+            const product = products.find(p => p.id === parseInt(productId));
+            if (product) {
+                product.price = price;
+            }
+        });
+
+        modifiedPrices = {};
+        renderPriceTable();
+        renderProducts();
+        showNotification(`${modifiedCount} prezzi aggiornati! ✓`);
+    } catch (err) {
+        console.error('Errore catch:', err);
+        alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
+    }
+}
+
+// Ripristina tutti i prezzi originali
+async function resetAllPrices() {
+    if (!confirm('Ripristinare TUTTI i prezzi originali? Questa azione non può essere annullata!')) {
+        return;
+    }
+
+    try {
+        showNotification('Ripristino prezzi...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .delete()
+            .neq('product_id', 0);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nel ripristino!');
+            return;
+        }
+
+        products.forEach(product => {
+            if (originalPrices[product.id]) {
+                product.price = originalPrices[product.id];
+            }
+        });
+
+        modifiedPrices = {};
+        renderPriceTable();
+        renderProducts();
+        showNotification('Tutti i prezzi ripristinati! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nel ripristino!');
+    }
+}
