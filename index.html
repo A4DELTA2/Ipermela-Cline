@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipermela Store - Ordini</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ipermela Store - Ordini</h1>
+            <div class="header-actions">
+                <button id="quick-add-btn" class="header-btn" title="Aggiungi prodotto">
+                    <span class="btn-icon">➕</span>
+                </button>
+                <button id="quick-cart-btn" class="header-btn" title="Vai al carrello">
+                    <span class="btn-icon">🛒</span>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sezione Catalogo -->
+            <section class="catalog-section">
+                <h2>Catalogo Prodotti</h2>
+                
+                <!-- Filtri per Categoria -->
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">Tutti</button>
+                    <button class="category-btn" data-category="iphone">iPhone</button>
+                    <button class="category-btn" data-category="mac">Mac</button>
+                    <button class="category-btn" data-category="ipad">iPad</button>
+                    <button class="category-btn" data-category="accessori">Accessori</button>
+                </div>
+
+                <!-- Griglia Prodotti -->
+                <div id="products-grid" class="products-grid"></div>
+
+                <!-- Aggiungi Accessorio Personalizzato -->
+                <div class="custom-accessory">
+                    <h3>➕ Aggiungi Accessorio Personalizzato</h3>
+                    <div class="custom-form">
+                        <input type="text" id="custom-name" placeholder="Nome accessorio" />
+                        <input type="number" id="custom-price" placeholder="Prezzo (€)" min="0" step="0.01" />
+                        <button id="add-custom-btn" class="btn-primary">Aggiungi al Catalogo</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sezione Carrello/Ordine -->
+            <section class="cart-section">
+                <h2>Ordine Corrente</h2>
+                
+                <div id="cart-items" class="cart-items"></div>
+                
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotale:</span>
+                        <span id="subtotal">€0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>IVA (22%):</span>
+                        <span id="tax">€0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Totale:</span>
+                        <span id="total">€0.00</span>
+                    </div>
+                </div>
+
+                <div class="cart-actions">
+                    <button id="clear-cart-btn" class="btn-secondary">Svuota Carrello</button>
+                    <button id="save-order-btn" class="btn-primary">Salva Ordine</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sezione Ordini Salvati -->
+        <section class="orders-section">
+            <h2>Ordini Salvati</h2>
+            <div id="saved-orders" class="saved-orders"></div>
+        </section>
+    </div>
+
+    <!-- Modal per Salvataggio Ordine -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Completa Ordine</h2>
+            <div class="modal-form">
+                <input type="text" id="customer-name" placeholder="Nome Cliente" required />
+                <input type="email" id="customer-email" placeholder="Email Cliente" />
+                <input type="tel" id="customer-phone" placeholder="Telefono" />
+                <textarea id="order-notes" placeholder="Note ordine (opzionale)"></textarea>
+                <button id="confirm-order-btn" class="btn-primary">Conferma Ordine</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
