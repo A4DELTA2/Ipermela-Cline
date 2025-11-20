@@ -110,6 +110,32 @@ header h1 {
     font-size: 1.8em;
 }
 
+/* Barra di Ricerca */
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #0071e3;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 113, 227, 0.1);
+}
+
+.search-bar input::placeholder {
+    color: #999;
+}
+
 .category-filters {
     display: flex;
     gap: 10px;
@@ -135,6 +161,42 @@ header h1 {
 }
 
 .category-btn.active {
+    background: #0071e3;
+    color: white;
+    border-color: #0071e3;
+}
+
+/* Sottocategorie Mac */
+.mac-subcategories {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: #f0f9ff;
+    border-radius: 15px;
+    border: 2px solid #e3f2fd;
+}
+
+.subcategory-btn {
+    padding: 8px 16px;
+    border: 2px solid #bbdefb;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #0071e3;
+    font-size: 0.9em;
+}
+
+.subcategory-btn:hover {
+    border-color: #0071e3;
+    background: #e3f2fd;
+    transform: translateY(-2px);
+}
+
+.subcategory-btn.active {
     background: #0071e3;
     color: white;
     border-color: #0071e3;
