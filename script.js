@@ -133,6 +133,7 @@ async function loadProducts() {
                 price: parseFloat(p.price),
                 category: p.category || 'accessori',
                 icon: p.icon || '🎁',
+                imageUrl: p.image_url || null,
                 custom: true
             }));
             
@@ -353,7 +354,17 @@ function renderProducts() {
 
     grid.innerHTML = filteredProducts.map(product => `
         <div class="product-card" data-id="${product.id}">
-            <div class="product-icon">${product.icon}</div>
+            ${product.imageUrl ? 
+                `<div class="product-image-container">
+                    <img src="${product.imageUrl}" 
+                         alt="${product.name}" 
+                         class="product-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-icon-fallback" style="display: none;">${product.icon}</div>
+                 </div>` 
+                : 
+                `<div class="product-icon">${product.icon}</div>`
+            }
             <div class="product-name">${product.name}</div>
             <div class="product-price">€${product.price.toFixed(2)}</div>
             <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
@@ -469,9 +480,11 @@ function clearCart() {
 async function addCustomAccessory() {
     const nameInput = document.getElementById('custom-name');
     const priceInput = document.getElementById('custom-price');
+    const imageUrlInput = document.getElementById('custom-image-url');
     
     const name = nameInput.value.trim();
     const price = parseFloat(priceInput.value);
+    const imageUrl = imageUrlInput.value.trim();
 
     if (!name) {
         alert('Inserisci un nome per l\'accessorio!');
@@ -488,7 +501,8 @@ async function addCustomAccessory() {
         name: name,
         price: price,
         category: 'accessori',
-        icon: '🎁'
+        icon: '🎁',
+        image_url: imageUrl || null
     };
 
     try {
@@ -504,10 +518,11 @@ async function addCustomAccessory() {
             return;
         }
 
-        products.push({ ...newProduct, custom: true });
+        products.push({ ...newProduct, imageUrl: imageUrl || null, custom: true });
 
         nameInput.value = '';
         priceInput.value = '';
+        imageUrlInput.value = '';
 
         if (currentFilter === 'all' || currentFilter === 'accessori') {
             renderProducts();
