@@ -198,4 +198,3 @@ Se hai ancora problemi, contatta il team di sviluppo o apri una issue su GitHub.
 **🎉 Configurazione completata!** 
 
 Ora la tua app Ipermela Store è protetta da autenticazione sicura! 🔐
-
