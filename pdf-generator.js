@@ -1,37 +1,17 @@
 // ===== GENERAZIONE PDF CON jsPDF =====
 
-// Carica il logo come base64 per uso nei PDF
+// Logo placeholder - può essere rimosso o sostituito con base64 diretto
 let logoBase64 = null;
 
-async function loadLogoForPDF() {
-    try {
-        const response = await fetch('./_logo_ipermela_nero.png');
-        const blob = await response.blob();
-        const reader = new FileReader();
-        
-        return new Promise((resolve) => {
-            reader.onloadend = () => {
-                logoBase64 = reader.result;
-                resolve(logoBase64);
-            };
-            reader.readAsDataURL(blob);
-        });
-    } catch (err) {
-        console.error('Errore caricamento logo:', err);
-        return null;
-    }
-}
+// Funzione rimossa - causava errori CORS con file:// protocol
+// Per aggiungere il logo, convertilo in base64 e inseriscilo direttamente qui:
+// logoBase64 = 'data:image/png;base64,iVBORw0KG...';
 
 // Genera PDF per un singolo ordine
 async function generateOrderPDF(order) {
     try {
         showNotification('Generazione PDF in corso...', 'info');
-        
-        // Assicurati che il logo sia caricato
-        if (!logoBase64) {
-            await loadLogoForPDF();
-        }
-        
+
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
@@ -217,12 +197,7 @@ async function generateAllOrdersPDF() {
         }
         
         showNotification(`Generazione PDF di ${savedOrders.length} ordini...`, 'info');
-        
-        // Assicurati che il logo sia caricato
-        if (!logoBase64) {
-            await loadLogoForPDF();
-        }
-        
+
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
@@ -452,7 +427,7 @@ async function generateAllOrdersPDF() {
 
 // Carica logo all'avvio dell'app
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadLogoForPDF);
+    // Logo loading removed - caused CORS errors
 } else {
-    loadLogoForPDF();
+    // Logo loading removed - caused CORS errors
 }

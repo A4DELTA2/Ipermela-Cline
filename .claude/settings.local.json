@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: Risolto problema di login con policy RLS corrette\n\n- Fix policy RLS su user_roles che bloccava il login\n- Migliorata gestione errori con messaggi specifici\n- Aggiunta creazione automatica ruolo operator\n- Aggiunti log dettagliati per debug\n- Creato script SQL per fix database\n- Aggiunta documentazione completa per la fix\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(node -c:*)",
+      "Bash(awk:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

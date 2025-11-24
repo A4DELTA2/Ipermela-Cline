@@ -810,723 +810,732 @@ function decreaseQuantity(productId) {
             item.quantity--;
         } else {
             removeFromCart(productId);
-            if (modal) {
-                modal.classList.add('hidden');
-            }
+        }
+        renderCart();
+    }
+}
 
-            const customerName = document.getElementById('customer-name');
-            const customerEmail = document.getElementById('customer-email');
-            const customerPhone = document.getElementById('customer-phone');
-            const orderNotes = document.getElementById('order-notes');
+// ===== GESTIONE ORDINI =====
 
-            if (customerName) customerName.value = '';
-            if (customerEmail) customerEmail.value = '';
-            if (customerPhone) customerPhone.value = '';
-            if (orderNotes) orderNotes.value = '';
+function clearOrderForm() {
+    const modal = document.getElementById('order-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+
+    const customerName = document.getElementById('customer-name');
+    const customerEmail = document.getElementById('customer-email');
+    const customerPhone = document.getElementById('customer-phone');
+    const orderNotes = document.getElementById('order-notes');
+
+    if (customerName) customerName.value = '';
+    if (customerEmail) customerEmail.value = '';
+    if (customerPhone) customerPhone.value = '';
+    if (orderNotes) orderNotes.value = '';
+}
+
+async function saveOrder() {
+    const customerNameInput = document.getElementById('customer-name');
+    const customerEmailInput = document.getElementById('customer-email');
+    const customerPhoneInput = document.getElementById('customer-phone');
+    const orderNotesInput = document.getElementById('order-notes');
+
+    if (!customerNameInput) return;
+
+    const customerName = customerNameInput.value.trim();
+    const customerEmail = customerEmailInput?.value.trim() || null;
+    const customerPhone = customerPhoneInput?.value.trim() || null;
+    const notes = orderNotesInput?.value.trim() || null;
+
+    if (!customerName) {
+        alert('Inserisci il nome del cliente!');
+        return;
+    }
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const tax = subtotal * 0.22;
+    const total = subtotal + tax;
+
+    const orderId = Date.now();
+    const order = {
+        id: orderId,
+        date: new Date().toLocaleString('it-IT'),
+        customer_name: customerName,
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
+        items: cart,
+        subtotal: subtotal,
+        tax: tax,
+        total: total,
+        notes: notes,
+        created_by: currentUser.id
+    };
+
+    try {
+        showNotification('Salvataggio ordine sul cloud...', 'info');
+
+        const { error } = await supabase
+            .from('orders')
+            .insert([order]);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nel salvataggio dell\'ordine!');
+            return;
         }
 
-        async function saveOrder() {
-            const customerNameInput = document.getElementById('customer-name');
-            const customerEmailInput = document.getElementById('customer-email');
-            const customerPhoneInput = document.getElementById('customer-phone');
-            const orderNotesInput = document.getElementById('order-notes');
+        cart = [];
+        renderCart();
+        await renderSavedOrders();
+        closeOrderModal();
 
-            if (!customerNameInput) return;
+        showNotification('Ordine salvato con successo! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nel salvataggio!');
+    }
+}
 
-            const customerName = customerNameInput.value.trim();
-            const customerEmail = customerEmailInput?.value.trim() || null;
-            const customerPhone = customerPhoneInput?.value.trim() || null;
-            const notes = orderNotesInput?.value.trim() || null;
+async function renderSavedOrders() {
+    const ordersDiv = document.getElementById('saved-orders');
+    if (!ordersDiv) return;
 
-            if (!customerName) {
-                alert('Inserisci il nome del cliente!');
-                return;
-            }
+    try {
+        const { data, error } = await supabase
+            .from('orders')
+            .select('*')
+            .order('id', { ascending: false });
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const tax = subtotal * 0.22;
-            const total = subtotal + tax;
-
-            const orderId = Date.now();
-            const order = {
-                id: orderId,
-                date: new Date().toLocaleString('it-IT'),
-                customer_name: customerName,
-                customer_email: customerEmail,
-                customer_phone: customerPhone,
-                items: cart,
-                subtotal: subtotal,
-                tax: tax,
-                total: total,
-                notes: notes,
-                created_by: currentUser.id
-            };
-
-            try {
-                showNotification('Salvataggio ordine sul cloud...', 'info');
-
-                const { error } = await supabase
-                    .from('orders')
-                    .insert([order]);
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert('Errore nel salvataggio dell\'ordine!');
-                    return;
-                }
-
-                cart = [];
-                renderCart();
-                await renderSavedOrders();
-                closeOrderModal();
-
-                showNotification('Ordine salvato con successo! ✓');
-            } catch (err) {
-                console.error('Errore:', err);
-                alert('Errore nel salvataggio!');
-            }
+        if (error) {
+            console.error('Errore:', error);
+            ordersDiv.innerHTML = '<div class="empty-message">Errore nel caricamento degli ordini</div>';
+            return;
         }
 
-        async function renderSavedOrders() {
-            const ordersDiv = document.getElementById('saved-orders');
-            if (!ordersDiv) return;
+        savedOrders = data || [];
 
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('*')
-                    .order('id', { ascending: false });
+        // Update orders count
+        const ordersCount = document.getElementById('orders-count');
+        if (ordersCount) {
+            ordersCount.textContent = `${savedOrders.length} ${savedOrders.length === 1 ? 'ordine' : 'ordini'}`;
+        }
 
-                if (error) {
-                    console.error('Errore:', error);
-                    ordersDiv.innerHTML = '<div class="empty-message">Errore nel caricamento degli ordini</div>';
-                    return;
-                }
+        if (savedOrders.length === 0) {
+            ordersDiv.innerHTML = `
+        <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+            <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-5">
+                <svg class="w-12 h-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <p class="text-gray-500 text-lg font-medium mb-2">Nessun ordine salvato</p>
+            <p class="text-sm text-gray-400">Gli ordini completati appariranno qui</p>
+        </div>
+    `;
+            return;
+        }
 
-                savedOrders = data || [];
-
-                // Update orders count
-                const ordersCount = document.getElementById('orders-count');
-                if (ordersCount) {
-                    ordersCount.textContent = `${savedOrders.length} ${savedOrders.length === 1 ? 'ordine' : 'ordini'}`;
-                }
-
-                if (savedOrders.length === 0) {
-                    ordersDiv.innerHTML = `
-                <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
-                    <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-5">
-                        <svg class="w-12 h-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <p class="text-gray-500 text-lg font-medium mb-2">Nessun ordine salvato</p>
-                    <p class="text-sm text-gray-400">Gli ordini completati appariranno qui</p>
+        ordersDiv.innerHTML = savedOrders.map(order => {
+            const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+            return `
+    <div class="group bg-white rounded-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+        <!-- Order Header -->
+        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4">
+            <div class="flex items-center justify-between text-white">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                    <span class="font-bold text-lg">#${order.id}</span>
                 </div>
-            `;
-                    return;
-                }
-
-                ordersDiv.innerHTML = savedOrders.map(order => {
-                    const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
-                    return `
-            <div class="group bg-white rounded-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
-                <!-- Order Header -->
-                <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4">
-                    <div class="flex items-center justify-between text-white">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                            </svg>
-                            <span class="font-bold text-lg">#${order.id}</span>
-                        </div>
-                        <div class="text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                            ${itemCount} ${itemCount === 1 ? 'articolo' : 'articoli'}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Order Body -->
-                <div class="p-5">
-                    <!-- Date -->
-                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span>${order.date}</span>
-                    </div>
-
-                    <!-- Customer Info -->
-                    <div class="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
-                        <div class="flex items-center gap-2 text-sm">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                            <span class="font-semibold text-gray-900">${order.customer_name}</span>
-                        </div>
-                        ${order.customer_email ? `
-                            <div class="flex items-center gap-2 text-xs text-gray-600">
-                                <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                <span class="truncate">${order.customer_email}</span>
-                            </div>
-                        ` : ''}
-                        ${order.customer_phone ? `
-                            <div class="flex items-center gap-2 text-xs text-gray-600">
-                                <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <span>${order.customer_phone}</span>
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <!-- Products List -->
-                    <div class="mb-4">
-                        <div class="text-xs font-semibold text-gray-500 uppercase mb-2 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
-                            Prodotti
-                        </div>
-                        <div class="space-y-1.5 max-h-32 overflow-y-auto">
-                            ${order.items.map(item => `
-                                <div class="flex justify-between items-center text-sm bg-white p-2 rounded-lg border border-gray-100">
-                                    <span class="text-gray-700 truncate flex-1">${item.name}</span>
-                                    <div class="flex items-center gap-3 text-xs">
-                                        <span class="text-gray-500">×${item.quantity}</span>
-                                        <span class="font-semibold text-gray-900 min-w-[60px] text-right">€${(item.price * item.quantity).toFixed(2)}</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- Notes (if any) -->
-                    ${order.notes ? `
-                        <div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
-                            <div class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                                </svg>
-                                <div class="text-xs text-amber-800 flex-1">
-                                    <span class="font-semibold block mb-1">Note:</span>
-                                    <span class="italic">${order.notes}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    <!-- Total -->
-                    <div class="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-2 border-purple-200 mb-4">
-                        <span class="text-sm font-semibold text-gray-700">Totale</span>
-                        <span class="text-2xl font-bold text-purple-600">€${parseFloat(order.total).toFixed(2)}</span>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex gap-2">
-                        <button
-                            class="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
-                            onclick="exportOrderPDF(${order.id})"
-                            title="Scarica PDF"
-                        >
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            <span>PDF</span>
-                        </button>
-                        ${canDeleteOrder(order) ? `
-                            <button
-                                class="px-4 py-2.5 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-xl transition-all duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white hover:scale-105 active:scale-95 flex items-center justify-center"
-                                onclick="deleteOrder(${order.id})"
-                                title="Elimina ordine"
-                            >
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                            </button>
-                        ` : ''}
-                    </div>
+                <div class="text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                    ${itemCount} ${itemCount === 1 ? 'articolo' : 'articoli'}
                 </div>
             </div>
-            `;
-                }).join('');
-            } catch (err) {
-                console.error('Errore:', err);
-                ordersDiv.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10">Errore nel caricamento</div>';
-            }
-        }
+        </div>
 
-        // Controlla se l'utente può eliminare l'ordine
-        function canDeleteOrder(order) {
-            // Admin può eliminare tutto
-            if (userRole === 'admin') return true;
-            // Gli altri utenti possono eliminare solo i propri ordini
-            return order.created_by === currentUser.id;
-        }
+        <!-- Order Body -->
+        <div class="p-5">
+            <!-- Date -->
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>${order.date}</span>
+            </div>
 
-        async function deleteOrder(orderId) {
-            if (!confirm('Sei sicuro di voler eliminare questo ordine?')) {
-                return;
-            }
-
-            try {
-                showNotification('Eliminazione dal cloud...', 'info');
-
-                const { error } = await supabase
-                    .from('orders')
-                    .delete()
-                    .eq('id', orderId);
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert('Errore nell\'eliminazione dell\'ordine!');
-                    return;
-                }
-
-                await renderSavedOrders();
-                showNotification('Ordine eliminato');
-            } catch (err) {
-                console.error('Errore:', err);
-                alert('Errore nell\'eliminazione!');
-            }
-        }
-
-        // Wrapper per export PDF di un singolo ordine
-        function exportOrderPDF(orderId) {
-            const order = savedOrders.find(o => o.id === orderId);
-            if (order) {
-                generateOrderPDF(order);
-            } else {
-                showNotification('Ordine non trovato!', 'error');
-            }
-        }
-
-        // ===== GESTIONE PREZZI =====
-
-        function openPriceManagement() {
-            // Solo admin e operator possono modificare i prezzi
-            if (userRole !== 'admin' && userRole !== 'operator') {
-                showNotification('Non hai i permessi per modificare i prezzi', 'error');
-                return;
-            }
-
-            showPriceManagement();
-        }
-
-        async function showPriceManagement() {
-            await loadCustomPrices();
-            const section = document.getElementById('price-management-section');
-            if (section) {
-                section.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                renderPriceTable();
-            }
-        }
-
-        function closePriceManagement() {
-            const section = document.getElementById('price-management-section');
-            if (section) {
-                section.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-            priceFilter = 'all';
-            priceSearchQuery = '';
-            modifiedPrices = {};
-        }
-
-        async function loadCustomPrices() {
-            try {
-                const { data, error } = await supabase
-                    .from('product_prices')
-                    .select('*');
-
-                if (error) {
-                    console.error('Errore caricamento prezzi:', error);
-                    return;
-                }
-
-                products.forEach(p => {
-                    if (!originalPrices[p.id]) {
-                        originalPrices[p.id] = p.price;
-                    }
-                });
-
-                if (data && data.length > 0) {
-                    data.forEach(priceData => {
-                        const product = products.find(p => p.id === priceData.product_id);
-                        if (product) {
-                            product.price = parseFloat(priceData.custom_price);
-                        }
-                    });
-                }
-            } catch (err) {
-                console.error('Errore:', err);
-            }
-        }
-
-        function renderPriceTable() {
-            const tbody = document.getElementById('price-table-body');
-            if (!tbody) return;
-
-            let filteredProducts = products.filter(p => !p.custom);
-
-            if (priceFilter !== 'all') {
-                filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
-            }
-
-            if (priceSearchQuery) {
-                filteredProducts = filteredProducts.filter(p =>
-                    p.name.toLowerCase().includes(priceSearchQuery)
-                );
-            }
-
-            if (filteredProducts.length === 0) {
-                tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="py-16 text-center">
-                    <div class="flex flex-col items-center gap-3">
-                        <svg class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <!-- Customer Info -->
+            <div class="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
+                <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span class="font-semibold text-gray-900">${order.customer_name}</span>
+                </div>
+                ${order.customer_email ? `
+                    <div class="flex items-center gap-2 text-xs text-gray-600">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <p class="text-gray-500 font-medium">Nessun prodotto trovato</p>
-                        <p class="text-sm text-gray-400">Prova a modificare i filtri</p>
+                        <span class="truncate">${order.customer_email}</span>
                     </div>
-                </td>
-            </tr>
-        `;
-                return;
-            }
+                ` : ''}
+                ${order.customer_phone ? `
+                    <div class="flex items-center gap-2 text-xs text-gray-600">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>${order.customer_phone}</span>
+                    </div>
+                ` : ''}
+            </div>
 
-            const getCategoryInfo = (category) => {
-                const categories = {
-                    'iphone': { label: 'iPhone', color: 'bg-purple-100 text-purple-700 border-purple-200' },
-                    'mac': { label: 'Mac', color: 'bg-blue-100 text-blue-700 border-blue-200' },
-                    'ipad': { label: 'iPad', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' },
-                    'accessori': { label: 'Accessori', color: 'bg-green-100 text-green-700 border-green-200' }
-                };
-                return categories[category] || { label: category, color: 'bg-gray-100 text-gray-700 border-gray-200' };
-            };
+            <!-- Products List -->
+            <div class="mb-4">
+                <div class="text-xs font-semibold text-gray-500 uppercase mb-2 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    Prodotti
+                </div>
+                <div class="space-y-1.5 max-h-32 overflow-y-auto">
+                    ${order.items.map(item => `
+                        <div class="flex justify-between items-center text-sm bg-white p-2 rounded-lg border border-gray-100">
+                            <span class="text-gray-700 truncate flex-1">${item.name}</span>
+                            <div class="flex items-center gap-3 text-xs">
+                                <span class="text-gray-500">×${item.quantity}</span>
+                                <span class="font-semibold text-gray-900 min-w-[60px] text-right">€${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
 
-            tbody.innerHTML = filteredProducts.map(product => {
-                const originalPrice = originalPrices[product.id] || product.price;
-                const currentPrice = product.price;
-                const pendingPrice = modifiedPrices[product.id];
-                const categoryInfo = getCategoryInfo(product.category);
-                const hasChanges = pendingPrice !== undefined;
-
-                return `
-            <tr data-product-id="${product.id}" class="group hover:bg-orange-50/30 transition-all duration-300 ${hasChanges ? 'bg-amber-50' : ''}">
-                <!-- Product Name with Icon -->
-                <td class="px-4 py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="text-3xl">${product.icon}</div>
-                        <div>
-                            <div class="font-semibold text-gray-900">${product.name}</div>
-                            ${hasChanges ? '<div class="text-xs text-amber-600 font-medium mt-1">● Modifiche in sospeso</div>' : ''}
+            <!-- Notes (if any) -->
+            ${order.notes ? `
+                <div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r-lg">
+                    <div class="flex items-start gap-2">
+                        <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
+                        <div class="text-xs text-amber-800 flex-1">
+                            <span class="font-semibold block mb-1">Note:</span>
+                            <span class="italic">${order.notes}</span>
                         </div>
                     </div>
-                </td>
+                </div>
+            ` : ''}
 
-                <!-- Category Badge -->
-                <td class="px-4 py-4">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${categoryInfo.color}">
-                        ${categoryInfo.label}
-                    </span>
-                </td>
+            <!-- Total -->
+            <div class="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-2 border-purple-200 mb-4">
+                <span class="text-sm font-semibold text-gray-700">Totale</span>
+                <span class="text-2xl font-bold text-purple-600">€${parseFloat(order.total).toFixed(2)}</span>
+            </div>
 
-                <!-- Original Price -->
-                <td class="px-4 py-4">
-                    <div class="flex items-center gap-2">
-                        <span class="text-gray-400 line-through text-sm">€${originalPrice.toFixed(2)}</span>
-                        ${originalPrice !== currentPrice ? '<span class="text-xs text-orange-600 font-medium">Modificato</span>' : ''}
-                    </div>
-                </td>
+            <!-- Actions -->
+            <div class="flex gap-2">
+                <button
+                    class="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                    onclick="exportOrderPDF(${order.id})"
+                    title="Scarica PDF"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>PDF</span>
+                </button>
+                ${canDeleteOrder(order) ? `
+                    <button
+                        class="px-4 py-2.5 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-xl transition-all duration-300 hover:border-red-500 hover:bg-red-500 hover:text-white hover:scale-105 active:scale-95 flex items-center justify-center"
+                        onclick="deleteOrder(${order.id})"
+                        title="Elimina ordine"
+                    >
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                ` : ''}
+            </div>
+        </div>
+    </div>
+    `;
+        }).join('');
+    } catch (err) {
+        console.error('Errore:', err);
+        ordersDiv.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10">Errore nel caricamento</div>';
+    }
+}
 
-                <!-- Current Price Input -->
-                <td class="px-4 py-4">
-                    <div class="relative inline-block">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500">€</span>
-                        </div>
-                        <input
-                            type="number"
-                            class="w-36 pl-8 pr-3 py-2.5 border-2 rounded-xl text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 ${hasChanges ? 'border-amber-400 bg-amber-50 text-amber-900 focus:border-amber-500 focus:ring-amber-500/20' : 'border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-orange-500/20'}"
-                            value="${pendingPrice !== undefined ? pendingPrice : currentPrice.toFixed(2)}"
-                            min="0"
-                            step="0.01"
-                            data-product-id="${product.id}"
-                            onchange="updatePriceInput(${product.id}, this.value)"
-                        />
-                    </div>
-                </td>
+// Controlla se l'utente può eliminare l'ordine
+function canDeleteOrder(order) {
+    // Admin può eliminare tutto
+    if (userRole === 'admin') return true;
+    // Gli altri utenti possono eliminare solo i propri ordini
+    return order.created_by === currentUser.id;
+}
 
-                <!-- Actions -->
-                <td class="px-4 py-4">
-                    <div class="flex items-center justify-center gap-2">
-                        <button
-                            class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium rounded-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-700 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                            onclick="savePrice(${product.id})"
-                            title="Salva prezzo"
-                        >
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span class="hidden sm:inline">Salva</span>
-                        </button>
-                        <button
-                            class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-500 hover:text-white hover:scale-105 active:scale-95"
-                            onclick="resetPrice(${product.id})"
-                            title="Ripristina prezzo originale"
-                        >
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        `;
-            }).join('');
+async function deleteOrder(orderId) {
+    if (!confirm('Sei sicuro di voler eliminare questo ordine?')) {
+        return;
+    }
+
+    try {
+        showNotification('Eliminazione dal cloud...', 'info');
+
+        const { error } = await supabase
+            .from('orders')
+            .delete()
+            .eq('id', orderId);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nell\'eliminazione dell\'ordine!');
+            return;
         }
 
-        function updatePriceInput(productId, value) {
-            const price = parseFloat(value);
-            if (!isNaN(price) && price >= 0) {
-                modifiedPrices[productId] = price;
-                renderPriceTable();
+        await renderSavedOrders();
+        showNotification('Ordine eliminato');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nell\'eliminazione!');
+    }
+}
+
+// Wrapper per export PDF di un singolo ordine
+function exportOrderPDF(orderId) {
+    const order = savedOrders.find(o => o.id === orderId);
+    if (order) {
+        generateOrderPDF(order);
+    } else {
+        showNotification('Ordine non trovato!', 'error');
+    }
+}
+
+// ===== GESTIONE PREZZI =====
+
+function openPriceManagement() {
+    // Solo admin e operator possono modificare i prezzi
+    if (userRole !== 'admin' && userRole !== 'operator') {
+        showNotification('Non hai i permessi per modificare i prezzi', 'error');
+        return;
+    }
+
+    showPriceManagement();
+}
+
+async function showPriceManagement() {
+    await loadCustomPrices();
+    const section = document.getElementById('price-management-section');
+    if (section) {
+        section.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        renderPriceTable();
+    }
+}
+
+function closePriceManagement() {
+    const section = document.getElementById('price-management-section');
+    if (section) {
+        section.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+    priceFilter = 'all';
+    priceSearchQuery = '';
+    modifiedPrices = {};
+}
+
+async function loadCustomPrices() {
+    try {
+        const { data, error } = await supabase
+            .from('product_prices')
+            .select('*');
+
+        if (error) {
+            console.error('Errore caricamento prezzi:', error);
+            return;
+        }
+
+        products.forEach(p => {
+            if (!originalPrices[p.id]) {
+                originalPrices[p.id] = p.price;
             }
-        }
+        });
 
-        async function savePrice(productId) {
-            let newPrice = modifiedPrices[productId];
-
-            if (newPrice === undefined) {
-                const input = document.querySelector(`input[data-product-id="${productId}"]`);
-                if (input) {
-                    const price = parseFloat(input.value);
-                    if (!isNaN(price) && price >= 0) {
-                        newPrice = price;
-                        modifiedPrices[productId] = price;
-                    } else {
-                        alert('Inserisci un prezzo valido!');
-                        return;
-                    }
+        if (data && data.length > 0) {
+            data.forEach(priceData => {
+                const product = products.find(p => p.id === priceData.product_id);
+                if (product) {
+                    product.price = parseFloat(priceData.custom_price);
                 }
-            }
+            });
+        }
+    } catch (err) {
+        console.error('Errore:', err);
+    }
+}
 
-            if (newPrice === undefined || newPrice < 0) {
+function renderPriceTable() {
+    const tbody = document.getElementById('price-table-body');
+    if (!tbody) return;
+
+    let filteredProducts = products.filter(p => !p.custom);
+
+    if (priceFilter !== 'all') {
+        filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
+    }
+
+    if (priceSearchQuery) {
+        filteredProducts = filteredProducts.filter(p =>
+            p.name.toLowerCase().includes(priceSearchQuery)
+        );
+    }
+
+    if (filteredProducts.length === 0) {
+        tbody.innerHTML = `
+    <tr>
+        <td colspan="5" class="py-16 text-center">
+            <div class="flex flex-col items-center gap-3">
+                <svg class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p class="text-gray-500 font-medium">Nessun prodotto trovato</p>
+                <p class="text-sm text-gray-400">Prova a modificare i filtri</p>
+            </div>
+        </td>
+    </tr>
+`;
+        return;
+    }
+
+    const getCategoryInfo = (category) => {
+        const categories = {
+            'iphone': { label: 'iPhone', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+            'mac': { label: 'Mac', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+            'ipad': { label: 'iPad', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' },
+            'accessori': { label: 'Accessori', color: 'bg-green-100 text-green-700 border-green-200' }
+        };
+        return categories[category] || { label: category, color: 'bg-gray-100 text-gray-700 border-gray-200' };
+    };
+
+    tbody.innerHTML = filteredProducts.map(product => {
+        const originalPrice = originalPrices[product.id] || product.price;
+        const currentPrice = product.price;
+        const pendingPrice = modifiedPrices[product.id];
+        const categoryInfo = getCategoryInfo(product.category);
+        const hasChanges = pendingPrice !== undefined;
+
+        return `
+    <tr data-product-id="${product.id}" class="group hover:bg-orange-50/30 transition-all duration-300 ${hasChanges ? 'bg-amber-50' : ''}">
+        <!-- Product Name with Icon -->
+        <td class="px-4 py-4">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl">${product.icon}</div>
+                <div>
+                    <div class="font-semibold text-gray-900">${product.name}</div>
+                    ${hasChanges ? '<div class="text-xs text-amber-600 font-medium mt-1">● Modifiche in sospeso</div>' : ''}
+                </div>
+            </div>
+        </td>
+
+        <!-- Category Badge -->
+        <td class="px-4 py-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${categoryInfo.color}">
+                ${categoryInfo.label}
+            </span>
+        </td>
+
+        <!-- Original Price -->
+        <td class="px-4 py-4">
+            <div class="flex items-center gap-2">
+                <span class="text-gray-400 line-through text-sm">€${originalPrice.toFixed(2)}</span>
+                ${originalPrice !== currentPrice ? '<span class="text-xs text-orange-600 font-medium">Modificato</span>' : ''}
+            </div>
+        </td>
+
+        <!-- Current Price Input -->
+        <td class="px-4 py-4">
+            <div class="relative inline-block">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="text-gray-500">€</span>
+                </div>
+                <input
+                    type="number"
+                    class="w-36 pl-8 pr-3 py-2.5 border-2 rounded-xl text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 ${hasChanges ? 'border-amber-400 bg-amber-50 text-amber-900 focus:border-amber-500 focus:ring-amber-500/20' : 'border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-orange-500/20'}"
+                    value="${pendingPrice !== undefined ? pendingPrice : currentPrice.toFixed(2)}"
+                    min="0"
+                    step="0.01"
+                    data-product-id="${product.id}"
+                    onchange="updatePriceInput(${product.id}, this.value)"
+                />
+            </div>
+        </td>
+
+        <!-- Actions -->
+        <td class="px-4 py-4">
+            <div class="flex items-center justify-center gap-2">
+                <button
+                    class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium rounded-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-700 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                    onclick="savePrice(${product.id})"
+                    title="Salva prezzo"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span class="hidden sm:inline">Salva</span>
+                </button>
+                <button
+                    class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-500 hover:text-white hover:scale-105 active:scale-95"
+                    onclick="resetPrice(${product.id})"
+                    title="Ripristina prezzo originale"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </button>
+            </div>
+        </td>
+    </tr>
+`;
+    }).join('');
+}
+
+function updatePriceInput(productId, value) {
+    const price = parseFloat(value);
+    if (!isNaN(price) && price >= 0) {
+        modifiedPrices[productId] = price;
+        renderPriceTable();
+    }
+}
+
+async function savePrice(productId) {
+    let newPrice = modifiedPrices[productId];
+
+    if (newPrice === undefined) {
+        const input = document.querySelector(`input[data-product-id="${productId}"]`);
+        if (input) {
+            const price = parseFloat(input.value);
+            if (!isNaN(price) && price >= 0) {
+                newPrice = price;
+                modifiedPrices[productId] = price;
+            } else {
                 alert('Inserisci un prezzo valido!');
                 return;
             }
-
-            try {
-                showNotification('Salvataggio prezzo...', 'info');
-
-                const { error } = await supabase
-                    .from('product_prices')
-                    .upsert({
-                        product_id: productId,
-                        custom_price: newPrice,
-                        updated_by: currentUser.id
-                    }, {
-                        onConflict: 'product_id'
-                    });
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
-                    return;
-                }
-
-                const product = products.find(p => p.id === productId);
-                if (product) {
-                    product.price = newPrice;
-                }
-
-                delete modifiedPrices[productId];
-                renderPriceTable();
-                renderProducts();
-                showNotification('Prezzo aggiornato! ✓');
-            } catch (err) {
-                console.error('Errore:', err);
-                alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
-            }
-        }
-
-        async function resetPrice(productId) {
-            if (!confirm('Ripristinare il prezzo originale per questo prodotto?')) {
-                return;
-            }
-
-            try {
-                showNotification('Ripristino prezzo...', 'info');
-
-                const { error } = await supabase
-                    .from('product_prices')
-                    .delete()
-                    .eq('product_id', productId);
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert('Errore nel ripristino!');
-                    return;
-                }
-
-                const product = products.find(p => p.id === productId);
-                if (product && originalPrices[productId]) {
-                    product.price = originalPrices[productId];
-                }
-
-                delete modifiedPrices[productId];
-                renderPriceTable();
-                renderProducts();
-                showNotification('Prezzo ripristinato! ✓');
-            } catch (err) {
-                console.error('Errore:', err);
-                alert('Errore nel ripristino!');
-            }
-        }
-
-        async function saveAllPrices() {
-            const modifiedCount = Object.keys(modifiedPrices).length;
-
-            if (modifiedCount === 0) {
-                alert('Non ci sono modifiche da salvare!');
-                return;
-            }
-
-            if (!confirm(`Salvare ${modifiedCount} modifiche ai prezzi?`)) {
-                return;
-            }
-
-            try {
-                showNotification('Salvataggio modifiche...', 'info');
-
-                const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
-                    product_id: parseInt(productId),
-                    custom_price: price,
-                    updated_by: currentUser.id
-                }));
-
-                const { error } = await supabase
-                    .from('product_prices')
-                    .upsert(updates, {
-                        onConflict: 'product_id'
-                    });
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
-                    return;
-                }
-
-                Object.entries(modifiedPrices).forEach(([productId, price]) => {
-                    const product = products.find(p => p.id === parseInt(productId));
-                    if (product) {
-                        product.price = price;
-                    }
-                });
-
-                modifiedPrices = {};
-                renderPriceTable();
-                renderProducts();
-                showNotification(`${modifiedCount} prezzi aggiornati! ✓`);
-            } catch (err) {
-                console.error('Errore:', err);
-                alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
-            }
-        }
-
-        async function resetAllPrices() {
-            if (!confirm('Ripristinare TUTTI i prezzi originali? Questa azione non può essere annullata!')) {
-                return;
-            }
-
-            try {
-                showNotification('Ripristino prezzi...', 'info');
-
-                const { error } = await supabase
-                    .from('product_prices')
-                    .delete()
-                    .neq('product_id', 0);
-
-                if (error) {
-                    console.error('Errore:', error);
-                    alert('Errore nel ripristino!');
-                    return;
-                }
-
-                products.forEach(product => {
-                    if (originalPrices[product.id]) {
-                        product.price = originalPrices[product.id];
-                    }
-                });
-
-                modifiedPrices = {};
-                renderPriceTable();
-                renderProducts();
-                showNotification('Tutti i prezzi ripristinati! ✓');
-            } catch (err) {
-                console.error('Errore:', err);
-                alert('Errore nel ripristino!');
-            }
-        }
-
-        // ===== NOTIFICATIONS =====
-        function showNotification(message, type = 'success') {
-            const colors = {
-                success: '#34c759',
-                info: '#007aff',
-                error: '#ff3b30'
-            };
-
-            const notification = document.createElement('div');
-            notification.textContent = message;
-            notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${colors[type] || colors.success};
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        font-weight: 600;
-        animation: slideIn 0.3s ease;
-    `;
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Stili animazione
-        const style = document.createElement('style');
-        style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
         }
     }
+
+    if (newPrice === undefined || newPrice < 0) {
+        alert('Inserisci un prezzo valido!');
+        return;
+    }
+
+    try {
+        showNotification('Salvataggio prezzo...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .upsert({
+                product_id: productId,
+                custom_price: newPrice,
+                updated_by: currentUser.id
+            }, {
+                onConflict: 'product_id'
+            });
+
+        if (error) {
+            console.error('Errore:', error);
+            alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
+            return;
+        }
+
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            product.price = newPrice;
+        }
+
+        delete modifiedPrices[productId];
+        renderPriceTable();
+        renderProducts();
+        showNotification('Prezzo aggiornato! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
+    }
+}
+
+async function resetPrice(productId) {
+    if (!confirm('Ripristinare il prezzo originale per questo prodotto?')) {
+        return;
+    }
+
+    try {
+        showNotification('Ripristino prezzo...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .delete()
+            .eq('product_id', productId);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nel ripristino!');
+            return;
+        }
+
+        const product = products.find(p => p.id === productId);
+        if (product && originalPrices[productId]) {
+            product.price = originalPrices[productId];
+        }
+
+        delete modifiedPrices[productId];
+        renderPriceTable();
+        renderProducts();
+        showNotification('Prezzo ripristinato! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nel ripristino!');
+    }
+}
+
+async function saveAllPrices() {
+    const modifiedCount = Object.keys(modifiedPrices).length;
+
+    if (modifiedCount === 0) {
+        alert('Non ci sono modifiche da salvare!');
+        return;
+    }
+
+    if (!confirm(`Salvare ${modifiedCount} modifiche ai prezzi?`)) {
+        return;
+    }
+
+    try {
+        showNotification('Salvataggio modifiche...', 'info');
+
+        const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
+            product_id: parseInt(productId),
+            custom_price: price,
+            updated_by: currentUser.id
+        }));
+
+        const { error } = await supabase
+            .from('product_prices')
+            .upsert(updates, {
+                onConflict: 'product_id'
+            });
+
+        if (error) {
+            console.error('Errore:', error);
+            alert(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`);
+            return;
+        }
+
+        Object.entries(modifiedPrices).forEach(([productId, price]) => {
+            const product = products.find(p => p.id === parseInt(productId));
+            if (product) {
+                product.price = price;
+            }
+        });
+
+        modifiedPrices = {};
+        renderPriceTable();
+        renderProducts();
+        showNotification(`${modifiedCount} prezzi aggiornati! ✓`);
+    } catch (err) {
+        console.error('Errore:', err);
+        alert(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`);
+    }
+}
+
+async function resetAllPrices() {
+    if (!confirm('Ripristinare TUTTI i prezzi originali? Questa azione non può essere annullata!')) {
+        return;
+    }
+
+    try {
+        showNotification('Ripristino prezzi...', 'info');
+
+        const { error } = await supabase
+            .from('product_prices')
+            .delete()
+            .neq('product_id', 0);
+
+        if (error) {
+            console.error('Errore:', error);
+            alert('Errore nel ripristino!');
+            return;
+        }
+
+        products.forEach(product => {
+            if (originalPrices[product.id]) {
+                product.price = originalPrices[product.id];
+            }
+        });
+
+        modifiedPrices = {};
+        renderPriceTable();
+        renderProducts();
+        showNotification('Tutti i prezzi ripristinati! ✓');
+    } catch (err) {
+        console.error('Errore:', err);
+        alert('Errore nel ripristino!');
+    }
+}
+
+// ===== NOTIFICATIONS =====
+function showNotification(message, type = 'success') {
+    const colors = {
+        success: '#34c759',
+        info: '#007aff',
+        error: '#ff3b30'
+    };
+
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+position: fixed;
+top: 20px;
+right: 20px;
+background: ${colors[type] || colors.success};
+color: white;
+padding: 15px 25px;
+border-radius: 10px;
+box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+z-index: 10000;
+font-weight: 600;
+animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Stili animazione
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+from {
+    transform: translateX(400px);
+    opacity: 0;
+}
+to {
+    transform: translateX(0);
+    opacity: 1;
+}
+    }
     @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
+from {
+    transform: translateX(0);
+    opacity: 1;
+}
+to {
+    transform: translateX(400px);
+    opacity: 0;
+}
     }
 `;
         document.head.appendChild(style);
