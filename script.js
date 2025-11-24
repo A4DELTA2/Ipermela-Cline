@@ -473,6 +473,12 @@ function setupEventListeners() {
     if (confirmOrderBtn) {
         confirmOrderBtn.addEventListener('click', saveOrder);
     }
+
+    // Export all orders button - PDF
+    const exportAllOrdersBtn = document.getElementById('export-all-orders-btn');
+    if (exportAllOrdersBtn) {
+        exportAllOrdersBtn.addEventListener('click', generateAllOrdersPDF);
+    }
 }
 
 // ===== UTILITY FUNCTIONS =====
@@ -848,11 +854,16 @@ async function renderSavedOrders() {
                 </div>
                 ${order.notes ? `<div style="margin-top: 10px; color: #666;"><em>Note: ${order.notes}</em></div>` : ''}
                 <div class="order-total">Totale: €${parseFloat(order.total).toFixed(2)}</div>
-                ${canDeleteOrder(order) ? `
-                    <button class="delete-order-btn" onclick="deleteOrder(${order.id})">
-                        Elimina Ordine
+                <div class="order-actions">
+                    <button class="export-pdf-btn" onclick="exportOrderPDF(${order.id})" title="Scarica PDF">
+                        📄 PDF
                     </button>
-                ` : ''}
+                    ${canDeleteOrder(order) ? `
+                        <button class="delete-order-btn" onclick="deleteOrder(${order.id})">
+                            Elimina Ordine
+                        </button>
+                    ` : ''}
+                </div>
             </div>
         `).join('');
     } catch (err) {
@@ -876,7 +887,7 @@ async function deleteOrder(orderId) {
 
     try {
         showNotification('Eliminazione dal cloud...', 'info');
-        
+
         const { error } = await supabase
             .from('orders')
             .delete()
@@ -893,6 +904,16 @@ async function deleteOrder(orderId) {
     } catch (err) {
         console.error('Errore:', err);
         alert('Errore nell\'eliminazione!');
+    }
+}
+
+// Wrapper per export PDF di un singolo ordine
+function exportOrderPDF(orderId) {
+    const order = savedOrders.find(o => o.id === orderId);
+    if (order) {
+        generateOrderPDF(order);
+    } else {
+        showNotification('Ordine non trovato!', 'error');
     }
 }
 

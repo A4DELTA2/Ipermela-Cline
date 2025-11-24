@@ -1265,3 +1265,84 @@ header h1 {
         font-size: 1.8em;
     }
 }
+
+/* ===== STILI PDF EXPORT ===== */
+
+.orders-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.btn-export-all {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-export-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-export-all:active {
+    transform: translateY(0);
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.export-pdf-btn {
+    background: #007aff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 0 0 auto;
+}
+
+.export-pdf-btn:hover {
+    background: #0051d5;
+    transform: scale(1.05);
+}
+
+.delete-order-btn {
+    flex: 1;
+}
+
+/* Responsive PDF Export */
+@media (max-width: 768px) {
+    .orders-toolbar {
+        justify-content: center;
+    }
+
+    .btn-export-all {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+
+    .export-pdf-btn,
+    .delete-order-btn {
+        width: 100%;
+    }
+}
