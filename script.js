@@ -133,14 +133,30 @@ async function getUserRole() {
 
         if (error) {
             console.error('Errore ottenimento ruolo:', error);
-            userRole = 'operator'; // Default
+            console.error('Dettagli errore:', error.message, error.details, error.hint);
+
+            // Se l'utente non ha un ruolo assegnato, creane uno di default
+            if (error.code === 'PGRST116') { // Row not found
+                console.log('Ruolo non trovato, assegno ruolo operator di default');
+                const { error: insertError } = await supabase
+                    .from('user_roles')
+                    .insert({ user_id: currentUser.id, role: 'operator' });
+
+                if (!insertError) {
+                    userRole = 'operator';
+                    console.log('Ruolo operator assegnato con successo');
+                    return;
+                }
+            }
+
+            userRole = 'operator'; // Default fallback
             return;
         }
 
         userRole = data?.role || 'operator';
         console.log('Ruolo utente:', userRole);
     } catch (err) {
-        console.error('Errore:', err);
+        console.error('Errore imprevisto durante ottenimento ruolo:', err);
         userRole = 'operator';
     }
 }
@@ -167,18 +183,39 @@ async function handleLogin(e) {
 
         if (error) {
             console.error('Errore login:', error);
-            showNotification('Credenziali non valide!', 'error');
+
+            // Fornisci messaggi di errore più specifici
+            let errorMessage = 'Credenziali non valide!';
+            if (error.message.includes('Email not confirmed')) {
+                errorMessage = 'Email non ancora confermata. Controlla la tua casella di posta.';
+            } else if (error.message.includes('Invalid login credentials')) {
+                errorMessage = 'Email o password non corretti. Riprova.';
+            } else if (error.message.includes('Too many requests')) {
+                errorMessage = 'Troppi tentativi. Attendi qualche minuto e riprova.';
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+
+            showNotification(errorMessage, 'error');
+            return;
+        }
+
+        if (!data.user) {
+            console.error('Nessun utente restituito dopo il login');
+            showNotification('Errore durante il login. Riprova.', 'error');
             return;
         }
 
         currentUser = data.user;
+        console.log('Login effettuato con successo. User ID:', currentUser.id);
+
         await getUserRole();
         showApp();
         await initializeApp();
         showNotification('Login effettuato! ✓', 'success');
     } catch (err) {
-        console.error('Errore:', err);
-        showNotification('Errore durante il login', 'error');
+        console.error('Errore imprevisto durante login:', err);
+        showNotification('Errore durante il login: ' + err.message, 'error');
     }
 }
 
