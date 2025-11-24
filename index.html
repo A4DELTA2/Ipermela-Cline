@@ -421,7 +421,7 @@
                 <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mb-6"></div>
 
                 <!-- Custom Accessory Form -->
-                <div class="relative overflow-hidden p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-dashed border-apple-blue rounded-2xl">
+                <div class="custom-accessory relative overflow-hidden p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-dashed border-apple-blue rounded-2xl">
                     <!-- Decorative background -->
                     <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-apple-blue/5 rounded-full blur-2xl"></div>
                     <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl"></div>
@@ -446,6 +446,19 @@
                                 placeholder="Nome accessorio"
                                 class="flex-1 px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/20 transition-all duration-300"
                             />
+                            <select
+                                id="custom-icon"
+                                class="px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/20 transition-all duration-300 cursor-pointer"
+                            >
+                                <option value="🎁">🎁</option>
+                                <option value="📱">📱</option>
+                                <option value="💻">💻</option>
+                                <option value="🎧">🎧</option>
+                                <option value="🔌">🔌</option>
+                                <option value="🛡️">🛡️</option>
+                                <option value="🎒">🎒</option>
+                                <option value="🔧">🔧</option>
+                            </select>
                             <input
                                 type="number"
                                 id="custom-price"
