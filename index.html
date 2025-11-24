@@ -6,6 +6,8 @@
     <title>Ipermela Store - Ordini</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Libreria jsPDF per generare PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <!-- Schermata di Login (visibile prima dell'autenticazione) -->
@@ -139,7 +141,6 @@
                     <div class="custom-form">
                         <input type="text" id="custom-name" placeholder="Nome accessorio" />
                         <input type="number" id="custom-price" placeholder="Prezzo (€)" min="0" step="0.01" />
-                        <input type="url" id="custom-image-url" placeholder="URL immagine (opzionale)" />
                         <button id="add-custom-btn" class="btn-primary">Aggiungi al Catalogo</button>
                     </div>
                 </div>
@@ -176,6 +177,11 @@
         <!-- Sezione Ordini Salvati -->
         <section class="orders-section">
             <h2>Ordini Salvati</h2>
+            <div class="orders-toolbar">
+                <button id="export-all-orders-btn" class="btn-export-all">
+                    📄 Esporta Tutti gli Ordini in PDF
+                </button>
+            </div>
             <div id="saved-orders" class="saved-orders"></div>
         </section>
     </div>
@@ -241,5 +247,6 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="pdf-generator.js"></script>
 </body>
 </html>
