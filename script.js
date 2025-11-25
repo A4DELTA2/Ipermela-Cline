@@ -702,6 +702,79 @@ function addToCart(productId) {
     showNotification('Prodotto aggiunto al carrello! ✓');
 }
 
+async function addCustomAccessory() {
+    const nameInput = document.getElementById('custom-name');
+    const iconSelect = document.getElementById('custom-icon');
+    const priceInput = document.getElementById('custom-price');
+
+    if (!nameInput || !iconSelect || !priceInput) return;
+
+    const name = nameInput.value.trim();
+    const icon = iconSelect.value;
+    const price = parseFloat(priceInput.value);
+
+    // Validazione
+    if (!name) {
+        showNotification('Inserisci il nome del prodotto!', 'error');
+        nameInput.focus();
+        return;
+    }
+
+    if (!price || price <= 0) {
+        showNotification('Inserisci un prezzo valido!', 'error');
+        priceInput.focus();
+        return;
+    }
+
+    try {
+        showNotification('Salvataggio prodotto...', 'info');
+
+        // Salva su Supabase
+        const { data, error } = await supabase
+            .from('custom_products')
+            .insert([{
+                id: nextProductId,
+                name: name,
+                price: price,
+                category: 'accessori',
+                icon: icon
+            }])
+            .select();
+
+        if (error) {
+            console.error('Errore salvataggio:', error);
+            showNotification('Errore nel salvataggio del prodotto!', 'error');
+            return;
+        }
+
+        // Aggiungi al catalogo locale
+        const newProduct = {
+            id: nextProductId,
+            name: name,
+            price: price,
+            category: 'accessori',
+            icon: icon,
+            custom: true
+        };
+
+        products.push(newProduct);
+        nextProductId++;
+
+        // Pulisci i campi
+        nameInput.value = '';
+        priceInput.value = '';
+        iconSelect.value = '🎁';
+
+        // Renderizza il catalogo
+        renderProducts();
+
+        showNotification('Prodotto aggiunto al catalogo! ✓', 'success');
+    } catch (err) {
+        console.error('Errore:', err);
+        showNotification('Errore nel salvataggio: ' + err.message, 'error');
+    }
+}
+
 function renderCart() {
     const cartItemsDiv = document.getElementById('cart-items');
     if (!cartItemsDiv) return;
@@ -815,14 +888,60 @@ function decreaseQuantity(productId) {
     }
 }
 
+function removeFromCart(productId) {
+    const index = cart.findIndex(i => i.id === productId);
+    if (index !== -1) {
+        cart.splice(index, 1);
+        renderCart();
+        showNotification('Prodotto rimosso dal carrello');
+    }
+}
+
+function clearCart() {
+    if (cart.length === 0) {
+        showNotification('Il carrello è già vuoto', 'info');
+        return;
+    }
+
+    if (confirm('Sei sicuro di voler svuotare il carrello?')) {
+        cart = [];
+        renderCart();
+        showNotification('Carrello svuotato ✓');
+    }
+}
+
 // ===== GESTIONE ORDINI =====
 
-function clearOrderForm() {
+function openOrderModal() {
+    if (cart.length === 0) {
+        showNotification('Il carrello è vuoto! Aggiungi prodotti prima di salvare un ordine.', 'error');
+        return;
+    }
+
+    const modal = document.getElementById('order-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+
+        // Focus sul campo nome cliente
+        setTimeout(() => {
+            const customerNameInput = document.getElementById('customer-name');
+            if (customerNameInput) {
+                customerNameInput.focus();
+            }
+        }, 100);
+    }
+}
+
+function closeOrderModal() {
     const modal = document.getElementById('order-modal');
     if (modal) {
         modal.classList.add('hidden');
     }
+    clearOrderForm();
+}
 
+function clearOrderForm() {
+    // Pulisce solo i campi del form, non chiude il modal
     const customerName = document.getElementById('customer-name');
     const customerEmail = document.getElementById('customer-email');
     const customerPhone = document.getElementById('customer-phone');
