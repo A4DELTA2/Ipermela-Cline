@@ -959,7 +959,7 @@ function renderCart() {
             <!-- Remove button (absolute top-right) -->
             <button
                 class="absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-white border border-gray-200 text-gray-400 rounded-lg transition-all duration-300 hover:bg-apple-red hover:text-white hover:border-apple-red hover:scale-110 opacity-0 group-hover:opacity-100"
-                onclick="removeFromCart(${item.id})"
+                onclick="removeFromCart('${item.variantKey}')"
                 title="Rimuovi"
             >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -970,6 +970,8 @@ function renderCart() {
             <!-- Product Info -->
             <div class="mb-3 pr-6">
                 <div class="font-semibold text-gray-900 mb-1 text-sm line-clamp-2">${item.name}</div>
+                ${item.color ? `<div class="text-xs text-gray-600 mb-1">🎨 ${item.color}</div>` : ''}
+                ${item.storage ? `<div class="text-xs text-gray-600 mb-1">💾 ${item.storage}</div>` : ''}
                 <div class="flex items-baseline gap-2">
                     <span class="text-xs text-gray-500">€${item.price.toFixed(2)}</span>
                     <span class="text-xs text-gray-400">× ${item.quantity}</span>
@@ -981,7 +983,7 @@ function renderCart() {
             <div class="flex items-center gap-2">
                 <button
                     class="flex-1 h-9 flex items-center justify-center bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-bold transition-all duration-300 hover:border-apple-blue hover:bg-apple-blue hover:text-white active:scale-95"
-                    onclick="decreaseQuantity(${item.id})"
+                    onclick="decreaseQuantity('${item.variantKey}')"
                 >
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4" />
@@ -992,7 +994,7 @@ function renderCart() {
                 </div>
                 <button
                     class="flex-1 h-9 flex items-center justify-center bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-bold transition-all duration-300 hover:border-apple-blue hover:bg-apple-blue hover:text-white active:scale-95"
-                    onclick="increaseQuantity(${item.id})"
+                    onclick="increaseQuantity('${item.variantKey}')"
                 >
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
@@ -1020,23 +1022,31 @@ function updateCartSummary(subtotal, tax, total) {
     if (totalEl) totalEl.textContent = `€${total.toFixed(2)}`;
 }
 
-function increaseQuantity(productId) {
-    const item = cart.find(i => i.id === productId);
+function removeFromCart(variantKey) {
+    cart = cart.filter(item => item.variantKey !== variantKey);
+    renderCart();
+    updateCartBadge();
+}
+
+function increaseQuantity(variantKey) {
+    const item = cart.find(i => i.variantKey === variantKey);
     if (item) {
         item.quantity++;
         renderCart();
+        updateCartBadge();
     }
 }
 
-function decreaseQuantity(productId) {
-    const item = cart.find(i => i.id === productId);
+function decreaseQuantity(variantKey) {
+    const item = cart.find(i => i.variantKey === variantKey);
     if (item) {
         if (item.quantity > 1) {
             item.quantity--;
         } else {
-            removeFromCart(productId);
+            removeFromCart(variantKey);
         }
         renderCart();
+        updateCartBadge();
     }
 }
 
@@ -1077,9 +1087,17 @@ async function saveOrder() {
         return;
     }
 
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const tax = subtotal * 0.22;
-    const total = subtotal + tax;
+    // I prezzi nel carrello sono IVA INCLUSA (22%)
+    // Calcoliamo il totale IVA inclusa
+    const totalIvaInclusa = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    // Calcoliamo l'imponibile: totale / 1.22
+    const subtotal = totalIvaInclusa / 1.22;
+
+    // Calcoliamo l'IVA: totale - imponibile
+    const tax = totalIvaInclusa - subtotal;
+
+    const total = totalIvaInclusa;
 
     const orderId = Date.now();
     const order = {
