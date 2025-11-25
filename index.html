@@ -83,6 +83,73 @@
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 1000px 100%;
         }
+
+        /* Card espandibili */
+        .product-card {
+            overflow: hidden;
+            max-height: 120px;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card.expanded {
+            max-height: 1200px;
+        }
+
+        .expanded-content {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .product-card.expanded .expanded-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .expand-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .product-card.expanded .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Color swatches */
+        .color-swatch {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .color-swatch.selected {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px white, 0 0 0 5px #0071e3;
+        }
+
+        /* Image fade in */
+        @keyframes fadeInImage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-fade-in {
+            animation: fadeInImage 0.4s ease-out;
+        }
+
+        /* Image overlay */
+        .image-overlay {
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.95) 100%);
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -358,7 +425,7 @@
         <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 
-            <!-- Catalogo Prodotti (2/3 width su desktop) -->
+            <!-- Catalogo Prodotti (Full width su mobile, 2/3 su desktop) -->
             <section class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6">
                 <!-- Header with title and search -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -418,7 +485,8 @@
                 </div>
 
                 <!-- Products Grid -->
-                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mb-6"></div>
+                <!-- Lista Prodotti (Layout Verticale ad Elenco) -->
+                <div id="products-grid" class="space-y-3 mb-6"></div>
 
                 <!-- Custom Accessory Form -->
                 <div class="custom-accessory relative overflow-hidden p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-dashed border-apple-blue rounded-2xl">
