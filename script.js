@@ -80,9 +80,9 @@ let products = [
         price: 1499, // Prezzo base: 256GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_max_cosmic_orange__xlarge.jpg',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-9inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=NUNzdzNKR0FJbmhKWm5YamRHb05tUzkyK3hWak1ybHhtWDkwUXVINFc0RnVrUzFnTVVSUnNLVnZUWUMxNTBGaGhsQTdPYWVGbmdIenAvNE9qYmZVYWVRU0p3cnVrZzhmdWQwTDVYRlMxUFpybkIybk5RZmlyRnNkQjBrajdkK0xqWUxobjNlSmdUU0RNNnFXZ0d4NHJR&traceId=1',
         colors: [
-            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_cosmic_orange__xlarge.jpg' },
+            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-9inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=NUNzdzNKR0FJbmhKWm5YamRHb05tUzkyK3hWak1ybHhtWDkwUXVINFc0RnVrUzFnTVVSUnNLVnZUWUMxNTBGaGhsQTdPYWVGbmdIenAvNE9qYmZVYWVRU0p3cnVrZzhmdWQwTDVYRlMxUFpybkIybk5RZmlyRnNkQjBrajdkK0xqWUxobjNlSmdUU0RNNnFXZ0d4NHJR&traceId=1' },
             { name: 'Deep Blue', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_deep_blue__xlarge.jpg' },
             { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_silver__xlarge.jpg' }
         ],
