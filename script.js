@@ -17,11 +17,11 @@ let products = [
         price: 1339,
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-7inch-silver',
+        imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Max',
         colors: [
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-7inch-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1726165415221' },
-            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://via.placeholder.com/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Max+Blu' },
-            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://via.placeholder.com/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Max+Arancione' }
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Max+Argento' },
+            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://placehold.co/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Max+Blu' },
+            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://placehold.co/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Max+Arancione' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
@@ -36,13 +36,13 @@ let products = [
         price: 879,
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black',
+        imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Plus',
         colors: [
-            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971097' },
-            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971160' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971142' },
-            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971152' },
-            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971115' }
+            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Plus+Nero' },
+            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://placehold.co/600x800/F5F5F0/666666?text=iPhone+16+Plus+Bianco' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://placehold.co/600x800/FFB6C1/ffffff?text=iPhone+16+Plus+Rosa' },
+            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://placehold.co/600x800/008B8B/ffffff?text=iPhone+16+Plus+Teal' },
+            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://placehold.co/600x800/120A8F/ffffff?text=iPhone+16+Plus+Ultramarine' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -57,12 +57,12 @@ let products = [
         category: 'mac',
         subcategory: 'macbook-air',
         icon: '💻',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20250304',
+        imageUrl: 'https://placehold.co/800x600/1C1C1E/ffffff?text=MacBook+Air+13+M4',
         colors: [
-            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954337' },
-            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-starlight-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954308' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-silver-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954355' },
-            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-skyblue-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954321' }
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/800x600/1C1C1E/ffffff?text=MacBook+Air+M4+Midnight' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://placehold.co/800x600/F5F5F0/666666?text=MacBook+Air+M4+Starlight' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/800x600/E8E8E8/666666?text=MacBook+Air+M4+Silver' },
+            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://placehold.co/800x600/87CEEB/ffffff?text=MacBook+Air+M4+Sky+Blue' }
         ],
         specs: ['10C CPU/8C GPU', '16GB RAM', '256GB Storage'],
         upgrades: {
@@ -114,10 +114,10 @@ let products = [
         price: 1119,
         category: 'ipad',
         icon: '📲',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-spacegray-202510',
+        imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5',
         colors: [
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-spacegray-202510?wid=470&hei=556&fmt=png-alpha&.v=1729116015690' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-silver-202510?wid=470&hei=556&fmt=png-alpha&.v=1729116015753' }
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5+Space+Black' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPad+Pro+13+M5+Silver' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB'],
         storageNotes: '1TB e 2TB: 16GB RAM + 10-core CPU | 256GB/512GB: 12GB RAM + 9-core CPU'
@@ -779,7 +779,12 @@ function renderProducts() {
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Capacità:</label>
                         <div class="flex flex-wrap gap-2">
                             ${product.storage.map((storage, index) => `
-                            <button class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all">
+                            <button
+                                data-storage-btn
+                                ${index === 0 ? 'data-storage-selected="true"' : ''}
+                                class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all"
+                                onclick="event.stopPropagation(); selectProductStorage(${product.id}, this)"
+                            >
                                 ${storage}
                             </button>
                             `).join('')}
@@ -833,13 +838,20 @@ function renderProducts() {
                     ${product.imageUrl || (hasColors && product.colors[0].imageUrl) ? `
                     <!-- Immagine Prodotto -->
                     <div class="relative mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 p-8">
-                        <img
-                            id="product-image-${product.id}"
-                            src="${product.colors && product.colors[0].imageUrl ? product.colors[0].imageUrl : product.imageUrl}"
-                            alt="${product.name}"
-                            class="w-full h-auto max-w-sm mx-auto image-fade-in"
-                            onerror="this.src='https://via.placeholder.com/400x500/f0f0f0/666666?text=Immagine+Non+Disponibile'"
-                        />
+                        <div class="w-full max-w-sm mx-auto">
+                            <img
+                                id="product-image-${product.id}"
+                                src="${product.colors && product.colors[0].imageUrl ? product.colors[0].imageUrl : product.imageUrl}"
+                                alt="${product.name} ${product.colors && product.colors[0].name ? '- ' + product.colors[0].name : ''}"
+                                class="w-full h-auto image-fade-in"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            />
+                            <div class="hidden flex-col items-center justify-center p-8 text-center">
+                                <div class="text-6xl mb-4">${product.icon}</div>
+                                <div class="text-gray-600 font-medium">${product.name}</div>
+                                <div class="text-gray-400 text-sm mt-2">Immagine non disponibile</div>
+                            </div>
+                        </div>
                         <div class="absolute bottom-0 left-0 right-0 h-20 image-overlay pointer-events-none"></div>
                     </div>
                     ` : ''}
@@ -864,20 +876,54 @@ function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
-    const existingItem = cart.find(item => item.id === productId);
+    // Leggi colore e storage selezionati dalla card (se disponibili)
+    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+    let selectedColor = null;
+    let selectedStorage = null;
+    let selectedImageUrl = null;
+
+    if (card) {
+        // Trova colore selezionato
+        const selectedColorSwatch = card.querySelector('.color-swatch.selected');
+        if (selectedColorSwatch) {
+            selectedColor = selectedColorSwatch.getAttribute('title');
+            const colorImageUrl = selectedColorSwatch.getAttribute('data-image-url');
+            if (colorImageUrl) selectedImageUrl = colorImageUrl;
+        }
+
+        // Trova storage selezionato
+        const selectedStorageBtn = card.querySelector('[data-storage-selected="true"]');
+        if (selectedStorageBtn) {
+            selectedStorage = selectedStorageBtn.textContent.trim();
+        }
+    }
+
+    // Crea chiave univoca per varianti (stesso prodotto, colore/storage diverso)
+    const variantKey = `${productId}-${selectedColor || 'default'}-${selectedStorage || 'default'}`;
+
+    const existingItem = cart.find(item => item.variantKey === variantKey);
 
     if (existingItem) {
         existingItem.quantity++;
     } else {
-        cart.push({
+        const cartItem = {
             id: product.id,
+            variantKey: variantKey,
             name: product.name,
             price: product.price,
             quantity: 1
-        });
+        };
+
+        // Aggiungi info varianti se disponibili
+        if (selectedColor) cartItem.color = selectedColor;
+        if (selectedStorage) cartItem.storage = selectedStorage;
+        if (selectedImageUrl) cartItem.imageUrl = selectedImageUrl;
+
+        cart.push(cartItem);
     }
 
     renderCart();
+    updateCartBadge();
     showNotification('Prodotto aggiunto al carrello! ✓');
 }
 
@@ -1696,6 +1742,8 @@ function selectProductColor(productId, colorCode, imageUrl, colorName) {
     );
     if (clickedSwatch) {
         clickedSwatch.classList.add('selected');
+        // Salva URL immagine come data-attribute per recuperarlo in addToCart
+        clickedSwatch.setAttribute('data-image-url', imageUrl || '');
     }
 
     // Aggiorna testo colore selezionato
@@ -1718,6 +1766,24 @@ function selectProductColor(productId, colorCode, imageUrl, colorName) {
             }, 300);
         }
     }
+}
+
+// Seleziona storage prodotto
+function selectProductStorage(productId, storageBtn) {
+    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+    if (!card) return;
+
+    // Rimuovi selected da tutti i bottoni storage della card
+    card.querySelectorAll('[data-storage-btn]').forEach(btn => {
+        btn.classList.remove('border-apple-blue', 'bg-apple-blue', 'text-white');
+        btn.classList.add('border-gray-200', 'bg-white', 'text-gray-700');
+        btn.removeAttribute('data-storage-selected');
+    });
+
+    // Aggiungi selected al bottone cliccato
+    storageBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700');
+    storageBtn.classList.add('border-apple-blue', 'bg-apple-blue', 'text-white');
+    storageBtn.setAttribute('data-storage-selected', 'true');
 }
 
 // ===== NOTIFICATIONS =====
