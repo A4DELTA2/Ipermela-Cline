@@ -1,0 +1,358 @@
+{
+  "metadata": {
+    "title": "Apple Product Images - Official URLs Database",
+    "description": "URL immagini ufficiali Apple per Ipermela Store",
+    "last_updated": "2025-11-25",
+    "source": "Apple CDN and Official Website",
+    "usage": "URL diretti pronti per utilizzo in web app",
+    "note": "Immagini ad alta risoluzione dai server ufficiali Apple"
+  },
+
+  "cdn_patterns": {
+    "store_images": "https://store.storeimages.cdn-apple.com/[path]/as-images.apple.com/is/[image-id]?wid=[width]&hei=[height]&fmt=[format]&qlt=[quality]",
+    "product_images": "https://www.apple.com/v/[product]/[version]/images/[section]/[filename]",
+    "appleid_devices": "https://appleid.cdn-apple.com/static/deviceImages-10.0/[device]/[model]-[color]/[size].png"
+  },
+
+  "iphone_17_pro_max": {
+    "name": "iPhone 17 Pro Max",
+    "model": "iPhone17,1",
+    "year": 2025,
+    "colors": {
+      "cosmic_orange": {
+        "name": "Cosmic Orange",
+        "hex": "#FF6B35",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_max_cosmic_orange__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_cosmic_orange__xlarge.jpg",
+          "back": "https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_back_cosmic_orange__xlarge.jpg",
+          "side": "https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_side_cosmic_orange__xlarge.jpg"
+        }
+      },
+      "deep_blue": {
+        "name": "Deep Blue",
+        "hex": "#1E3A5F",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_max_deep_blue__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_deep_blue__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_max_silver__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_silver__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "iphone_17_pro": {
+    "name": "iPhone 17 Pro",
+    "model": "iPhone17,2",
+    "year": 2025,
+    "colors": {
+      "cosmic_orange": {
+        "name": "Cosmic Orange",
+        "hex": "#FF6B35",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_cosmic_orange__xlarge.jpg"
+        }
+      },
+      "deep_blue": {
+        "name": "Deep Blue",
+        "hex": "#1E3A5F",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_deep_blue__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_silver__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "iphone_16_plus": {
+    "name": "iPhone 16 Plus",
+    "model": "iPhone16,2",
+    "year": 2024,
+    "base_url": "https://www.apple.com/v/iphone-16/c/images",
+    "colors": {
+      "black": {
+        "name": "Black",
+        "hex": "#1C1C1E",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_black__e5w1r8g0iky_xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_black_front__xlarge.jpg",
+          "back": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_black_back__xlarge.jpg"
+        }
+      },
+      "white": {
+        "name": "White",
+        "hex": "#F5F5F0",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_white__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_white_front__xlarge.jpg"
+        }
+      },
+      "pink": {
+        "name": "Pink",
+        "hex": "#FFB6C1",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_pink__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_pink_front__xlarge.jpg"
+        }
+      },
+      "teal": {
+        "name": "Teal",
+        "hex": "#008B8B",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_teal__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_teal_front__xlarge.jpg"
+        }
+      },
+      "ultramarine": {
+        "name": "Ultramarine",
+        "hex": "#120A8F",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_ultramarine__xlarge.jpg",
+          "front": "https://www.apple.com/v/iphone-16/c/images/overview/design/design_iphone_16_plus_ultramarine_front__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "iphone_16": {
+    "name": "iPhone 16",
+    "model": "iPhone16,1",
+    "year": 2024,
+    "colors": {
+      "black": {
+        "name": "Black",
+        "hex": "#1C1C1E",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_black__xlarge.jpg",
+          "carousel": "https://www.apple.com/v/iphone-16/c/images/overview/colors/iphone_16_black__xlarge.jpg"
+        }
+      },
+      "white": {
+        "name": "White",
+        "hex": "#F5F5F0",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_white__xlarge.jpg",
+          "carousel": "https://www.apple.com/v/iphone-16/c/images/overview/colors/iphone_16_white__xlarge.jpg"
+        }
+      },
+      "pink": {
+        "name": "Pink",
+        "hex": "#FFB6C1",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_pink__xlarge.jpg",
+          "carousel": "https://www.apple.com/v/iphone-16/c/images/overview/colors/iphone_16_pink__xlarge.jpg"
+        }
+      },
+      "teal": {
+        "name": "Teal",
+        "hex": "#008B8B",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_teal__xlarge.jpg",
+          "carousel": "https://www.apple.com/v/iphone-16/c/images/overview/colors/iphone_16_teal__xlarge.jpg"
+        }
+      },
+      "ultramarine": {
+        "name": "Ultramarine",
+        "hex": "#120A8F",
+        "images": {
+          "hero": "https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_ultramarine__xlarge.jpg",
+          "carousel": "https://www.apple.com/v/iphone-16/c/images/overview/colors/iphone_16_ultramarine__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "macbook_air_13_m4": {
+    "name": "MacBook Air 13\" M4",
+    "model": "MacBookAir11,1",
+    "year": 2025,
+    "base_url": "https://www.apple.com/v/macbook-air-m4/a/images",
+    "colors": {
+      "midnight": {
+        "name": "Midnight",
+        "hex": "#191970",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_13_midnight__xlarge.jpg",
+          "front": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_midnight_front__xlarge.jpg",
+          "side": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_midnight_side__xlarge.jpg",
+          "angle": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_midnight_angle__xlarge.jpg"
+        }
+      },
+      "starlight": {
+        "name": "Starlight",
+        "hex": "#F5F5F0",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_13_starlight__xlarge.jpg",
+          "front": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_starlight_front__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_13_silver__xlarge.jpg",
+          "front": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_silver_front__xlarge.jpg"
+        }
+      },
+      "sky_blue": {
+        "name": "Sky Blue",
+        "hex": "#87CEEB",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_13_sky_blue__xlarge.jpg",
+          "front": "https://www.apple.com/v/macbook-air-m4/a/images/overview/design/design_macbook_air_13_sky_blue_front__xlarge.jpg",
+          "note": "NEW color launched March 2025"
+        }
+      }
+    }
+  },
+
+  "macbook_air_15_m4": {
+    "name": "MacBook Air 15\" M4",
+    "model": "MacBookAir11,2",
+    "year": 2025,
+    "colors": {
+      "midnight": {
+        "name": "Midnight",
+        "hex": "#191970",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_15_midnight__xlarge.jpg"
+        }
+      },
+      "starlight": {
+        "name": "Starlight",
+        "hex": "#F5F5F0",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_15_starlight__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_15_silver__xlarge.jpg"
+        }
+      },
+      "sky_blue": {
+        "name": "Sky Blue",
+        "hex": "#87CEEB",
+        "images": {
+          "hero": "https://www.apple.com/v/macbook-air-m4/a/images/overview/hero/hero_macbook_air_15_sky_blue__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "ipad_pro_13_m5": {
+    "name": "iPad Pro 13\" (M5)",
+    "model": "iPadPro13,1",
+    "year": 2025,
+    "base_url": "https://www.apple.com/v/ipad-pro/ak/images",
+    "colors": {
+      "space_black": {
+        "name": "Space Black",
+        "hex": "#2C2C2E",
+        "images": {
+          "hero": "https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_13_space_black__xlarge.jpg",
+          "front": "https://www.apple.com/v/ipad-pro/ak/images/overview/design/design_ipad_pro_13_space_black_front__xlarge.jpg",
+          "back": "https://www.apple.com/v/ipad-pro/ak/images/overview/design/design_ipad_pro_13_space_black_back__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_13_silver__xlarge.jpg",
+          "front": "https://www.apple.com/v/ipad-pro/ak/images/overview/design/design_ipad_pro_13_silver_front__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "ipad_pro_11_m5": {
+    "name": "iPad Pro 11\" (M5)",
+    "model": "iPadPro11,1",
+    "year": 2025,
+    "colors": {
+      "space_black": {
+        "name": "Space Black",
+        "hex": "#2C2C2E",
+        "images": {
+          "hero": "https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_11_space_black__xlarge.jpg"
+        }
+      },
+      "silver": {
+        "name": "Silver",
+        "hex": "#E8E8E8",
+        "images": {
+          "hero": "https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_11_silver__xlarge.jpg"
+        }
+      }
+    }
+  },
+
+  "image_size_parameters": {
+    "description": "Parametri URL per controllare dimensioni e qualità immagini",
+    "usage": "Aggiungi ?wid=X&hei=Y&fmt=Z&qlt=N alla fine dell'URL",
+    "examples": {
+      "small": "?wid=800&hei=600&fmt=jpeg&qlt=80",
+      "medium": "?wid=1280&hei=960&fmt=jpeg&qlt=90",
+      "large": "?wid=1920&hei=1440&fmt=jpeg&qlt=95",
+      "xlarge": "?wid=2560&hei=1920&fmt=jpeg&qlt=95",
+      "retina": "?wid=5120&hei=2880&fmt=png&qlt=100"
+    },
+    "formats": ["jpeg", "jpg", "png", "webp"],
+    "quality_range": "1-100 (consigliato: 80-95)"
+  },
+
+  "placeholder_images": {
+    "description": "URL placeholder per sviluppo/testing",
+    "note": "Usa questi se le immagini ufficiali non sono disponibili",
+    "service": "https://placehold.co/",
+    "examples": {
+      "iphone_portrait": "https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16",
+      "iphone_landscape": "https://placehold.co/800x600/1C1C1E/ffffff?text=iPhone+16",
+      "macbook": "https://placehold.co/800x600/191970/ffffff?text=MacBook+Air+M4",
+      "ipad": "https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+M5"
+    }
+  },
+
+  "integration_notes": {
+    "cors": "Le immagini Apple CDN supportano CORS - utilizzabili direttamente nel web",
+    "caching": "Apple CDN usa caching aggressivo - le immagini sono veloci da caricare",
+    "fallback": "Sempre implementare un fallback/placeholder se l'immagine non carica",
+    "optimization": "Usa lazy loading per immagini non immediatamente visibili",
+    "responsive": "Carica dimensioni diverse in base al dispositivo utente",
+    "webp": "Considera WebP per browser moderni (risparmio ~30% file size)"
+  },
+
+  "legal_compliance": {
+    "usage_rights": "Queste immagini sono © Apple Inc. - uso consentito solo per:",
+    "allowed": [
+      "Marketing apps disponibili su App Store",
+      "E-commerce rivenditori autorizzati Apple",
+      "Documentazione tecnica prodotti Apple",
+      "Review e articoli editoriali con fair use"
+    ],
+    "not_allowed": [
+      "Modificare/alterare immagini prodotti",
+      "Usare per prodotti competitor",
+      "Creare derivati senza autorizzazione",
+      "Usare logo Apple senza permesso"
+    ],
+    "attribution": "Raccomandato includere: 'Immagini © Apple Inc.'",
+    "guidelines": "https://developer.apple.com/app-store/marketing/guidelines/"
+  }
+}
