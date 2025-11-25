@@ -11,18 +11,66 @@ let userRole = null;
 // Catalogo Prodotti Predefiniti
 let products = [
     // iPhone 17 Series
-    { id: 1, name: 'iPhone 17 Pro Max', price: 1339, category: 'iphone', icon: '📱' },
+    {
+        id: 1,
+        name: 'iPhone 17 Pro Max',
+        price: 1339,
+        category: 'iphone',
+        icon: '📱',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-7inch-silver',
+        colors: [
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-7inch-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1726165415221' },
+            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://via.placeholder.com/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Max+Blu' },
+            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://via.placeholder.com/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Max+Arancione' }
+        ],
+        storage: ['256GB', '512GB', '1TB', '2TB']
+    },
     { id: 2, name: 'iPhone 17 Pro', price: 1339, category: 'iphone', icon: '📱' },
     { id: 3, name: 'iPhone Air', price: 1239, category: 'iphone', icon: '📱' },
     { id: 4, name: 'iPhone 17', price: 979, category: 'iphone', icon: '📱' },
 
     // iPhone 16 Series
-    { id: 5, name: 'iPhone 16 Plus', price: 879, category: 'iphone', icon: '📱' },
+    {
+        id: 5,
+        name: 'iPhone 16 Plus',
+        price: 879,
+        category: 'iphone',
+        icon: '📱',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black',
+        colors: [
+            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971097' },
+            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971160' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971142' },
+            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971152' },
+            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1723666971115' }
+        ],
+        storage: ['128GB', '256GB', '512GB']
+    },
     { id: 6, name: 'iPhone 16', price: 879, category: 'iphone', icon: '📱' },
     { id: 7, name: 'iPhone 16e', price: 729, category: 'iphone', icon: '📱' },
 
     // MacBook Air - M4
-    { id: 100, name: 'MacBook Air 13" M4 - 10C CPU/8C GPU, 16GB, 256GB', price: 1199, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
+    {
+        id: 100,
+        name: 'MacBook Air 13" M4',
+        price: 1199,
+        category: 'mac',
+        subcategory: 'macbook-air',
+        icon: '💻',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20250304',
+        colors: [
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954337' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-starlight-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954308' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-silver-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954355' },
+            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-skyblue-select-20250304?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1709671954321' }
+        ],
+        specs: ['10C CPU/8C GPU', '16GB RAM', '256GB Storage'],
+        upgrades: {
+            chip: ['10C CPU/8C GPU', '10C CPU/10C GPU (+€250)'],
+            ram: ['16GB', '24GB (+€250)', '32GB (+€500)'],
+            storage: ['256GB', '512GB (+€250)', '1TB (+€500)', '2TB (+€750)']
+        }
+    },
     { id: 101, name: 'MacBook Air 13" M4 - 10C CPU/10C GPU, 16GB, 512GB', price: 1449, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
     { id: 102, name: 'MacBook Air 13" M4 - 10C CPU/10C GPU, 24GB, 512GB', price: 1699, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
     { id: 103, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 16GB, 256GB', price: 1499, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
@@ -60,7 +108,20 @@ let products = [
     { id: 151, name: 'Mac Studio M3 ULTRA - 28C CPU/60C GPU, 96GB, 1TB', price: 4949, category: 'mac', subcategory: 'mac-studio', icon: '🖥️' },
 
     // iPad
-    { id: 200, name: 'iPad Pro 13" (M5)', price: 1119, category: 'ipad', icon: '📲' },
+    {
+        id: 200,
+        name: 'iPad Pro 13" (M5)',
+        price: 1119,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-spacegray-202510',
+        colors: [
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-spacegray-202510?wid=470&hei=556&fmt=png-alpha&.v=1729116015690' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-13-select-wifi-silver-202510?wid=470&hei=556&fmt=png-alpha&.v=1729116015753' }
+        ],
+        storage: ['256GB', '512GB', '1TB', '2TB'],
+        storageNotes: '1TB e 2TB: 16GB RAM + 10-core CPU | 256GB/512GB: 12GB RAM + 9-core CPU'
+    },
     { id: 201, name: 'iPad Pro 11" (M5)', price: 1119, category: 'ipad', icon: '📲' },
     { id: 202, name: 'iPad Air 13"', price: 669, category: 'ipad', icon: '📲' },
     { id: 203, name: 'iPad Air 11"', price: 669, category: 'ipad', icon: '📲' },
@@ -622,59 +683,168 @@ function renderProducts() {
 
     grid.innerHTML = filteredProducts.map(product => {
         const categoryInfo = getCategoryInfo(product.category);
+        const hasColors = product.colors && product.colors.length > 0;
+        const hasStorage = product.storage && product.storage.length > 0;
+        const hasUpgrades = product.upgrades;
+        const hasExpandableContent = hasColors || hasStorage || hasUpgrades || product.imageUrl;
+
         return `
-        <div class="group relative bg-white rounded-2xl overflow-hidden border-2 border-gray-100 transition-all duration-300 hover:border-apple-blue hover:shadow-2xl hover:-translate-y-1" data-id="${product.id}">
-            <!-- Category Badge -->
-            <div class="absolute top-3 left-3 z-10">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${categoryInfo.color} backdrop-blur-sm bg-opacity-90">
-                    ${categoryInfo.label}
-                </span>
-            </div>
+        <div class="product-card bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-3" data-id="${product.id}">
 
-            <!-- Product Image/Icon Area -->
-            <div class="relative bg-gradient-to-br from-gray-50 to-gray-100 p-8 flex items-center justify-center h-48 group-hover:from-blue-50 group-hover:to-indigo-50 transition-all duration-300">
-                <div class="text-7xl transform group-hover:scale-110 transition-transform duration-300">
-                    ${product.icon}
-                </div>
-                <!-- Quick View Badge on Hover -->
-                <div class="absolute inset-0 bg-apple-blue/0 group-hover:bg-apple-blue/5 transition-all duration-300"></div>
-            </div>
+            <!-- Header Card (Sempre Visibile) -->
+            <div class="p-4 cursor-pointer" onclick="toggleProductCard(${product.id})">
+                <div class="flex items-center justify-between gap-4">
 
-            <!-- Product Info -->
-            <div class="p-5">
-                <!-- Product Name -->
-                <h3 class="font-semibold text-gray-900 mb-3 min-h-[2.5rem] line-clamp-2 text-base leading-tight">
-                    ${product.name}
-                </h3>
+                    <!-- Info Prodotto -->
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <!-- Icon/Emoji -->
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-${categoryInfo.color.split(' ')[0].replace('bg-', '')}-50 to-${categoryInfo.color.split(' ')[0].replace('bg-', '')}-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">${product.icon}</span>
+                        </div>
 
-                <!-- Price and Action -->
-                <div class="flex items-center justify-between gap-3 mb-3">
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 mb-0.5">Prezzo</span>
-                        <span class="text-2xl font-bold text-apple-blue">€${product.price.toFixed(2)}</span>
+                        <!-- Nome e Categoria -->
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base md:text-lg truncate">${product.name}</h3>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${categoryInfo.color}">
+                                    ${categoryInfo.label}
+                                </span>
+                                ${hasColors ? `<span class="text-xs text-gray-500">• ${product.colors.length} colori</span>` : ''}
+                            </div>
+                        </div>
                     </div>
-                    <button
-                        class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-apple-blue text-white rounded-xl transition-all duration-300 hover:bg-apple-darkblue hover:scale-110 hover:shadow-lg active:scale-95"
-                        onclick="addToCart(${product.id})"
-                        title="Aggiungi al carrello"
-                    >
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+
+                    <!-- Prezzo e Freccia -->
+                    <div class="flex items-center gap-3">
+                        <div class="text-right">
+                            <div class="text-xl md:text-2xl font-bold text-apple-blue">€${product.price.toFixed(2)}</div>
+                        </div>
+
+                        ${hasExpandableContent ? `
+                        <!-- Freccia espansione -->
+                        <button class="expand-arrow p-2 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        ` : `
+                        <!-- Quick Add Button -->
+                        <button class="px-4 py-2 bg-apple-blue text-white rounded-xl hover:bg-apple-darkblue transition-all" onclick="event.stopPropagation(); addToCart(${product.id})">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </button>
+                        `}
+                    </div>
+                </div>
+            </div>
+
+            ${hasExpandableContent ? `
+            <!-- Contenuto Espandibile -->
+            <div class="expanded-content px-4 pb-4">
+                <div class="border-t-2 border-gray-100 pt-4">
+
+                    ${hasColors ? `
+                    <!-- Selettore Colori -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Scegli il colore:</label>
+                        <div class="flex flex-wrap gap-2">
+                            ${product.colors.map((color, index) => `
+                            <button
+                                class="color-swatch ${index === 0 ? 'selected' : ''} w-10 h-10 rounded-full border-2 border-gray-300"
+                                style="background: ${color.gradient}"
+                                title="${color.name}"
+                                onclick="event.stopPropagation(); selectProductColor(${product.id}, '${color.code}', '${color.imageUrl || product.imageUrl || ''}', '${color.name}')"
+                            >
+                                <span class="sr-only">${color.name}</span>
+                            </button>
+                            `).join('')}
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Colore selezionato: <span class="font-semibold" id="selected-color-${product.id}">${product.colors[0].name}</span></p>
+                    </div>
+                    ` : ''}
+
+                    ${hasStorage ? `
+                    <!-- Configurazione Storage -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Capacità:</label>
+                        <div class="flex flex-wrap gap-2">
+                            ${product.storage.map((storage, index) => `
+                            <button class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all">
+                                ${storage}
+                            </button>
+                            `).join('')}
+                        </div>
+                        ${product.storageNotes ? `<p class="text-xs text-gray-500 mt-2">💡 ${product.storageNotes}</p>` : ''}
+                    </div>
+                    ` : ''}
+
+                    ${hasUpgrades ? `
+                    <!-- Configurazioni Upgrades (Mac) -->
+                    <div class="mb-4 space-y-3">
+                        ${product.upgrades.chip ? `
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Chip:</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.upgrades.chip.map((chip, index) => `
+                                <button class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all">
+                                    ${chip}
+                                </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        ${product.upgrades.ram ? `
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Memoria:</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.upgrades.ram.map((ram, index) => `
+                                <button class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all">
+                                    ${ram}
+                                </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        ${product.upgrades.storage ? `
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Storage:</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.upgrades.storage.map((storage, index) => `
+                                <button class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all">
+                                    ${storage}
+                                </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                    ` : ''}
+
+                    ${product.imageUrl || (hasColors && product.colors[0].imageUrl) ? `
+                    <!-- Immagine Prodotto -->
+                    <div class="relative mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+                        <img
+                            id="product-image-${product.id}"
+                            src="${product.colors && product.colors[0].imageUrl ? product.colors[0].imageUrl : product.imageUrl}"
+                            alt="${product.name}"
+                            class="w-full h-auto max-w-sm mx-auto image-fade-in"
+                            onerror="this.src='https://via.placeholder.com/400x500/f0f0f0/666666?text=Immagine+Non+Disponibile'"
+                        />
+                        <div class="absolute bottom-0 left-0 right-0 h-20 image-overlay pointer-events-none"></div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Pulsante Aggiungi -->
+                    <button class="w-full py-3 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-bold rounded-xl hover:from-apple-darkblue hover:to-indigo-700 transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2" onclick="event.stopPropagation(); addToCart(${product.id})">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
+                        <span>Aggiungi al carrello</span>
                     </button>
                 </div>
-
-                <!-- Full Width Add Button (visible on mobile/tablet) -->
-                <button
-                    class="w-full py-2.5 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-apple-darkblue hover:to-indigo-700 hover:shadow-lg flex items-center justify-center gap-2 lg:hidden"
-                    onclick="addToCart(${product.id})"
-                >
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                    <span>Aggiungi al carrello</span>
-                </button>
             </div>
+            ` : ''}
         </div>
         `;
     }).join('');
@@ -1479,6 +1649,65 @@ async function resetAllPrices() {
     } catch (err) {
         console.error('Errore:', err);
         alert('Errore nel ripristino!');
+    }
+}
+
+// ===== CARD ESPANDIBILI =====
+
+// Toggle espansione/compressione card prodotto
+function toggleProductCard(productId) {
+    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+    if (!card) return;
+
+    const isExpanded = card.classList.contains('expanded');
+
+    if (isExpanded) {
+        // Comprimi
+        card.classList.remove('expanded');
+    } else {
+        // Espandi
+        card.classList.add('expanded');
+    }
+}
+
+// Seleziona colore prodotto e aggiorna immagine
+function selectProductColor(productId, colorCode, imageUrl, colorName) {
+    // Aggiorna selezione visiva colori
+    const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+    if (!card) return;
+
+    // Rimuovi selected da tutti i color swatches della card
+    card.querySelectorAll('.color-swatch').forEach(swatch => {
+        swatch.classList.remove('selected');
+    });
+
+    // Aggiungi selected al colore cliccato
+    const clickedSwatch = Array.from(card.querySelectorAll('.color-swatch')).find(swatch =>
+        swatch.getAttribute('title') === colorName
+    );
+    if (clickedSwatch) {
+        clickedSwatch.classList.add('selected');
+    }
+
+    // Aggiorna testo colore selezionato
+    const colorText = card.querySelector(`#selected-color-${productId}`);
+    if (colorText) {
+        colorText.textContent = colorName;
+    }
+
+    // Aggiorna immagine se disponibile
+    if (imageUrl) {
+        const image = card.querySelector(`#product-image-${productId}`);
+        if (image) {
+            // Aggiungi animazione fade out
+            image.style.opacity = '0';
+            setTimeout(() => {
+                image.src = imageUrl;
+                // Fade in con nuova immagine
+                image.style.transition = 'opacity 0.3s ease';
+                image.style.opacity = '1';
+            }, 300);
+        }
     }
 }
 
