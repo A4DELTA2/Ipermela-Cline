@@ -8,13 +8,76 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentUser = null;
 let userRole = null;
 
+// Listino Prezzi per Storage (IVA INCLUSA 22%)
+// Fonte: Listino fornito dall'utente
+const productPricing = {
+    // iPhone 17 Pro Max
+    1: {
+        '256GB': 1499,
+        '512GB': 1759,
+        '1TB': 2009,
+        '2TB': 2509
+    },
+    // iPhone 17 Pro
+    2: {
+        '256GB': 1359,
+        '512GB': 1499,
+        '1TB': 1759,
+        '2TB': 2509
+    },
+    // iPhone Air
+    3: {
+        '512GB': 1259,
+        '1TB': 1599
+    },
+    // iPhone 17
+    4: {
+        '128GB': 999,
+        '256GB': 1249,
+        '512GB': 1499,
+        '1TB': 1759
+    },
+    // iPhone 16 Plus
+    5: {
+        '128GB': 999,
+        '256GB': 1129,
+        '512GB': 1499
+    },
+    // iPhone 16
+    6: {
+        '128GB': 899,
+        '256GB': 1129,
+        '512GB': 1359
+    },
+    // iPhone 16e
+    7: {
+        '128GB': 749,
+        '256GB': 879,
+        '512GB': 1129
+    },
+    // MacBook Air 13" M4 - Base configuration
+    100: {
+        '256GB': 1199,
+        '512GB': 1449,
+        '1TB': 1699,
+        '2TB': 1949
+    },
+    // iPad Pro 13" M5
+    200: {
+        '256GB': 1719,
+        '512GB': 2009,
+        '1TB': 2239,
+        '2TB': 2949
+    }
+};
+
 // Catalogo Prodotti Predefiniti
 let products = [
     // iPhone 17 Series
     {
         id: 1,
         name: 'iPhone 17 Pro Max',
-        price: 1339,
+        price: 1499, // Prezzo base: 256GB (da listino)
         category: 'iphone',
         icon: '📱',
         imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Max',
@@ -25,15 +88,41 @@ let products = [
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
-    { id: 2, name: 'iPhone 17 Pro', price: 1339, category: 'iphone', icon: '📱' },
-    { id: 3, name: 'iPhone Air', price: 1239, category: 'iphone', icon: '📱' },
-    { id: 4, name: 'iPhone 17', price: 979, category: 'iphone', icon: '📱' },
+    {
+        id: 2,
+        name: 'iPhone 17 Pro',
+        price: 1359, // Prezzo base: 256GB (da listino)
+        category: 'iphone',
+        icon: '📱',
+        colors: [
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Argento' },
+            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://placehold.co/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Blu' },
+            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://placehold.co/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Arancione' }
+        ],
+        storage: ['256GB', '512GB', '1TB', '2TB']
+    },
+    {
+        id: 3,
+        name: 'iPhone Air',
+        price: 1259, // Prezzo base: 512GB (da listino)
+        category: 'iphone',
+        icon: '📱',
+        storage: ['512GB', '1TB']
+    },
+    {
+        id: 4,
+        name: 'iPhone 17',
+        price: 999, // Prezzo base: 128GB (da listino)
+        category: 'iphone',
+        icon: '📱',
+        storage: ['128GB', '256GB', '512GB', '1TB']
+    },
 
     // iPhone 16 Series
     {
         id: 5,
         name: 'iPhone 16 Plus',
-        price: 879,
+        price: 999, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
         imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Plus',
@@ -46,8 +135,22 @@ let products = [
         ],
         storage: ['128GB', '256GB', '512GB']
     },
-    { id: 6, name: 'iPhone 16', price: 879, category: 'iphone', icon: '📱' },
-    { id: 7, name: 'iPhone 16e', price: 729, category: 'iphone', icon: '📱' },
+    {
+        id: 6,
+        name: 'iPhone 16',
+        price: 899, // Prezzo base: 128GB (da listino)
+        category: 'iphone',
+        icon: '📱',
+        storage: ['128GB', '256GB', '512GB']
+    },
+    {
+        id: 7,
+        name: 'iPhone 16e',
+        price: 749, // Prezzo base: 128GB (da listino)
+        category: 'iphone',
+        icon: '📱',
+        storage: ['128GB', '256GB', '512GB']
+    },
 
     // MacBook Air - M4
     {
@@ -111,7 +214,7 @@ let products = [
     {
         id: 200,
         name: 'iPad Pro 13" (M5)',
-        price: 1119,
+        price: 1719, // Prezzo base: 256GB (da listino)
         category: 'ipad',
         icon: '📲',
         imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5',
@@ -1802,6 +1905,24 @@ function selectProductStorage(productId, storageBtn) {
     storageBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700');
     storageBtn.classList.add('border-apple-blue', 'bg-apple-blue', 'text-white');
     storageBtn.setAttribute('data-storage-selected', 'true');
+
+    // Aggiorna prezzo se disponibile nel listino
+    const storageText = storageBtn.textContent.trim();
+    if (productPricing[productId] && productPricing[productId][storageText]) {
+        const newPrice = productPricing[productId][storageText];
+
+        // Aggiorna prezzo nel header della card
+        const priceElement = card.querySelector('.text-xl.md\\:text-2xl.font-bold.text-apple-blue');
+        if (priceElement) {
+            priceElement.textContent = `€${newPrice.toFixed(2)}`;
+        }
+
+        // Aggiorna anche nel prodotto (per addToCart)
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            product.price = newPrice;
+        }
+    }
 }
 
 // ===== NOTIFICATIONS =====
