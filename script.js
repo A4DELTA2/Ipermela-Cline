@@ -688,6 +688,15 @@ function renderProducts() {
         const hasUpgrades = product.upgrades;
         const hasExpandableContent = hasColors || hasStorage || hasUpgrades || product.imageUrl;
 
+        // Background icona basato su categoria
+        const iconBgMap = {
+            'iphone': 'bg-purple-100',
+            'mac': 'bg-blue-100',
+            'ipad': 'bg-indigo-100',
+            'accessori': 'bg-green-100'
+        };
+        const iconBg = iconBgMap[product.category] || 'bg-gray-100';
+
         return `
         <div class="product-card bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-3" data-id="${product.id}">
 
@@ -698,7 +707,7 @@ function renderProducts() {
                     <!-- Info Prodotto -->
                     <div class="flex items-center gap-4 flex-1 min-w-0">
                         <!-- Icon/Emoji -->
-                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-${categoryInfo.color.split(' ')[0].replace('bg-', '')}-50 to-${categoryInfo.color.split(' ')[0].replace('bg-', '')}-100 rounded-xl flex items-center justify-center">
+                        <div class="flex-shrink-0 w-12 h-12 ${iconBg} rounded-xl flex items-center justify-center">
                             <span class="text-2xl">${product.icon}</span>
                         </div>
 
