@@ -94,26 +94,26 @@ let products = [
         price: 1359, // Prezzo base: 256GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_cosmic_orange__xlarge.jpg',
         colors: [
-            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Deep Blue', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-deepblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_cosmic_orange__xlarge.jpg' },
+            { name: 'Deep Blue', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_deep_blue__xlarge.jpg' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/hero/hero_iphone_17_pro_silver__xlarge.jpg' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
     {
         id: 3,
         name: 'iPhone Air',
-        price: 1259, // Prezzo base: 512GB (da listino)
+        price: 1259, // Prezzo base: 512GB (da listino) - NOTA: Prodotto speculativo, immagini placeholder
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-skyblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://placehold.co/800x1000/87CEEB/ffffff?text=iPhone+Air',
         colors: [
-            { name: 'Sky Blue', code: 'sky-blue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-skyblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Light Gold', code: 'light-gold', gradient: 'linear-gradient(135deg, #F5E6D3 0%, #E8D5C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-lightgold?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Cloud White', code: 'cloud-white', gradient: 'linear-gradient(135deg, #FFFFFF 0%, #F5F5F0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-cloudwhite?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Sky Blue', code: 'sky-blue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://placehold.co/800x1000/87CEEB/ffffff?text=iPhone+Air+Sky+Blue' },
+            { name: 'Light Gold', code: 'light-gold', gradient: 'linear-gradient(135deg, #F5E6D3 0%, #E8D5C0 100%)', imageUrl: 'https://placehold.co/800x1000/F5E6D3/666666?text=iPhone+Air+Light+Gold' },
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/800x1000/1C1C1E/ffffff?text=iPhone+Air+Space+Black' },
+            { name: 'Cloud White', code: 'cloud-white', gradient: 'linear-gradient(135deg, #FFFFFF 0%, #F5F5F0 100%)', imageUrl: 'https://placehold.co/800x1000/FFFFFF/666666?text=iPhone+Air+Cloud+White' }
         ],
         storage: ['512GB', '1TB']
     },
@@ -142,13 +142,13 @@ let products = [
         price: 999, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_ultramarine__xlarge.jpg',
         colors: [
-            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_black__e5w1r8g0iky_xlarge.jpg' },
+            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_white__xlarge.jpg' },
+            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_pink__xlarge.jpg' },
+            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_teal__xlarge.jpg' },
+            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_plus_ultramarine__xlarge.jpg' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -158,13 +158,13 @@ let products = [
         price: 899, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_ultramarine__xlarge.jpg',
         colors: [
-            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_black__xlarge.jpg' },
+            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_white__xlarge.jpg' },
+            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_pink__xlarge.jpg' },
+            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_teal__xlarge.jpg' },
+            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://www.apple.com/v/iphone-16/c/images/overview/hero/hero_iphone_16_ultramarine__xlarge.jpg' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -277,10 +277,10 @@ let products = [
         price: 1719, // Prezzo base: 256GB (da listino)
         category: 'ipad',
         icon: '📲',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_13_space_black__xlarge.jpg',
         colors: [
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_13_space_black__xlarge.jpg' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_13_silver__xlarge.jpg' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB'],
         storageNotes: '1TB e 2TB: 16GB RAM + 10-core CPU | 256GB/512GB: 12GB RAM + 9-core CPU'
@@ -291,10 +291,10 @@ let products = [
         price: 1119,
         category: 'ipad',
         icon: '📲',
-        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_11_space_black__xlarge.jpg',
         colors: [
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_11_space_black__xlarge.jpg' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://www.apple.com/v/ipad-pro/ak/images/overview/hero/hero_ipad_pro_11_silver__xlarge.jpg' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
