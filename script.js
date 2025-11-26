@@ -80,11 +80,11 @@ let products = [
         price: 1499, // Prezzo base: 256GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Max',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-9inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=NUNzdzNKR0FJbmhKWm5YamRHb05tUzkyK3hWak1ybHhtWDkwUXVINFc0RnVrUzFnTVVSUnNLVnZUWUMxNTBGaGhsQTdPYWVGbmdIenAvNE9qYmZVYWVRU0p3cnVrZzhmdWQwTDVYRlMxUFpybkIybk5RZmlyRnNkQjBrajdkK0xqWUxobjNlSmdUU0RNNnFXZ0d4NHJR&traceId=1',
         colors: [
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Max+Argento' },
-            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://placehold.co/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Max+Blu' },
-            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://placehold.co/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Max+Arancione' }
+            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-9inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=NUNzdzNKR0FJbmhKWm5YamRHb05tUzkyK3hWak1ybHhtWDkwUXVINFc0RnVrUzFnTVVSUnNLVnZUWUMxNTBGaGhsQTdPYWVGbmdIenAvNE9qYmZVYWVRU0p3cnVrZzhmdWQwTDVYRlMxUFpybkIybk5RZmlyRnNkQjBrajdkK0xqWUxobjNlSmdUU0RNNnFXZ0d4NHJR&traceId=1' },
+            { name: 'Deep Blue', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_deep_blue__xlarge.jpg' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://www.apple.com/v/iphone-17-pro/a/images/overview/design/design_front_silver__xlarge.jpg' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
@@ -94,10 +94,11 @@ let products = [
         price: 1359, // Prezzo base: 256GB (da listino)
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
         colors: [
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPhone+17+Pro+Argento' },
-            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://placehold.co/600x800/1E3A5F/ffffff?text=iPhone+17+Pro+Blu' },
-            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://placehold.co/600x800/FF6B35/ffffff?text=iPhone+17+Pro+Arancione' }
+            { name: 'Cosmic Orange', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-cosmicorange?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Deep Blue', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-deepblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
@@ -107,6 +108,13 @@ let products = [
         price: 1259, // Prezzo base: 512GB (da listino)
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-skyblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        colors: [
+            { name: 'Sky Blue', code: 'sky-blue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-skyblue?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Light Gold', code: 'light-gold', gradient: 'linear-gradient(135deg, #F5E6D3 0%, #E8D5C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-lightgold?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Cloud White', code: 'cloud-white', gradient: 'linear-gradient(135deg, #FFFFFF 0%, #F5F5F0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-202509-6-5inch-cloudwhite?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+        ],
         storage: ['512GB', '1TB']
     },
     {
@@ -115,6 +123,15 @@ let products = [
         price: 999, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+17',
+        colors: [
+            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+17+Black' },
+            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://placehold.co/600x800/F5F5F0/666666?text=iPhone+17+White' },
+            { name: 'Lavender', code: 'lavender', gradient: 'linear-gradient(135deg, #E6D5E8 0%, #D4C5F9 100%)', imageUrl: 'https://placehold.co/600x800/E6D5E8/666666?text=iPhone+17+Lavender' },
+            { name: 'Light Blue', code: 'light-blue', gradient: 'linear-gradient(135deg, #A8D8EA 0%, #87CEEB 100%)', imageUrl: 'https://placehold.co/600x800/A8D8EA/ffffff?text=iPhone+17+Light+Blue' },
+            { name: 'Sage', code: 'sage', gradient: 'linear-gradient(135deg, #9CAF88 0%, #8B9A7A 100%)', imageUrl: 'https://placehold.co/600x800/9CAF88/ffffff?text=iPhone+17+Sage' },
+            { name: 'Steel Gray', code: 'steel-gray', gradient: 'linear-gradient(135deg, #8B8D8F 0%, #6D6E70 100%)', imageUrl: 'https://placehold.co/600x800/8B8D8F/ffffff?text=iPhone+17+Steel+Gray' }
+        ],
         storage: ['128GB', '256GB', '512GB', '1TB']
     },
 
@@ -125,13 +142,13 @@ let products = [
         price: 999, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Plus',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
         colors: [
-            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Plus+Nero' },
-            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://placehold.co/600x800/F5F5F0/666666?text=iPhone+16+Plus+Bianco' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://placehold.co/600x800/FFB6C1/ffffff?text=iPhone+16+Plus+Rosa' },
-            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://placehold.co/600x800/008B8B/ffffff?text=iPhone+16+Plus+Teal' },
-            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://placehold.co/600x800/120A8F/ffffff?text=iPhone+16+Plus+Ultramarine' }
+            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-plus-finish-select-202409-6-7inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -141,10 +158,33 @@ let products = [
         price: 899, // Prezzo base: 128GB (da listino)
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        colors: [
+            { name: 'Black', code: 'black', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-black?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'White', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #FFFFFF 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-white?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Pink', code: 'pink', gradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Teal', code: 'teal', gradient: 'linear-gradient(135deg, #008B8B 0%, #006666 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-teal?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Ultramarine', code: 'ultramarine', gradient: 'linear-gradient(135deg, #120A8F 0%, #000080 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-ultramarine?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+        ],
         storage: ['128GB', '256GB', '512GB']
     },
     {
         id: 7,
+        name: 'iPhone 16 Pro',
+        price: 1099, // Prezzo base: 128GB
+        category: 'iphone',
+        icon: '📱',
+        imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Pro',
+        colors: [
+            { name: 'Black Titanium', code: 'black-titanium', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/600x800/1C1C1E/ffffff?text=iPhone+16+Pro+Black+Titanium' },
+            { name: 'Natural Titanium', code: 'natural-titanium', gradient: 'linear-gradient(135deg, #E0E0E0 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E0E0E0/666666?text=iPhone+16+Pro+Natural+Titanium' },
+            { name: 'White Titanium', code: 'white-titanium', gradient: 'linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%)', imageUrl: 'https://placehold.co/600x800/F5F5F5/666666?text=iPhone+16+Pro+White+Titanium' },
+            { name: 'Desert Titanium', code: 'desert-titanium', gradient: 'linear-gradient(135deg, #D4B896 0%, #C4A880 100%)', imageUrl: 'https://placehold.co/600x800/D4B896/ffffff?text=iPhone+16+Pro+Desert+Titanium' }
+        ],
+        storage: ['128GB', '256GB', '512GB', '1TB']
+    },
+    {
+        id: 8,
         name: 'iPhone 16e',
         price: 749, // Prezzo base: 128GB (da listino)
         category: 'iphone',
@@ -160,12 +200,12 @@ let products = [
         category: 'mac',
         subcategory: 'macbook-air',
         icon: '💻',
-        imageUrl: 'https://placehold.co/800x600/1C1C1E/ffffff?text=MacBook+Air+13+M4',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m4-midnight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90',
         colors: [
-            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://placehold.co/800x600/1C1C1E/ffffff?text=MacBook+Air+M4+Midnight' },
-            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://placehold.co/800x600/F5F5F0/666666?text=MacBook+Air+M4+Starlight' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/800x600/E8E8E8/666666?text=MacBook+Air+M4+Silver' },
-            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://placehold.co/800x600/87CEEB/ffffff?text=MacBook+Air+M4+Sky+Blue' }
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #191970 0%, #0A0A28 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m4-midnight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5DC 0%, #E8E8D0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m4-starlight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m4-silver-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Sky Blue', code: 'sky-blue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba13-m4-skyblue-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' }
         ],
         specs: ['10C CPU/8C GPU', '16GB RAM', '256GB Storage'],
         upgrades: {
@@ -176,9 +216,29 @@ let products = [
     },
     { id: 101, name: 'MacBook Air 13" M4 - 10C CPU/10C GPU, 16GB, 512GB', price: 1449, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
     { id: 102, name: 'MacBook Air 13" M4 - 10C CPU/10C GPU, 24GB, 512GB', price: 1699, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
-    { id: 103, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 16GB, 256GB', price: 1499, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
-    { id: 104, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 16GB, 512GB', price: 1749, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
-    { id: 105, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 24GB, 512GB', price: 1999, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
+    {
+        id: 103,
+        name: 'MacBook Air 15" M4',
+        price: 1499,
+        category: 'mac',
+        subcategory: 'macbook-air',
+        icon: '💻',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m4-midnight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90',
+        colors: [
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #191970 0%, #0A0A28 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m4-midnight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5DC 0%, #E8E8D0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m4-starlight-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m4-silver-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' },
+            { name: 'Sky Blue', code: 'sky-blue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-mba15-m4-skyblue-202503?wid=4000&hei=3074&fmt=jpeg&qlt=90' }
+        ],
+        specs: ['10C CPU/10C GPU', '16GB RAM', '256GB Storage'],
+        upgrades: {
+            chip: ['10C CPU/10C GPU'],
+            ram: ['16GB', '24GB (+€250)', '32GB (+€500)'],
+            storage: ['256GB', '512GB (+€250)', '1TB (+€500)', '2TB (+€750)']
+        }
+    },
+    { id: 106, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 16GB, 512GB', price: 1749, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
+    { id: 107, name: 'MacBook Air 15" M4 - 10C CPU/10C GPU, 24GB, 512GB', price: 1999, category: 'mac', subcategory: 'macbook-air', icon: '💻' },
 
     // MacBook Pro 14" - M5 e M4 PRO/MAX
     { id: 110, name: 'MacBook Pro 14" M5 - 10C CPU/10C GPU, 16GB, 512GB', price: 1899, category: 'mac', subcategory: 'macbook-pro', icon: '💻' },
@@ -217,15 +277,27 @@ let products = [
         price: 1719, // Prezzo base: 256GB (da listino)
         category: 'ipad',
         icon: '📲',
-        imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
         colors: [
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5+Space+Black' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPad+Pro+13+M5+Silver' }
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-finish-select-202510-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB'],
         storageNotes: '1TB e 2TB: 16GB RAM + 10-core CPU | 256GB/512GB: 12GB RAM + 9-core CPU'
     },
-    { id: 201, name: 'iPad Pro 11" (M5)', price: 1119, category: 'ipad', icon: '📲' },
+    {
+        id: 201,
+        name: 'iPad Pro 11" (M5)',
+        price: 1119,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80',
+        colors: [
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-spaceblack?wid=5120&hei=2880&fmt=p-jpg&qlt=80' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-finish-select-202510-silver?wid=5120&hei=2880&fmt=p-jpg&qlt=80' }
+        ],
+        storage: ['256GB', '512GB', '1TB', '2TB']
+    },
     { id: 202, name: 'iPad Air 13"', price: 669, category: 'ipad', icon: '📲' },
     { id: 203, name: 'iPad Air 11"', price: 669, category: 'ipad', icon: '📲' },
     { id: 204, name: 'iPad 11"', price: 389, category: 'ipad', icon: '📲' },
