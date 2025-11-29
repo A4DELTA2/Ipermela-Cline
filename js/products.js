@@ -218,7 +218,7 @@ function renderProductCard(product) {
 
                     <!-- Nome e Categoria -->
                     <div class="flex-1 min-w-0">
-                        <h3 class="font-bold text-gray-900 text-base md:text-lg truncate">${product.name}</h3>
+                        <h3 class="font-bold text-gray-900 text-base md:text-lg break-words leading-tight">${product.name}</h3>
                         <div class="flex items-center gap-2 mt-1">
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${categoryInfo.color}">
                                 ${categoryInfo.label}
@@ -609,17 +609,16 @@ export function renderConfigurationSelectors(product) {
             <label class="block text-sm font-semibold text-gray-700 mb-2">Chip:</label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="chip-selector-${product.id}">
                 ${product.configurations.chip.map(chip => {
-                    const isSelected = chip.name === product.currentConfig.chip;
-                    const chipLabel = chip.name.split('(')[0].trim();
-                    const chipSpecs = chip.name.match(/\((.*?)\)/)?.[1] || '';
+            const isSelected = chip.name === product.currentConfig.chip;
+            const chipLabel = chip.name.split('(')[0].trim();
+            const chipSpecs = chip.name.match(/\((.*?)\)/)?.[1] || '';
 
-                    return `
+            return `
                     <button
-                        class="config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${
-                            isSelected
-                                ? 'border-blue-600 bg-blue-600 text-white'
-                                : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-                        }"
+                        class="config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${isSelected
+                    ? 'border-blue-600 bg-blue-600 text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                }"
                         onclick="event.stopPropagation(); selectChipVariant(${product.id}, '${chip.name}')"
                         data-chip="${chip.name}"
                     >
@@ -629,7 +628,7 @@ export function renderConfigurationSelectors(product) {
                         ${chip.priceAdjustment < 0 ? `<div class="text-xs font-bold mt-1">-€${Math.abs(chip.priceAdjustment)}</div>` : ''}
                     </button>
                     `;
-                }).join('')}
+        }).join('')}
             </div>
         </div>
         `;
@@ -644,14 +643,13 @@ export function renderConfigurationSelectors(product) {
             <label class="block text-sm font-semibold text-gray-700 mb-2">Memoria:</label>
             <div class="flex flex-wrap gap-2" id="ram-selector-${product.id}">
                 ${availableRam.map(ram => {
-                    const isSelected = ram.size === product.currentConfig.ram;
-                    return `
+                const isSelected = ram.size === product.currentConfig.ram;
+                return `
                     <button
-                        class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${
-                            isSelected
-                                ? 'border-blue-600 bg-blue-600 text-white'
-                                : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-                        }"
+                        class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    }"
                         onclick="event.stopPropagation(); selectRamOption(${product.id}, '${ram.size}')"
                         data-ram="${ram.size}"
                     >
@@ -659,7 +657,7 @@ export function renderConfigurationSelectors(product) {
                         ${ram.priceAdjustment > 0 ? `<span class="text-xs ml-1">+€${ram.priceAdjustment}</span>` : ''}
                     </button>
                     `;
-                }).join('')}
+            }).join('')}
             </div>
         </div>
         `;
@@ -675,14 +673,13 @@ export function renderConfigurationSelectors(product) {
             <label class="block text-sm font-semibold text-gray-700 mb-2">Storage:</label>
             <div class="flex flex-wrap gap-2" id="storage-selector-${product.id}">
                 ${availableStorage.map(storage => {
-                    const isSelected = storage.size === product.currentConfig.storage;
-                    return `
+                const isSelected = storage.size === product.currentConfig.storage;
+                return `
                     <button
-                        class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${
-                            isSelected
-                                ? 'border-blue-600 bg-blue-600 text-white'
-                                : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-                        }"
+                        class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    }"
                         onclick="event.stopPropagation(); selectStorageOption(${product.id}, '${storage.size}')"
                         data-storage="${storage.size}"
                     >
@@ -691,7 +688,7 @@ export function renderConfigurationSelectors(product) {
                         ${storage.priceAdjustment < 0 ? `<span class="text-xs ml-1">-€${Math.abs(storage.priceAdjustment)}</span>` : ''}
                     </button>
                     `;
-                }).join('')}
+            }).join('')}
             </div>
         </div>
         `;
@@ -831,33 +828,30 @@ export function updateConfigSelectors(productId, selectorType) {
     if (selectorType === 'chip' || !selectorType) {
         card.querySelectorAll(`#chip-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.chip === product.currentConfig.chip;
-            btn.className = `config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${
-                isSelected
+            btn.className = `config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${isSelected
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-            }`;
+                }`;
         });
     }
 
     if (selectorType === 'ram' || !selectorType) {
         card.querySelectorAll(`#ram-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.ram === product.currentConfig.ram;
-            btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${
-                isSelected
+            btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-            }`;
+                }`;
         });
     }
 
     if (selectorType === 'storage' || !selectorType) {
         card.querySelectorAll(`#storage-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.storage === product.currentConfig.storage;
-            btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${
-                isSelected
+            btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
-            }`;
+                }`;
         });
     }
 }

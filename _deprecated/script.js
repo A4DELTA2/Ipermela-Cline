@@ -888,7 +888,7 @@ function renderProducts() {
 
                         <!-- Nome e Categoria -->
                         <div class="flex-1 min-w-0">
-                            <h3 class="font-bold text-gray-900 text-base md:text-lg truncate">${product.name}</h3>
+                            <h3 class="font-bold text-gray-900 text-base md:text-lg break-words leading-tight">${product.name}</h3>
                             <div class="flex items-center gap-2 mt-1">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${categoryInfo.color}">
                                     ${categoryInfo.label}
@@ -2172,4 +2172,4 @@ to {
 }
     }
 `;
-        document.head.appendChild(style);
+document.head.appendChild(style);
