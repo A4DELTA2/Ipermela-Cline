@@ -74,7 +74,7 @@ export function renderProducts() {
             <div class="col-span-full text-center py-16">
                 <div class="flex flex-col items-center gap-4">
                     <svg class="w-20 h-20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2_0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
                     <div class="text-gray-500 text-lg font-medium">Nessun prodotto trovato</div>
                     <div class="text-gray-400 text-sm">Prova a modificare i filtri di ricerca</div>
@@ -120,42 +120,39 @@ function renderProductCard(product) {
         : (product.price || product.basePrice);
 
     return `
-    <div class="product-card bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-3" data-id="${product.id}">
+    <div class="product-card bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-3" data-id="${product.id}" onclick="toggleProductCard(${product.id})">
 
-        <div class="p-4">
-            <div class="flex items-center gap-4">
+        <div class="p-4 flex items-center gap-4">
 
-                ${displayImage ? `
-                <div class="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                    <img src="${displayImage}" alt="${product.name}" class="w-full h-full object-cover">
-                </div>
-                ` : `
-                <div class="flex-shrink-0 w-12 h-12 ${getCategoryInfo(product.category).color.replace('text-', 'bg-').split(' ')[0]} rounded-xl flex items-center justify-center">
-                    <span class="text-2xl">${product.icon}</span>
-                </div>
-                `}
+            ${displayImage ? `
+            <div class="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
+                <img src="${displayImage}" alt="${product.name}" class="w-full h-full object-cover">
+            </div>
+            ` : `
+            <div class="flex-shrink-0 w-12 h-12 ${getCategoryInfo(product.category).color.replace('text-', 'bg-').split(' ')[0]} rounded-xl flex items-center justify-center">
+                <span class="text-2xl">${product.icon}</span>
+            </div>
+            `}
 
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-gray-900 text-lg leading-tight">${product.name}</h3>
-                    <div class="flex justify-between items-center mt-1">
-                        <div>
-                            ${hasColors ? `<p class="text-sm text-gray-500">${product.colors.length} colori</p>` : ''}
-                            <div class="text-lg font-bold text-apple-blue">€${currentPrice.toFixed(2)}</div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            ${hasExpandableContent ? `
-                            <button class="p-2 rounded-full hover:bg-gray-100 transition-colors" onclick="toggleProductCard(${product.id})">
-                                <svg class="expand-arrow w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-                            ` : ''}
-                            <button class="px-4 py-2 bg-apple-blue text-white rounded-xl hover:bg-apple-darkblue transition-all" onclick="event.stopPropagation(); addToCart(${product.id})">
-                                Aggiungi
-                            </button>
-                        </div>
+            <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-bold text-gray-900 text-lg leading-tight">${product.name}</h3>
+                        <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
                     </div>
+                    ${hasColors ? `<p class="text-sm text-gray-500">${product.colors.length} colori</p>` : ''}
                 </div>
+                
+                ${hasExpandableContent ? `
+                <div class="text-right">
+                    <button class="text-sm font-semibold text-gray-600 hover:text-apple-blue transition-colors flex items-center gap-1 ml-auto">
+                        <span>personalizza</span>
+                        <svg class="expand-arrow w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                ` : ''}
             </div>
         </div>
 
@@ -296,6 +293,12 @@ export function toggleProductCard(productId) {
 
     const isExpanded = card.classList.contains('expanded');
 
+    document.querySelectorAll('.product-card.expanded').forEach(expandedCard => {
+        if (expandedCard !== card) {
+            expandedCard.classList.remove('expanded');
+        }
+    });
+
     if (isExpanded) {
         card.classList.remove('expanded');
     } else {
@@ -325,7 +328,7 @@ export function selectProductColor(productId, colorCode, imageUrl, colorName) {
     }
 
     if (imageUrl) {
-        const image = card.querySelector(`#product-image-${productId}`);
+        const image = card.querySelector(`[data-id="${productId}"] .flex-shrink-0 img`);
         if (image) {
             image.style.opacity = '0';
             setTimeout(() => {
@@ -355,7 +358,7 @@ export function selectProductStorage(productId, storageBtn) {
     if (productPricing[productId] && productPricing[productId][storageText]) {
         const newPrice = productPricing[productId][storageText];
 
-        const priceElement = card.querySelector('.text-xl.md\\:text-2xl.font-bold.text-apple-blue');
+        const priceElement = card.querySelector('.text-lg.font-bold.text-apple-blue');
         if (priceElement) {
             priceElement.textContent = `€${newPrice.toFixed(2)}`;
         }
@@ -587,7 +590,7 @@ export function selectStorageOption(productId, storageSize) {
 }
 
 export function updatePriceDisplay(productId, newPrice) {
-    const priceElement = document.querySelector(`[data-id="${productId}"] .text-xl.md\\:text-2xl.font-bold.text-apple-blue`);
+    const priceElement = document.querySelector(`[data-id="${productId}"] .text-lg.font-bold.text-apple-blue`);
     if (priceElement) {
         priceElement.textContent = `€${newPrice.toFixed(2)}`;
     }
