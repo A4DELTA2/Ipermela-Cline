@@ -103,7 +103,8 @@ function renderProductCard(product) {
     const hasStorage = product.storage && product.storage.length > 0;
     const hasConfigurations = product.configurations;
     const hasExpandableContent = hasColors || hasStorage || hasConfigurations || product.imageUrl;
-
+    
+    // Use the product.imageUrl if available, otherwise check for color images
     const displayImage = product.imageUrl || (hasColors ? product.colors[0].imageUrl : null);
 
     if (hasConfigurations && !product.currentConfig) {
@@ -118,6 +119,13 @@ function renderProductCard(product) {
     const currentPrice = hasConfigurations
         ? calculateConfiguredPrice(product, product.currentConfig)
         : (product.price || product.basePrice);
+
+    // If it's the iPhone 17 Pro Max and has the coral color, we can force the image for testing if it's not set
+    // This is just a temporary check to align with the user request if the data doesn't have it yet.
+    // However, ideally, the data should be updated. Assuming the user wants to see the image *here* based on the screenshot.
+    // The screenshot shows the image on the left side of the card.
+    
+    // We'll trust the displayImage logic above, but ensure the image path is correct if passed.
 
     return `
     <div class="product-card bg-white rounded-3xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-4 overflow-hidden group" data-id="${product.id}" onclick="toggleProductCard(${product.id})">
@@ -336,6 +344,7 @@ export function selectProductColor(productId, colorCode, imageUrl, colorName) {
         colorText.textContent = colorName;
     }
 
+    // Update the main image with the color-specific image
     if (imageUrl) {
         const image = card.querySelector(`[data-id="${productId}"] .object-contain`);
         if (image) {
@@ -659,7 +668,7 @@ export function buildConfigSummary(product) {
         if (product.currentConfig.ram) parts.push(product.currentConfig.ram);
         if (product.currentConfig.storage) parts.push(product.currentConfig.storage);
         if (product.currentConfig.color) {
-            const colorName = typeof product.currentCfig.color === 'string'
+            const colorName = typeof product.currentConfig.color === 'string'
                 ? product.currentConfig.color
                 : product.currentConfig.color.name;
             parts.push(colorName);
