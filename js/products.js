@@ -74,7 +74,7 @@ export function renderProducts() {
             <div class="col-span-full text-center py-16">
                 <div class="flex flex-col items-center gap-4">
                     <svg class="w-20 h-20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2_0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
                     <div class="text-gray-500 text-lg font-medium">Nessun prodotto trovato</div>
                     <div class="text-gray-400 text-sm">Prova a modificare i filtri di ricerca</div>
@@ -120,34 +120,38 @@ function renderProductCard(product) {
         : (product.price || product.basePrice);
 
     return `
-    <div class="product-card bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-3" data-id="${product.id}" onclick="toggleProductCard(${product.id})">
+    <div class="product-card bg-white rounded-3xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-4 overflow-hidden group" data-id="${product.id}" onclick="toggleProductCard(${product.id})">
 
-        <div class="p-4 flex items-center gap-4">
-
+        <div class="flex h-[120px]">
+            <!-- Left Side: Image Box -->
             ${displayImage ? `
-            <div class="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                <img src="${displayImage}" alt="${product.name}" class="w-full h-full object-cover">
+            <div class="w-28 h-full bg-gray-100 flex items-center justify-center p-3 flex-shrink-0 relative">
+                 <div class="absolute inset-0 bg-gray-100 z-0"></div>
+                 <img src="${displayImage}" alt="${product.name}" class="relative z-10 w-auto h-auto max-w-full max-h-full object-contain mix-blend-multiply transform group-hover:scale-105 transition-transform duration-300">
             </div>
             ` : `
-            <div class="flex-shrink-0 w-12 h-12 ${getCategoryInfo(product.category).color.replace('text-', 'bg-').split(' ')[0]} rounded-xl flex items-center justify-center">
-                <span class="text-2xl">${product.icon}</span>
+            <div class="w-28 h-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-4xl">${product.icon}</span>
             </div>
             `}
 
-            <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-bold text-gray-900 text-lg leading-tight">${product.name}</h3>
-                        <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
+            <!-- Right Side: Content -->
+            <div class="flex-1 p-4 flex flex-col justify-between relative">
+                <!-- Header: Title and Price -->
+                <div class="flex justify-between items-start gap-2">
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-lg leading-tight line-clamp-2">${product.name}</h3>
+                        ${hasColors ? `<p class="text-sm text-gray-500 mt-1">${product.colors.length} colori</p>` : ''}
                     </div>
-                    ${hasColors ? `<p class="text-sm text-gray-500">${product.colors.length} colori</p>` : ''}
+                    <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
                 </div>
                 
+                <!-- Bottom: Expand Button -->
                 ${hasExpandableContent ? `
-                <div class="text-right">
-                    <button class="text-sm font-semibold text-gray-600 hover:text-apple-blue transition-colors flex items-center gap-1 ml-auto">
+                <div class="flex justify-end mt-auto">
+                    <button class="text-sm font-medium text-gray-400 hover:text-apple-blue transition-colors flex items-center gap-1 group-hover/text:text-apple-blue">
                         <span>personalizza</span>
-                        <svg class="expand-arrow w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="expand-arrow w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -156,17 +160,18 @@ function renderProductCard(product) {
             </div>
         </div>
 
+        <!-- Expanded Content Area -->
         ${hasExpandableContent ? `
-        <div class="expanded-content px-4 pb-4">
-            <div class="border-t-2 border-gray-100 pt-4">
+        <div class="expanded-content bg-white px-5 pb-5 border-t border-gray-100">
+            <div class="pt-4 space-y-5">
 
                 ${hasColors ? `
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Scegli il colore:</label>
-                    <div class="flex flex-wrap gap-2">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-3">Colore</label>
+                    <div class="flex flex-wrap gap-3">
                         ${product.colors.map((color, index) => `
                         <button
-                            class="color-swatch ${index === 0 ? 'selected' : ''} w-10 h-10 rounded-full border-2 border-gray-300"
+                            class="color-swatch ${index === 0 ? 'selected' : ''} w-10 h-10 rounded-full border-2 border-gray-200 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-offset-2 transition-all shadow-sm"
                             style="background: ${color.gradient}"
                             title="${color.name}"
                             onclick="event.stopPropagation(); selectProductColor(${product.id}, '${color.code}', '${color.imageUrl || product.imageUrl || ''}', '${color.name}')"
@@ -175,44 +180,48 @@ function renderProductCard(product) {
                         </button>
                         `).join('')}
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">Colore selezionato: <span class="font-semibold" id="selected-color-${product.id}">${product.colors[0].name}</span></p>
+                    <p class="text-xs text-gray-500 mt-2 font-medium">Selezionato: <span class="text-gray-900" id="selected-color-${product.id}">${product.colors[0].name}</span></p>
                 </div>
                 ` : ''}
 
                 ${hasStorage ? `
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Capacità:</label>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-3">Archiviazione</label>
                     <div class="flex flex-wrap gap-2">
                         ${product.storage.map((storage, index) => `
                         <button
                             data-storage-btn
                             ${index === 0 ? 'data-storage-selected="true"' : ''}
-                            class="px-4 py-2 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white' : 'border-gray-200 bg-white text-gray-700'} rounded-lg font-medium text-sm hover:border-apple-blue transition-all"
+                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white shadow-md' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
                             onclick="event.stopPropagation(); selectProductStorage(${product.id}, this)"
                         >
                             ${storage}
                         </button>
                         `).join('')}
                     </div>
-                    ${product.storageNotes ? `<p class="text-xs text-gray-500 mt-2">💡 ${product.storageNotes}</p>` : ''}
+                    ${product.storageNotes ? `<p class="text-xs text-gray-500 mt-2 flex items-center gap-1"><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> ${product.storageNotes}</p>` : ''}
                 </div>
                 ` : ''}
 
                 ${hasConfigurations ? `
                 ${renderConfigurationSelectors(product)}
 
-                <div class="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <p class="text-sm text-gray-700 font-medium">
-                        <span class="text-gray-500">Configurazione:</span> ${buildConfigSummary(product)}
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <p class="text-sm text-gray-600 font-medium flex items-start gap-2">
+                        <svg class="w-5 h-5 text-apple-blue shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span><span class="text-gray-900 font-semibold">Riepilogo:</span> ${buildConfigSummary(product)}</span>
                     </p>
                 </div>
                 ` : ''}
 
-                <button class="w-full py-3 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-bold rounded-xl hover:from-apple-darkblue hover:to-indigo-700 transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                <button class="w-full py-4 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-bold rounded-xl hover:from-apple-darkblue hover:to-indigo-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <span>Aggiungi al carrello${hasConfigurations ? ` - €${currentPrice.toFixed(2)}` : ''}</span>
+                    <span class="text-lg">Aggiungi al Carrello</span>
+                    ${hasConfigurations ? `<span class="bg-white/20 px-2 py-0.5 rounded text-sm font-semibold ml-1">€${currentPrice.toFixed(2)}</span>` : ''}
                 </button>
             </div>
         </div>
@@ -328,7 +337,7 @@ export function selectProductColor(productId, colorCode, imageUrl, colorName) {
     }
 
     if (imageUrl) {
-        const image = card.querySelector(`[data-id="${productId}"] .flex-shrink-0 img`);
+        const image = card.querySelector(`[data-id="${productId}"] .object-contain`);
         if (image) {
             image.style.opacity = '0';
             setTimeout(() => {
