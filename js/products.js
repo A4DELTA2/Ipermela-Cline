@@ -21,6 +21,10 @@ export function setSearchQuery(query) {
     searchQuery = query.toLowerCase();
 }
 
+/**
+ * Carica i prodotti personalizzati da Supabase
+ * 🔧 BUG FIX: Aggiunta gestione errori con logging
+ */
 export async function loadProducts() {
     try {
         const { data, error } = await supabase
@@ -28,6 +32,8 @@ export async function loadProducts() {
             .select('*');
 
         if (error) {
+            console.error('Errore caricamento prodotti personalizzati:', error.message);
+            // Non bloccare l'app, continua con i prodotti di default
             return;
         }
 
@@ -43,9 +49,11 @@ export async function loadProducts() {
 
             products = [...products, ...customProducts];
             nextProductId = Math.max(...products.map(p => p.id)) + 1;
+            console.log(`✓ Caricati ${customProducts.length} prodotti personalizzati`);
         }
     } catch (err) {
-        // Silent catch
+        console.error('Errore imprevisto nel caricamento prodotti:', err);
+        // Non mostrare notifica all'utente, solo log per debug
     }
 }
 

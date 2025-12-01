@@ -97,9 +97,22 @@ import {
 } from './utils.js';
 
 /**
+ * Flag per tracciare se l'app è già stata inizializzata
+ * Previene doppie inizializzazioni dal listener auth state change
+ */
+let isAppInitialized = false;
+
+/**
  * Inizializza l'applicazione dopo il login
+ * 🔧 BUG FIX: Aggiunto flag per prevenire doppia inizializzazione
  */
 async function initializeApp() {
+    // Previeni doppia inizializzazione
+    if (isAppInitialized) {
+        console.log('App già inizializzata, skip...');
+        return;
+    }
+
     showNotification('Caricamento dati dal cloud...', 'info');
 
     try {
@@ -108,14 +121,20 @@ async function initializeApp() {
         window.userRole = userRole;
 
         await loadProducts();
+        // Assicurati che window.products sia aggiornato prima di loadCustomPrices
+        window.products = products;
         await loadCustomPrices();
         renderProducts();
         renderCart();
         await renderSavedOrders();
+
+        // Marca come inizializzato solo dopo successo
+        isAppInitialized = true;
         showNotification('Dati caricati! ✓', 'success');
     } catch (err) {
         console.error('Errore inizializzazione:', err);
         showNotification('Errore nel caricamento dei dati', 'error');
+        // Non marcare come inizializzato in caso di errore
     }
 }
 
@@ -398,11 +417,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     await checkAuth();
 
     // Listener per cambiamenti autenticazione
+    // 🔧 BUG FIX: Previene doppia inizializzazione con flag isAppInitialized
     supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_OUT') {
+            isAppInitialized = false; // Reset flag al logout
             window.cart = [];
             showLoginScreen();
-        } else if (event === 'SIGNED_IN' && session) {
+        } else if (event === 'SIGNED_IN' && session && !isAppInitialized) {
+            // Inizializza solo se non già inizializzato
             window.currentUser = session.user;
             await initializeApp();
         }

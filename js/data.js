@@ -80,11 +80,11 @@ export const defaultProducts = [
         price: 1499,
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/IPHONE_17PM_SILVER.svg',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017%20PM/IPHONE_17PM_SILVER.svg',
         colors: [
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/IPHONE_17PM_SILVER.svg' },
-            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/IPHONE_17PM_BLUE.svg' },
-            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/IPHONE_17PM_CORAL.svg' }
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017%20PM/IPHONE_17PM_SILVER.svg' },
+            { name: 'Blu Profondo', code: 'deep-blue', gradient: 'linear-gradient(135deg, #1E3A5F 0%, #0A1929 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017%20PM/IPHONE_17PM_BLUE.svg' },
+            { name: 'Arancione Cosmico', code: 'cosmic-orange', gradient: 'linear-gradient(135deg, #FF6B35 0%, #C44D34 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017%20PM/IPHONE_17PM_CORAL.svg' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB']
     },
@@ -108,12 +108,12 @@ export const defaultProducts = [
         price: 1259,
         category: 'iphone',
         icon: '📱',
-        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Iphone%20Air/IP_AIR_CELESTE.svg',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/IP_AIR_CELESTE.svg',
         colors: [
-            { name: 'Blu Cielo', code: 'skyblue', gradient: 'linear-gradient(135deg, #F0F9FF 0%, #D0E9FF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Iphone%20Air/IP_AIR_CELESTE.svg' },
-            { name: 'Oro Chiaro', code: 'lightgold', gradient: 'linear-gradient(135deg, #FFFCF5 0%, #F5F0E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Iphone%20Air/IP_AIR_GOLD.svg' },
-            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #000000 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Iphone%20Air/IP_AIR_BLACK.svg' },
-            { name: 'Bianco Nuvola', code: 'cloudwhite', gradient: 'linear-gradient(135deg, #FCFCFC 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Iphone%20Air/IP_AIR_WHITE.svg' }
+            { name: 'Blu Cielo', code: 'skyblue', gradient: 'linear-gradient(135deg, #F0F9FF 0%, #D0E9FF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/IP_AIR_CELESTE.svg' },
+            { name: 'Oro Chiaro', code: 'lightgold', gradient: 'linear-gradient(135deg, #FFFCF5 0%, #F5F0E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/IP_AIR_GOLD.svg' },
+            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #000000 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/IP_AIR_BLACK.svg' },
+            { name: 'Bianco Nuvola', code: 'cloudwhite', gradient: 'linear-gradient(135deg, #FCFCFC 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/IP_AIR_WHITE.svg' }
         ],
         storage: ['512GB', '1TB']
     },
@@ -133,20 +133,7 @@ export const defaultProducts = [
         ],
         storage: ['128GB', '256GB', '512GB', '1TB']
     },
-    {
-        id: 41,
-        name: 'iPhone 17 Air',
-        price: 1199,
-        category: 'iphone',
-        icon: '📱',
-        colors: [
-            { name: 'Blu Cielo', code: 'skyblue', gradient: 'linear-gradient(135deg, #F0F9FF 0%, #D0E9FF 100%)' },
-            { name: 'Oro Chiaro', code: 'lightgold', gradient: 'linear-gradient(135deg, #FFFCF5 0%, #F5F0E0 100%)' },
-            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #000000 0%, #1C1C1E 100%)' },
-            { name: 'Bianco Nuvola', code: 'cloudwhite', gradient: 'linear-gradient(135deg, #FCFCFC 0%, #E8E8E8 100%)' }
-        ],
-        storage: ['256GB', '512GB', '1TB']
-    },
+
 
     // iPhone 16 Series
     {
@@ -155,12 +142,13 @@ export const defaultProducts = [
         price: 999,
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BLUOLTREMARE.svg',
         colors: [
-            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #9AADF6 0%, #7A8ED6 100%)' },
-            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #B0D4D2 0%, #90B4B2 100%)' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #F2ADDA 0%, #D28DBA 100%)' },
-            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)' },
-            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)' }
+            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #9AADF6 0%, #7A8ED6 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BLUOLTREMARE.svg' },
+            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #B0D4D2 0%, #90B4B2 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_VERDEACQUA.svg' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #F2ADDA 0%, #D28DBA 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_ROSA.svg' },
+            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BIANCO.svg' },
+            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_NERO.svg' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -170,12 +158,13 @@ export const defaultProducts = [
         price: 899,
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BLUOLTREMARE.svg',
         colors: [
-            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #9AADF6 0%, #7A8ED6 100%)' },
-            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #B0D4D2 0%, #90B4B2 100%)' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #F2ADDA 0%, #D28DBA 100%)' },
-            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)' },
-            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)' }
+            { name: 'Blu Oltremare', code: 'ultramarine', gradient: 'linear-gradient(135deg, #9AADF6 0%, #7A8ED6 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BLUOLTREMARE.svg' },
+            { name: 'Verde Acqua', code: 'teal', gradient: 'linear-gradient(135deg, #B0D4D2 0%, #90B4B2 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_VERDEACQUA.svg' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #F2ADDA 0%, #D28DBA 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_ROSA.svg' },
+            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_BIANCO.svg' },
+            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016/IP_17_NERO.svg' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
@@ -185,9 +174,10 @@ export const defaultProducts = [
         price: 749,
         category: 'iphone',
         icon: '📱',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016E/IP_16E_NERO.svg',
         colors: [
-            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)' },
-            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)' }
+            { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #3C4042 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016E/IP_16E_NERO.svg' },
+            { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #FAFAFA 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2016E/IP_16E_BIANCO.svg' }
         ],
         storage: ['128GB', '256GB', '512GB']
     },
