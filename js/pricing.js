@@ -177,12 +177,16 @@ export async function savePriceChange(productId, newPrice) {
  * @returns {void}
  */
 export function openPriceManagement() {
+    console.log('💰 Tentativo apertura gestione prezzi. Ruolo corrente:', window.userRole);
+
     // Verifica permessi
     if (window.userRole !== 'admin' && window.userRole !== 'operator') {
+        console.error('❌ Permesso negato. Ruolo:', window.userRole);
         showNotification('Non hai i permessi per modificare i prezzi', 'error');
         return;
     }
 
+    console.log('✅ Permesso concesso - Apertura modale prezzi');
     showPriceManagementModal();
 }
 
@@ -354,6 +358,25 @@ function renderPriceTable() {
     const tbody = document.getElementById('price-table-body');
     if (!tbody) return;
 
+    // 🔧 FIX: Verifica che window.products esista e non sia vuoto
+    if (!window.products || !Array.isArray(window.products) || window.products.length === 0) {
+        console.warn('⚠️ window.products non disponibile o vuoto');
+        tbody.innerHTML = `
+    <tr>
+        <td colspan="5" class="py-16 text-center">
+            <div class="flex flex-col items-center gap-3">
+                <svg class="w-16 h-16 text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-gray-500 font-semibold">Caricamento prodotti...</p>
+                <p class="text-sm text-gray-400">Attendi o ricarica la pagina</p>
+            </div>
+        </td>
+    </tr>
+`;
+        return;
+    }
+
     // Filtra i prodotti
     let filteredProducts = window.products.filter(p => !p.custom);
 
@@ -387,8 +410,9 @@ function renderPriceTable() {
 
     // Renderizza le righe della tabella
     tbody.innerHTML = filteredProducts.map(product => {
-        const originalPrice = originalPrices[product.id] || product.price;
-        const currentPrice = product.price;
+        // 🔧 FIX: Gestisci prodotti senza prezzo definito
+        const originalPrice = originalPrices[product.id] || product.price || 0;
+        const currentPrice = product.price || 0;
         const pendingPrice = modifiedPrices[product.id];
         const categoryInfo = getCategoryInfo(product.category);
         const hasChanges = pendingPrice !== undefined;

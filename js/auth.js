@@ -66,19 +66,25 @@ export async function getUserRole() {
 
                 if (!insertError) {
                     userRole = 'operator';
+                    window.userRole = userRole; // 🔧 FIX: Aggiorna subito window.userRole
+                    console.log('✅ Ruolo creato e assegnato:', userRole);
                     return;
                 }
             }
 
             console.error('Errore ottenimento ruolo:', error.message);
             userRole = 'operator'; // Default fallback
+            window.userRole = userRole; // 🔧 FIX: Aggiorna anche in caso di errore
             return;
         }
 
         userRole = data?.role || 'operator';
+        window.userRole = userRole; // 🔧 FIX: Aggiorna window.userRole
+        console.log('✅ Ruolo caricato correttamente:', userRole);
     } catch (err) {
         console.error('Errore imprevisto durante ottenimento ruolo:', err);
         userRole = 'operator';
+        window.userRole = userRole; // 🔧 FIX: Aggiorna anche in caso di errore
     }
 }
 
@@ -214,11 +220,21 @@ export function updateUIBasedOnRole() {
     const priceManagementBtn = document.getElementById('price-management-btn');
     const mobilePriceItem = document.querySelector('[data-action="price-management"]');
 
+    console.log('🔐 Aggiornamento UI per ruolo:', userRole);
+
     // Solo admin e operator possono modificare i prezzi
     if (userRole === 'admin' || userRole === 'operator') {
-        if (priceManagementBtn) priceManagementBtn.classList.remove('hidden');
+        console.log('✅ Ruolo autorizzato - Mostro pulsante Prezzi');
+        if (priceManagementBtn) {
+            priceManagementBtn.classList.remove('hidden');
+            // Aggiungi flex per mostrare correttamente il pulsante
+            if (!priceManagementBtn.classList.contains('flex')) {
+                priceManagementBtn.classList.add('flex');
+            }
+        }
         if (mobilePriceItem) mobilePriceItem.classList.remove('hidden');
     } else {
+        console.log('❌ Ruolo non autorizzato - Nascondo pulsante Prezzi');
         if (priceManagementBtn) priceManagementBtn.classList.add('hidden');
         if (mobilePriceItem) mobilePriceItem.classList.add('hidden');
     }
