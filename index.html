@@ -12,17 +12,33 @@
             theme: {
                 extend: {
                     colors: {
+                        // Colori Brand Ipermela
+                        brand: {
+                            DEFAULT: '#FF9900', // Arancione Ipermela
+                            light: '#FFAC33',   // Per hover o accenti
+                            dark: '#CC7A00',    // Per stati attivi/click
+                        },
+                        // Palette Sfondi (Soft Black - Apple Style)
+                        dark: {
+                            bg: '#1C1C1E',      // Sfondo principale
+                            card: '#2C2C2E',    // Schede prodotti / Container
+                            elevated: '#3A3A3C', // Modali / Dropdown / Navbar
+                            border: '#48484A',   // Bordi sottili
+                            text: '#F5F5F7',     // Testo principale (bianco sporco)
+                            muted: '#86868B',    // Testo secondario
+                        },
+                        // Colori Funzionali (Ottimizzati per Dark Mode)
                         apple: {
-                            blue: '#0071e3',
-                            darkblue: '#0077ed',
-                            red: '#ff3b30',
-                            darkred: '#ff453a',
-                            green: '#34c759',
-                            darkgreen: '#30b350',
-                            orange: '#ff9500',
-                            darkorange: '#ff8c00',
-                            purple: '#667eea',
-                            darkpurple: '#764ba2',
+                            blue: '#0A84FF',      // Action / Link
+                            darkblue: '#0077ED',  // Hover stati
+                            red: '#FF453A',       // Errori / Delete
+                            darkred: '#FF3B30',
+                            green: '#30D158',     // Successo / Conferma
+                            darkgreen: '#34C759',
+                            orange: '#FF9F0A',    // Warning
+                            darkorange: '#FF9500',
+                            purple: '#BF5AF2',    // Login / Brand accents
+                            darkpurple: '#AF52DE',
                         }
                     },
                     animation: {
@@ -215,9 +231,9 @@
     <!-- Schermata di Login - Modern Split Design -->
     <div id="login-screen" class="fixed inset-0 z-50 overflow-hidden">
         <!-- Split Layout -->
-        <div class="flex h-full">
+        <div class="flex h-full w-full">
             <!-- Left Side - Branding (Hidden on mobile) -->
-            <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-apple-purple via-indigo-600 to-apple-darkpurple relative overflow-hidden">
+            <div class="hidden lg:flex lg:w-1/2 lg:min-w-[50%] bg-gradient-to-br from-apple-purple via-indigo-600 to-apple-darkpurple relative overflow-hidden">
                 <!-- Animated Background Pattern -->
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-20 left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
@@ -266,7 +282,7 @@
             </div>
 
             <!-- Right Side - Login Form -->
-            <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+            <div class="w-full lg:w-1/2 lg:min-w-[50%] flex items-center justify-center p-8 bg-gray-50">
                 <div class="w-full max-w-md">
                     <!-- Mobile Logo (Visible only on mobile) -->
                     <div class="lg:hidden text-center mb-8 animate-fade-in">
@@ -362,13 +378,7 @@
             <div class="flex items-center justify-between gap-4">
                 <!-- Logo & Brand -->
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-apple-purple to-apple-darkpurple rounded-2xl flex items-center justify-center shadow-lg">
-                        <span class="text-2xl">🍎</span>
-                    </div>
-                    <div>
-                        <h1 class="text-base sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight">Ipermela Store</h1>
-                        <p class="text-xs text-gray-500">Gestione Ordini</p>
-                    </div>
+                    <img src="Logo_nero.png" alt="Ipermela Logo" class="h-12 w-auto object-contain">
                 </div>
 
                 <!-- Desktop Actions -->
