@@ -1,0 +1,245 @@
+[
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/.emptyFolderPlaceholder"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-4.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-blue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-midnight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-orange.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-purple.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-starlight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-pro-3.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Apple Pencil/apple-pencil-pro.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Apple Pencil/apple-pencil-usbc.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Apple TV/apple-tv-4k.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Display/pro-display-hero.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Display/studio-display-gallery.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Mini/mac-mini-back.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Mini/mac-mini.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Pro/mac-pro-rack-hero-splitter.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Pro/mac-pro-tower-hero-splitter.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Studio/mac-studio-back.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac Studio/mac-studio.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-blue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-green.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-orange.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-pink.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-purple.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-yellow.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16/IP_17_BIANCO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16/IP_17_BLUOLTREMARE.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16/IP_17_NERO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16/IP_17_ROSA.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16/IP_17_VERDEACQUA.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16E/IP_16E_BIANCO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 16E/IP_16E_NERO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 PM/IPHONE_17PM_BLUE.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 PM/IPHONE_17PM_CORAL.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 PM/IPHONE_17PM_SILVER.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 Pro/IPHONE_17P_BLUE.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 Pro/IPHONE_17P_CORAL.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17 Pro/IPHONE_17P_SILVER.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17/IP_17_AZZURRO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17/IP_17_BIANCO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17/IP_17_LAVANDA.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17/IP_17_NERO.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone 17/IP_17_SALVIA.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone Air/IP_AIR_BLACK.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone Air/IP_AIR_CELESTE.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone Air/IP_AIR_GOLD.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone Air/IP_AIR_WHITE.svg"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-midnight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-skyblue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-starlight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-midnight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-starlight-select.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP14-silver (2).png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP14-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP14-spaceblack.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP16-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP16-spaceblack.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16 10GEN/IPAD-10th-gen-blue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16 10GEN/IPAD-10th-gen-pink.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16 10GEN/IPAD-10th-gen-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16 10GEN/IPAD-10th-gen-yellow.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-blue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-purple.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-space-gray.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-starlight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Magic Keyboard/magic-keyboard-folio-white.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Magic Keyboard/magic-keyboard-ipad-air-black.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Magic Keyboard/magic-keyboard-ipad-air-white.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Magic Keyboard/magic-keyboard-pro-black.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Magic Keyboard/magic-keyboard-pro-white.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-blue.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-purple.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-space-gray.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-starlight.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-11inch-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-11inch-spaceblack.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-13inch-silver.png"
+  },
+  {
+    "url": "https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-13inch-spaceblack.png"
+  }
+]
