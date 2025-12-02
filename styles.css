@@ -526,7 +526,147 @@ body.dark-mode {
     mix-blend-mode: normal !important;
 }
 
-/* Saved orders cards */
+/* ===================================
+   SAVED ORDERS SECTION - LIGHT & DARK MODE
+   =================================== */
+
+/* Saved Orders Section Header */
+.saved-orders-section-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+}
+
+/* Saved Order Cards */
+.saved-order-card {
+    transition: all 0.3s ease;
+}
+
+.saved-order-card:hover {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 10px 30px rgba(255, 153, 0, 0.15) !important;
+}
+
+/* Saved Order Header */
+.saved-order-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+}
+
+/* Saved Order Total */
+.saved-order-total {
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.2);
+}
+
+/* ===================================
+   DARK MODE - SAVED ORDERS
+   =================================== */
+
+/* Dark mode - Saved Orders Section */
+.dark-mode .saved-orders-section {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Dark mode - Saved Orders Section Header */
+.dark-mode .saved-orders-section-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+}
+
+/* Dark mode - Export button hover */
+.dark-mode #export-all-orders-btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #FF9900 !important;
+}
+
+/* Dark mode - Saved Order Cards */
+.dark-mode .saved-order-card {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode .saved-order-card:hover {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 10px 30px rgba(255, 153, 0, 0.3) !important;
+}
+
+/* Dark mode - Order Card Body */
+.dark-mode .saved-order-card .bg-gray-50 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode .saved-order-card .text-gray-500 {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode .saved-order-card .text-gray-600,
+.dark-mode .saved-order-card .text-gray-700 {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode .saved-order-card .text-gray-900 {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .saved-order-card .font-semibold {
+    color: var(--text-primary) !important;
+}
+
+/* Dark mode - Order Notes */
+.dark-mode .saved-order-card .bg-amber-50 {
+    background-color: rgba(255, 153, 0, 0.1) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.dark-mode .saved-order-card .text-amber-600 {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode .saved-order-card .text-amber-800 {
+    color: #FFAC33 !important;
+}
+
+/* Dark mode - Product Items */
+.dark-mode .saved-order-card .bg-white {
+    background-color: var(--bg-primary) !important;
+}
+
+.dark-mode .saved-order-card .border-gray-100 {
+    border-color: var(--border-color) !important;
+}
+
+/* Dark mode - Saved Order Header (mantiene il gradiente arancione) */
+.dark-mode .saved-order-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+}
+
+/* Dark mode - Saved Order Total (mantiene il gradiente arancione) */
+.dark-mode .saved-order-total {
+    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4) !important;
+}
+
+/* Dark mode - PDF Export Button */
+.dark-mode .saved-order-card button[onclick^="exportOrderPDF"] {
+    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+}
+
+.dark-mode .saved-order-card button[onclick^="exportOrderPDF"]:hover {
+    background: linear-gradient(135deg, #FFAC33 0%, #FFB347 100%) !important;
+    box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4) !important;
+}
+
+/* Dark mode - Delete Button */
+.dark-mode .saved-order-card button[onclick^="deleteOrder"] {
+    background-color: transparent !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .saved-order-card button[onclick^="deleteOrder"]:hover {
+    border-color: var(--error-color) !important;
+    background-color: var(--error-color) !important;
+    color: white !important;
+}
+
+/* Saved orders cards - Deprecated (sostituito dalle nuove classi sopra) */
 .dark-mode #saved-orders > div {
     background-color: var(--bg-secondary) !important;
     border: 1px solid var(--border-color) !important;

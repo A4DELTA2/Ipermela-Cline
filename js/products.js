@@ -582,15 +582,15 @@ export function selectChipVariant(productId, chipName) {
 
     const card = document.querySelector(`.product-card[data-id="${productId}"]`);
     if (card && card.classList.contains('expanded')) {
-        const selectorsContainer = card.querySelector('.expanded-content .border-t-2');
-        if (selectorsContainer) {
+        const expandedContent = card.querySelector('.expanded-content');
+        if (expandedContent) {
             const newHtml = renderConfigurationSelectors(product);
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = newHtml;
 
-            const chipSelector = selectorsContainer.querySelector('[id^="chip-selector-"]')?.parentElement;
-            const ramSelector = selectorsContainer.querySelector('[id^="ram-selector-"]')?.parentElement;
-            const storageSelector = selectorsContainer.querySelector('[id^="storage-selector-"]')?.parentElement;
+            const chipSelector = expandedContent.querySelector('[id^="chip-selector-"]')?.parentElement;
+            const ramSelector = expandedContent.querySelector('[id^="ram-selector-"]')?.parentElement;
+            const storageSelector = expandedContent.querySelector('[id^="storage-selector-"]')?.parentElement;
 
             const newChipSelector = tempDiv.querySelector('[id^="chip-selector-"]')?.parentElement;
             const newRamSelector = tempDiv.querySelector('[id^="ram-selector-"]')?.parentElement;
@@ -600,12 +600,12 @@ export function selectChipVariant(productId, chipName) {
             if (ramSelector && newRamSelector) ramSelector.replaceWith(newRamSelector);
             if (storageSelector && newStorageSelector) storageSelector.replaceWith(newStorageSelector);
 
-            // Triggera le animazioni sui nuovi elementi dopo il replace
+            // Triggera le animazioni e aggiorna le classi sui nuovi elementi dopo il replace
             setTimeout(() => {
                 updateConfigSelectors(productId, 'chip');
                 updateConfigSelectors(productId, 'ram');
                 updateConfigSelectors(productId, 'storage');
-            }, 50);
+            }, 10);
         }
     }
 }

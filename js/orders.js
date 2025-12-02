@@ -258,9 +258,9 @@ export async function renderSavedOrders() {
         ordersDiv.innerHTML = savedOrders.map(order => {
             const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
             return `
-    <div class="group bg-white rounded-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 hover:border-purple-400 hover:shadow-xl hover:-translate-y-1">
+    <div class="saved-order-card group bg-white rounded-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 hover:border-brand hover:shadow-xl hover:-translate-y-1">
         <!-- Order Header -->
-        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4">
+        <div class="saved-order-header bg-gradient-to-r from-brand to-orange-600 p-4">
             <div class="flex items-center justify-between text-white">
                 <div class="flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -320,11 +320,29 @@ export async function renderSavedOrders() {
                 </div>
                 <div class="space-y-1.5 max-h-32 overflow-y-auto">
                     ${order.items.map(item => `
-                        <div class="flex justify-between items-center text-sm bg-white p-2 rounded-lg border border-gray-100">
-                            <span class="text-gray-700 truncate flex-1">${item.name}</span>
-                            <div class="flex items-center gap-3 text-xs">
-                                <span class="text-gray-500">×${item.quantity}</span>
-                                <span class="font-semibold text-gray-900 min-w-[60px] text-right">€${(item.price * item.quantity).toFixed(2)}</span>
+                        <div class="flex flex-col text-sm bg-white p-2 rounded-lg border border-gray-100">
+                            <div class="flex justify-between items-start gap-2">
+                                <div class="flex-1 min-w-0">
+                                    <span class="text-gray-900 font-medium block">${item.displayName || item.name}</span>
+                                    ${item.configuration ? `
+                                    <div class="text-xs text-gray-600 mt-1 space-y-0.5">
+                                        ${item.configuration.chip ? `<div class="truncate">• Chip: ${item.configuration.chip}</div>` : ''}
+                                        ${item.configuration.ram ? `<div class="truncate">• RAM: ${item.configuration.ram}</div>` : ''}
+                                        ${item.configuration.storage ? `<div class="truncate">• Storage: ${item.configuration.storage}</div>` : ''}
+                                        ${item.configuration.color ? `<div class="truncate">• Colore: ${item.configuration.color}</div>` : ''}
+                                    </div>
+                                    ` : ''}
+                                    ${!item.configuration && (item.color || item.storage) ? `
+                                    <div class="text-xs text-gray-600 mt-1">
+                                        ${item.color ? `<span>🎨 ${item.color}</span>` : ''}
+                                        ${item.storage ? `<span class="ml-2">💾 ${item.storage}</span>` : ''}
+                                    </div>
+                                    ` : ''}
+                                </div>
+                                <div class="flex items-center gap-3 text-xs whitespace-nowrap">
+                                    <span class="text-gray-500">×${item.quantity}</span>
+                                    <span class="font-semibold text-gray-900 min-w-[60px] text-right">€${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
                             </div>
                         </div>
                     `).join('')}
@@ -347,15 +365,15 @@ export async function renderSavedOrders() {
             ` : ''}
 
             <!-- Total -->
-            <div class="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-2 border-purple-200 mb-4">
-                <span class="text-sm font-semibold text-gray-700">Totale</span>
-                <span class="text-2xl font-bold text-purple-600">€${parseFloat(order.total).toFixed(2)}</span>
+            <div class="saved-order-total flex items-center justify-between p-4 bg-gradient-to-r from-brand to-orange-600 rounded-xl mb-4">
+                <span class="text-sm font-semibold text-white">Totale</span>
+                <span class="text-2xl font-bold text-white">€${parseFloat(order.total).toFixed(2)}</span>
             </div>
 
             <!-- Actions -->
             <div class="flex gap-2">
                 <button
-                    class="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                    class="flex-1 px-4 py-2.5 bg-gradient-to-r from-brand to-orange-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-orange-600 hover:to-orange-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
                     onclick="exportOrderPDF(${order.id})"
                     title="Scarica PDF"
                 >
