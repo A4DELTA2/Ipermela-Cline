@@ -432,25 +432,33 @@
                     <button id="quick-cart-btn" title="Vai al carrello"
                         class="relative px-4 py-2.5 flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" </div>
-                                <button id="logout-btn"
-                                    class="p-2.5 bg-red-50 text-apple-red rounded-xl transition-all duration-300 hover:bg-apple-red hover:text-white hover:-translate-y-0.5"
-                                    title="Logout">
-                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
-                                </button>
-                </div>
-            </div>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span id="cart-count" class="hidden lg:inline">0</span>
+                        <span
+                            class="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full">0</span>
+                    </button>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn"
-                class="md:hidden p-2.5 bg-gray-100 text-gray-900 rounded-xl transition-all duration-300 hover:bg-gray-200">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+                    <!-- Logout -->
+                    <button id="logout-btn"
+                        class="p-2.5 bg-red-50 text-apple-red rounded-xl transition-all duration-300 hover:bg-apple-red hover:text-white hover:-translate-y-0.5"
+                        title="Logout">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2.5 bg-gray-100 text-gray-900 rounded-xl transition-all duration-300 hover:bg-gray-200">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
 
             <!-- Mobile Dropdown -->
             <div id="mobile-dropdown"
@@ -525,8 +533,7 @@
                     <span class="flex-1 text-left font-semibold">Esci</span>
                 </button>
             </div>
-    </div>
-    </header>
+        </header>
 
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">

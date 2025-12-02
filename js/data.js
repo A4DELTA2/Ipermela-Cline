@@ -215,10 +215,10 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)' },
-            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' },
-            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)' }
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-midnight.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-starlight.png' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-silver.png' },
+            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA13-skyblue.png' }
         ]
     },
     {
@@ -250,10 +250,9 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)' },
-            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' },
-            { name: 'Sky Blue', code: 'skyblue', gradient: 'linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%)' }
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-midnight.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-starlight-select.png' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Air/MBA15-silver.png' }
         ]
     },
 
@@ -298,8 +297,8 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)' },
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' }
+            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP14-spaceblack.png' },
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP14-silver.png' }
         ]
     },
 
@@ -340,8 +339,8 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)' },
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' }
+            { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP16-spaceblack.png' },
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Macbook/Pro/MBP16-silver.png' }
         ]
     },
 
@@ -377,13 +376,13 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Verde', code: 'green', gradient: 'linear-gradient(135deg, #A3E7D5 0%, #7FCFBB 100%)' },
-            { name: 'Giallo', code: 'yellow', gradient: 'linear-gradient(135deg, #FFE27A 0%, #F5D05A 100%)' },
-            { name: 'Arancione', code: 'orange', gradient: 'linear-gradient(135deg, #FFB97A 0%, #FF9F5A 100%)' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB3C8 0%, #FF93A8 100%)' },
-            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)' },
-            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)' },
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' }
+            { name: 'Verde', code: 'green', gradient: 'linear-gradient(135deg, #A3E7D5 0%, #7FCFBB 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-green.png' },
+            { name: 'Giallo', code: 'yellow', gradient: 'linear-gradient(135deg, #FFE27A 0%, #F5D05A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-yellow.png' },
+            { name: 'Arancione', code: 'orange', gradient: 'linear-gradient(135deg, #FFB97A 0%, #FF9F5A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-orange.png' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB3C8 0%, #FF93A8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-pink.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-purple.png' },
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-blue.png' },
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-silver.png' }
         ]
     },
     {
@@ -415,13 +414,13 @@ export const defaultProducts = [
             ]
         },
         colors: [
-            { name: 'Verde', code: 'green', gradient: 'linear-gradient(135deg, #A3E7D5 0%, #7FCFBB 100%)' },
-            { name: 'Giallo', code: 'yellow', gradient: 'linear-gradient(135deg, #FFE27A 0%, #F5D05A 100%)' },
-            { name: 'Arancione', code: 'orange', gradient: 'linear-gradient(135deg, #FFB97A 0%, #FF9F5A 100%)' },
-            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB3C8 0%, #FF93A8 100%)' },
-            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)' },
-            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)' },
-            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)' }
+            { name: 'Verde', code: 'green', gradient: 'linear-gradient(135deg, #A3E7D5 0%, #7FCFBB 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-green.png' },
+            { name: 'Giallo', code: 'yellow', gradient: 'linear-gradient(135deg, #FFE27A 0%, #F5D05A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-yellow.png' },
+            { name: 'Arancione', code: 'orange', gradient: 'linear-gradient(135deg, #FFB97A 0%, #FF9F5A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-orange.png' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB3C8 0%, #FF93A8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-pink.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-purple.png' },
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-blue.png' },
+            { name: 'Argento', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iMac/IMAC-silver.png' }
         ]
     },
 
@@ -435,6 +434,7 @@ export const defaultProducts = [
         category: 'mac',
         subcategory: 'mac-mini',
         icon: '🖥️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac%20Mini/mac-mini.png',
         baseConfig: {
             chip: 'M4 (10C CPU / 10C GPU)',
             ram: '16GB',
@@ -464,6 +464,7 @@ export const defaultProducts = [
         category: 'mac',
         subcategory: 'mac-mini',
         icon: '🖥️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac%20Mini/mac-mini.png',
         baseConfig: {
             chip: 'M4 Pro (12C CPU / 16C GPU)',
             ram: '24GB',
@@ -499,6 +500,7 @@ export const defaultProducts = [
         category: 'mac',
         subcategory: 'mac-studio',
         icon: '🖥️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac%20Studio/mac-studio.png',
         baseConfig: {
             chip: 'M4 Max (14C CPU / 32C GPU)',
             ram: '36GB',
@@ -531,6 +533,7 @@ export const defaultProducts = [
         category: 'mac',
         subcategory: 'mac-studio',
         icon: '🖥️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Mac%20Studio/mac-studio.png',
         baseConfig: {
             chip: 'M3 Ultra (28C CPU / 60C GPU)',
             ram: '96GB',
@@ -564,43 +567,146 @@ export const defaultProducts = [
         price: 1719,
         category: 'ipad',
         icon: '📲',
-        imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-13inch-spaceblack.png',
         colors: [
-            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://placehold.co/600x800/2C2C2E/ffffff?text=iPad+Pro+13+M5+Space+Black' },
-            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://placehold.co/600x800/E8E8E8/666666?text=iPad+Pro+13+M5+Silver' }
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-13inch-spaceblack.png' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-13inch-silver.png' }
         ],
         storage: ['256GB', '512GB', '1TB', '2TB'],
         storageNotes: '1TB e 2TB: 16GB RAM + 10-core CPU | 256GB/512GB: 12GB RAM + 9-core CPU'
     },
-    { id: 201, name: 'iPad Pro 11" (M5)', price: 1119, category: 'ipad', icon: '📲' },
-    { id: 202, name: 'iPad Air 13"', price: 669, category: 'ipad', icon: '📲' },
-    { id: 203, name: 'iPad Air 11"', price: 669, category: 'ipad', icon: '📲' },
-    { id: 204, name: 'iPad 11"', price: 389, category: 'ipad', icon: '📲' },
-    { id: 205, name: 'iPad mini', price: 559, category: 'ipad', icon: '📲' },
+    {
+        id: 201,
+        name: 'iPad Pro 11" (M5)',
+        price: 1119,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-11inch-spaceblack.png',
+        colors: [
+            { name: 'Space Black', code: 'space-black', gradient: 'linear-gradient(135deg, #2C2C2E 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-11inch-spaceblack.png' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Pro/ipad-pro-11inch-silver.png' }
+        ],
+        storage: ['256GB', '512GB', '1TB', '2TB']
+    },
+    {
+        id: 202,
+        name: 'iPad Air 13"',
+        price: 669,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-blue.png',
+        colors: [
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-blue.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-purple.png' },
+            { name: 'Space Gray', code: 'space-gray', gradient: 'linear-gradient(135deg, #5C5C5E 0%, #3C3C3E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-space-gray.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-starlight.png' }
+        ],
+        storage: ['128GB', '256GB', '512GB', '1TB']
+    },
+    {
+        id: 203,
+        name: 'iPad Air 11"',
+        price: 669,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-blue.png',
+        colors: [
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-blue.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-purple.png' },
+            { name: 'Space Gray', code: 'space-gray', gradient: 'linear-gradient(135deg, #5C5C5E 0%, #3C3C3E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-space-gray.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Air/IPAD-air-11inch-starlight.png' }
+        ],
+        storage: ['128GB', '256GB', '512GB', '1TB']
+    },
+    {
+        id: 204,
+        name: 'iPad 11"',
+        price: 389,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16%2010GEN/IPAD-10th-gen-blue.png',
+        colors: [
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16%2010GEN/IPAD-10th-gen-blue.png' },
+            { name: 'Rosa', code: 'pink', gradient: 'linear-gradient(135deg, #FFB3C8 0%, #FF93A8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16%2010GEN/IPAD-10th-gen-pink.png' },
+            { name: 'Silver', code: 'silver', gradient: 'linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16%2010GEN/IPAD-10th-gen-silver.png' },
+            { name: 'Giallo', code: 'yellow', gradient: 'linear-gradient(135deg, #FFE27A 0%, #F5D05A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/A16%2010GEN/IPAD-10th-gen-yellow.png' }
+        ],
+        storage: ['64GB', '256GB']
+    },
+    {
+        id: 205,
+        name: 'iPad mini',
+        price: 559,
+        category: 'ipad',
+        icon: '📲',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-blue.png',
+        colors: [
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-blue.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-purple.png' },
+            { name: 'Space Gray', code: 'space-gray', gradient: 'linear-gradient(135deg, #5C5C5E 0%, #3C3C3E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-space-gray.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPad/Mini/ipad-mini-starlight.png' }
+        ],
+        storage: ['128GB', '256GB', '512GB']
+    },
 
     // Accessori - AirPods
-    { id: 300, name: 'AirPods Pro 3', price: 249, category: 'accessori', icon: '🎧' },
-    { id: 301, name: 'AirPods 4 con ANC', price: 199, category: 'accessori', icon: '🎧' },
-    { id: 302, name: 'AirPods Max', price: 579, category: 'accessori', icon: '🎧' },
-
-    // Accessori - Apple Watch
-    { id: 310, name: 'Apple Watch Series 10', price: 449, category: 'accessori', icon: '⌚' },
-    { id: 311, name: 'Apple Watch SE', price: 279, category: 'accessori', icon: '⌚' },
-    { id: 312, name: 'Apple Watch Ultra 2', price: 899, category: 'accessori', icon: '⌚' },
+    {
+        id: 300,
+        name: 'AirPods Pro 3',
+        price: 249,
+        category: 'accessori',
+        icon: '🎧',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-pro-3.png'
+    },
+    {
+        id: 301,
+        name: 'AirPods 4 con ANC',
+        price: 199,
+        category: 'accessori',
+        icon: '🎧',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-4.png'
+    },
+    {
+        id: 302,
+        name: 'AirPods Max',
+        price: 579,
+        category: 'accessori',
+        icon: '🎧',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-midnight.png',
+        colors: [
+            { name: 'Midnight', code: 'midnight', gradient: 'linear-gradient(135deg, #1C1C1E 0%, #000000 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-midnight.png' },
+            { name: 'Starlight', code: 'starlight', gradient: 'linear-gradient(135deg, #F5F5F0 0%, #E8E8E0 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-starlight.png' },
+            { name: 'Blu', code: 'blue', gradient: 'linear-gradient(135deg, #9DD3FF 0%, #7DB3DF 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-blue.png' },
+            { name: 'Arancione', code: 'orange', gradient: 'linear-gradient(135deg, #FFB97A 0%, #FF9F5A 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-orange.png' },
+            { name: 'Viola', code: 'purple', gradient: 'linear-gradient(135deg, #D4C5F9 0%, #B4A5D9 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Airpods/airpods-max-purple.png' }
+        ]
+    },
 
     // Accessori - Input
     { id: 320, name: 'Magic Keyboard', price: 109, category: 'accessori', icon: '⌨️' },
     { id: 321, name: 'Magic Mouse', price: 89, category: 'accessori', icon: '🖱️' },
     { id: 322, name: 'Magic Trackpad', price: 149, category: 'accessori', icon: '🖱️' },
-    { id: 323, name: 'Apple Pencil Pro', price: 149, category: 'accessori', icon: '✏️' },
-    { id: 324, name: 'Apple Pencil (USB-C)', price: 89, category: 'accessori', icon: '✏️' },
+    {
+        id: 323,
+        name: 'Apple Pencil Pro',
+        price: 149,
+        category: 'accessori',
+        icon: '✏️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Apple%20Pencil/apple-pencil-pro.png'
+    },
+    {
+        id: 324,
+        name: 'Apple Pencil (USB-C)',
+        price: 89,
+        category: 'accessori',
+        icon: '✏️',
+        imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/Apple%20Pencil/apple-pencil-usbc.png'
+    },
 
     // Accessori - Vari
     { id: 330, name: 'AirTag', price: 39, category: 'accessori', icon: '📍' },
     { id: 331, name: 'AirTag (Confezione da 4)', price: 129, category: 'accessori', icon: '📍' },
     { id: 332, name: 'Custodia iPhone MagSafe', price: 59, category: 'accessori', icon: '📱' },
     { id: 333, name: 'Caricatore MagSafe', price: 49, category: 'accessori', icon: '🔌' },
-    { id: 334, name: 'Cavo USB-C (2m)', price: 35, category: 'accessori', icon: '🔌' },
-    { id: 335, name: 'HomePod mini', price: 109, category: 'accessori', icon: '🔊' },
-    { id: 336, name: 'HomePod', price: 349, category: 'accessori', icon: '🔊' }
+    { id: 334, name: 'Cavo USB-C (2m)', price: 35, category: 'accessori', icon: '🔌' }
 ];
