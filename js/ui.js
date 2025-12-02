@@ -52,6 +52,9 @@ export function toggleDarkMode() {
     // Salva la preferenza nel localStorage
     localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
 
+    // Aggiorna le icone nei pulsanti toggle
+    updateDarkModeIcons(isDarkMode);
+
     // Notifica l'utente del cambio tema
     showNotification(
         isDarkMode ? '🌙 Dark Mode attivato' : '☀️ Light Mode attivato',
@@ -62,24 +65,58 @@ export function toggleDarkMode() {
 }
 
 /**
+ * Aggiorna le icone del dark mode toggle
+ * @param {boolean} isDarkMode - Se il dark mode è attivo
+ */
+function updateDarkModeIcons(isDarkMode) {
+    // Aggiorna icone nel pulsante desktop
+    const sunIcons = document.querySelectorAll('.sun-icon');
+    const moonIcons = document.querySelectorAll('.moon-icon');
+
+    sunIcons.forEach(icon => {
+        if (isDarkMode) {
+            icon.classList.add('hidden');
+        } else {
+            icon.classList.remove('hidden');
+        }
+    });
+
+    moonIcons.forEach(icon => {
+        if (isDarkMode) {
+            icon.classList.remove('hidden');
+        } else {
+            icon.classList.add('hidden');
+        }
+    });
+}
+
+/**
  * Inizializza la modalità scura in base alle preferenze salvate
  */
 export function initDarkMode() {
     // Controlla se c'è una preferenza salvata nel localStorage
     const savedTheme = localStorage.getItem('darkMode');
 
+    let isDarkMode = false;
+
     // Se c'è una preferenza salvata, applicala
     if (savedTheme === 'enabled') {
         document.body.classList.add('dark-mode');
+        isDarkMode = true;
     } else if (savedTheme === 'disabled') {
         document.body.classList.remove('dark-mode');
+        isDarkMode = false;
     } else {
         // Se non c'è preferenza salvata, controlla la preferenza del sistema
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) {
             document.body.classList.add('dark-mode');
+            isDarkMode = true;
         }
     }
+
+    // Aggiorna le icone in base al tema attuale
+    updateDarkModeIcons(isDarkMode);
 }
 
 /**

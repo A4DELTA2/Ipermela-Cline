@@ -249,7 +249,7 @@
         <div class="flex h-full w-full">
             <!-- Left Side - Branding (Hidden on mobile) -->
             <div
-                class="hidden lg:flex lg:w-1/2 lg:min-w-[50%] bg-gradient-to-br from-apple-purple via-indigo-600 to-apple-darkpurple relative overflow-hidden">
+                class="hidden lg:flex lg:w-1/2 lg:min-w-[50%] bg-gradient-to-br from-orange-500 via-brand to-orange-600 relative overflow-hidden">
                 <!-- Animated Background Pattern -->
                 <div class="absolute inset-0 opacity-10">
                     <div
@@ -262,9 +262,10 @@
                 <!-- Content -->
                 <div class="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
                     <div class="text-center mb-12 animate-fade-in">
-                        <div class="text-8xl mb-6 drop-shadow-2xl">🍎</div>
-                        <h1 class="text-6xl font-bold mb-4 tracking-tight">Ipermela Store</h1>
-                        <p class="text-2xl text-white/80 font-light">Sistema Gestione Ordini</p>
+                        <div class="mb-8 flex justify-center">
+                            <img src="Logo_nero.png" alt="Ipermela Logo" class="h-32 w-auto object-contain drop-shadow-2xl brightness-0 invert">
+                        </div>
+                        <h1 class="text-4xl font-bold mb-4 tracking-tight">Sistema Gestione Ordini</h1>
                     </div>
 
                     <!-- Features -->
@@ -311,9 +312,10 @@
                 <div class="w-full max-w-md">
                     <!-- Mobile Logo (Visible only on mobile) -->
                     <div class="lg:hidden text-center mb-8 animate-fade-in">
-                        <div class="text-6xl mb-4">🍎</div>
-                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Ipermela Store</h1>
-                        <p class="text-gray-600">Sistema Gestione Ordini</p>
+                        <div class="mb-4 flex justify-center">
+                            <img src="Logo_nero.png" alt="Ipermela Logo" class="h-20 w-auto object-contain">
+                        </div>
+                        <h1 class="text-2xl font-bold text-gray-900">Sistema Gestione Ordini</h1>
                     </div>
 
                     <!-- Login Card -->
@@ -339,7 +341,7 @@
                                     </div>
                                     <input type="email" id="login-email" placeholder="tuaemail@ipermela.it" required
                                         autocomplete="email"
-                                        class="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 focus:outline-none focus:border-apple-purple focus:bg-white focus:ring-4 focus:ring-apple-purple/10" />
+                                        class="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-orange-500/10" />
                                 </div>
                             </div>
 
@@ -358,17 +360,17 @@
                                     </div>
                                     <input type="password" id="login-password" placeholder="••••••••" required
                                         autocomplete="current-password"
-                                        class="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 focus:outline-none focus:border-apple-purple focus:bg-white focus:ring-4 focus:ring-apple-purple/10" />
+                                        class="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 focus:outline-none focus:border-brand focus:bg-white focus:ring-4 focus:ring-orange-500/10" />
                                 </div>
                             </div>
 
                             <!-- Submit Button -->
                             <button type="submit" class="relative w-full group">
                                 <div
-                                    class="absolute -inset-0.5 bg-gradient-to-r from-apple-purple to-apple-darkpurple rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-300">
+                                    class="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-brand-dark rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-300">
                                 </div>
                                 <div
-                                    class="relative w-full py-4 bg-gradient-to-r from-apple-purple to-apple-darkpurple text-white font-semibold rounded-xl text-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                                    class="relative w-full py-4 bg-gradient-to-r from-brand to-orange-600 text-white font-semibold rounded-xl text-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30">
                                     <span>Accedi</span>
                                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -404,7 +406,8 @@
             <div class="flex items-center justify-between gap-4">
                 <!-- Logo & Brand -->
                 <div class="flex items-center gap-3">
-                    <img src="Logo_nero.png" alt="Ipermela Logo" class="h-12 w-auto object-contain">
+                    <img src="Logo_nero.png" alt="Ipermela Logo" class="h-12 w-auto object-contain logo-light">
+                    <img src="Logo_bianco.png" alt="Ipermela Logo" class="h-12 w-auto object-contain logo-dark hidden">
                 </div>
 
                 <!-- Desktop Actions -->
@@ -421,7 +424,7 @@
 
                     <!-- Quick Add -->
                     <button id="quick-add-btn" title="Aggiungi prodotto"
-                        class="px-4 py-2.5 flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5">
+                        class="px-4 py-2.5 flex items-center gap-2 bg-white text-gray-900 font-semibold rounded-xl border-2 border-dashed border-orange-500 transition-all duration-300 hover:bg-orange-50 hover:border-orange-600 hover:-translate-y-0.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
@@ -438,6 +441,20 @@
                         <span id="cart-count" class="hidden lg:inline">0</span>
                         <span
                             class="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full">0</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="dark-mode-toggle-btn" onclick="toggleDarkMode()"
+                        class="p-2.5 bg-gray-100 text-gray-900 rounded-xl transition-all duration-300 hover:bg-gray-200 hover:-translate-y-0.5"
+                        title="Toggle Dark Mode">
+                        <svg class="w-5 h-5 sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg class="w-5 h-5 moon-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
                     </button>
 
                     <!-- Logout -->
@@ -520,6 +537,21 @@
                     <span class="flex-1 text-left font-medium text-gray-900">Vai al Carrello</span>
                     <span id="cart-count-mobile"
                         class="min-w-[24px] h-6 px-2 flex items-center justify-center bg-apple-red text-white text-xs font-bold rounded-full">0</span>
+                </button>
+
+                <button onclick="toggleDarkMode()"
+                    class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 transition-colors hover:bg-gray-50">
+                    <div class="w-10 h-10 bg-gradient-to-r from-gray-700 to-gray-900 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg class="w-5 h-5 text-white moon-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </div>
+                    <span class="flex-1 text-left font-medium text-gray-900">Dark Mode</span>
                 </button>
 
                 <button id="mobile-logout-btn"

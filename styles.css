@@ -122,6 +122,135 @@ body.dark-mode {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Applica variabili CSS al body */
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Dark mode - applicazione selettiva dei colori */
+.dark-mode {
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%) !important;
+}
+
+/* Override background Tailwind in dark mode */
+body.dark-mode {
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%) !important;
+}
+
+/* App container background in dark mode */
+.dark-mode #app-container {
+    background: transparent !important;
+}
+
+/* Main sections in dark mode */
+.dark-mode section,
+.dark-mode .bg-white {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Cards and containers */
+.dark-mode .card,
+.dark-mode .bg-gray-50 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Text colors in dark mode */
+.dark-mode .text-gray-900,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3 {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .text-gray-600,
+.dark-mode .text-gray-700,
+.dark-mode p {
+    color: var(--text-secondary) !important;
+}
+
+/* Borders */
+.dark-mode .border-gray-200,
+.dark-mode border {
+    border-color: var(--border-color) !important;
+}
+
+/* Input fields in dark mode */
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode input::placeholder,
+.dark-mode select::placeholder,
+.dark-mode textarea::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* Accenti arancioni in dark mode */
+.dark-mode button:not(.bg-red-50):not(#logout-btn):not(#mobile-logout-btn):not(.border-gray-200):hover {
+    box-shadow: 0 0 20px rgba(255, 153, 0, 0.3) !important;
+}
+
+/* Header in dark mode */
+.dark-mode header {
+    background: rgba(30, 30, 30, 0.8) !important;
+    backdrop-filter: blur(10px);
+    border-color: var(--border-color) !important;
+}
+
+/* Logo switching in dark mode */
+.logo-light {
+    display: block;
+}
+
+.logo-dark {
+    display: none;
+}
+
+.dark-mode .logo-light {
+    display: none !important;
+}
+
+.dark-mode .logo-dark {
+    display: block !important;
+}
+
+/* Quick Add button styling */
+#quick-add-btn {
+    background: transparent !important;
+    color: #FF9900 !important;
+    border: none !important;
+    outline: 2px dashed #FF9900 !important;
+    outline-offset: -4px !important;
+}
+
+#quick-add-btn:hover {
+    background: #FF9900 !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.dark-mode #quick-add-btn {
+    background: transparent !important;
+    color: #FF9900 !important;
+    border: none !important;
+    outline: 2px dashed #FF9900 !important;
+    outline-offset: -4px !important;
+}
+
+.dark-mode #quick-add-btn:hover {
+    background: #FF9900 !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+}
+
 /* ===================================
    4. SCROLLBAR STYLING
    =================================== */
@@ -339,41 +468,279 @@ body.dark-mode {
 }
 
 /* ===================================
-   12. DARK MODE TOGGLE BUTTON
+   12. DARK MODE - COMPONENTI SPECIFICI
    =================================== */
-.theme-toggle {
+/* Product cards in dark mode */
+.dark-mode .product-card {
+    background-color: transparent !important;
+    border: 1px solid var(--border-color) !important;
     position: relative;
-    width: 60px;
-    height: 30px;
-    background: var(--border-color);
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.theme-toggle::before {
+/* Background as pseudo-element to control z-index */
+.dark-mode .product-card::before {
     content: '';
     position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 24px;
-    height: 24px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    inset: 0;
+    background-color: var(--bg-secondary);
+    z-index: -1;
+    border-radius: inherit;
 }
 
-.dark-mode .theme-toggle {
-    background: var(--accent-color);
+.dark-mode .product-card:hover {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 20px rgba(255, 153, 0, 0.2) !important;
 }
 
-.dark-mode .theme-toggle::before {
-    transform: translateX(30px);
+/* Ensure all content stays on top of background */
+.dark-mode .product-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Product card labels and text */
+.dark-mode .product-card label,
+.dark-mode .product-card .text-sm,
+.dark-mode .product-card .font-semibold {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode .product-card .text-xs,
+.dark-mode .product-card .text-gray-500 {
+    color: var(--text-secondary) !important;
+}
+
+/* Product card image background in dark mode */
+/* Target all bg-gray-100 divs to change background color */
+.dark-mode .product-card .bg-gray-100 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Ensure image container stays visible on hover */
+.dark-mode .product-card:hover .bg-gray-100 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Fix blend mode for product images in dark mode */
+.dark-mode .product-card img {
+    mix-blend-mode: normal !important;
+}
+
+/* Saved orders cards */
+.dark-mode #saved-orders > div {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Category buttons in dark mode */
+.dark-mode .category-btn,
+.dark-mode .subcategory-btn,
+.dark-mode .price-category-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode .category-btn:hover,
+.dark-mode .subcategory-btn:hover,
+.dark-mode .price-category-btn:hover {
+    border-color: var(--accent-color) !important;
+    color: var(--accent-color) !important;
+}
+
+/* Active category button */
+.dark-mode .category-btn.active,
+.dark-mode .bg-blue-600,
+.dark-mode .bg-blue-500 {
+    background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
+    border-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+/* Mac subcategories section in dark mode */
+.dark-mode #mac-subcategories {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.dark-mode #mac-subcategories .text-apple-blue,
+.dark-mode #mac-subcategories span {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode #mac-subcategories .text-blue-600 {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode #mac-subcategories svg {
+    color: var(--accent-color) !important;
+}
+
+/* Shopping cart in dark mode */
+.dark-mode .cart-section {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark-mode .cart-section .bg-gray-50 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Cart header gradient - mantiene il blu in dark mode */
+.dark-mode .bg-gradient-to-r.from-apple-blue {
+    background: linear-gradient(135deg, #0A84FF 0%, #0077ED 100%) !important;
+}
+
+/* Cart item count text */
+.dark-mode #cart-item-count,
+.dark-mode .cart-section p {
+    color: var(--text-primary) !important;
+}
+
+/* Cart labels and text */
+.dark-mode .cart-section .text-sm,
+.dark-mode .cart-section span:not(.text-white) {
+    color: var(--text-secondary) !important;
+}
+
+/* Cart buttons in dark mode - improve readability */
+.dark-mode #save-order-btn {
+    color: white !important;
+}
+
+.dark-mode #save-order-btn span,
+.dark-mode #save-order-btn svg {
+    color: white !important;
+}
+
+.dark-mode #clear-cart-btn {
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode #clear-cart-btn span,
+.dark-mode #clear-cart-btn svg {
+    color: var(--text-primary) !important;
+}
+
+/* Modals in dark mode */
+.dark-mode #order-modal > div,
+.dark-mode #price-management-section > div {
+    background-color: var(--bg-primary) !important;
+}
+
+/* Modal headers with gradients - mantengono i loro colori originali in dark mode */
+
+/* Tables in dark mode */
+.dark-mode table thead {
+    background: var(--bg-tertiary) !important;
+}
+
+.dark-mode table tbody {
+    background: var(--bg-secondary) !important;
+}
+
+.dark-mode table tbody tr {
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode table tbody tr:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Custom accessory form */
+.dark-mode .custom-accessory {
+    background: var(--bg-secondary) !important;
+    border-color: var(--accent-color) !important;
 }
 
 /* ===================================
-   13. MOBILE RESPONSIVE
+   13. LOGIN SCREEN DARK MODE
+   =================================== */
+/* Login screen background in dark mode */
+.dark-mode #login-screen .bg-gray-50 {
+    background-color: var(--bg-primary) !important;
+}
+
+/* Login card in dark mode */
+.dark-mode #login-screen .bg-white {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Logo visibility in dark mode - inverte il logo nero per renderlo bianco */
+.dark-mode #login-screen img[alt="Ipermela Logo"] {
+    filter: brightness(0) invert(1);
+}
+
+/* Input fields in dark mode */
+.dark-mode #login-screen input {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode #login-screen input::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* Text colors in dark mode */
+.dark-mode #login-screen .text-gray-900 {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode #login-screen .text-gray-600,
+.dark-mode #login-screen .text-gray-700 {
+    color: var(--text-secondary) !important;
+}
+
+.dark-mode #login-screen .border-gray-200 {
+    border-color: var(--border-color) !important;
+}
+
+/* ===================================
+   14. DARK MODE TOGGLE BUTTON
+   =================================== */
+#dark-mode-toggle-btn {
+    position: relative;
+}
+
+/* Light mode colors */
+#dark-mode-toggle-btn {
+    background-color: #E8E8ED;
+    color: #1D1D1F;
+}
+
+#dark-mode-toggle-btn:hover {
+    background-color: #D2D2D7;
+}
+
+/* Dark mode colors */
+.dark-mode #dark-mode-toggle-btn {
+    background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
+    color: white !important;
+    box-shadow: 0 0 20px rgba(255, 153, 0, 0.4) !important;
+}
+
+.dark-mode #dark-mode-toggle-btn:hover {
+    box-shadow: 0 0 30px rgba(255, 153, 0, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Dark mode toggle in mobile menu */
+.dark-mode button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
+    background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
+}
+
+.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"] {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"]:hover {
+    background-color: var(--bg-secondary) !important;
+    border-left: 3px solid var(--accent-color);
+}
+
+/* ===================================
+   15. MOBILE RESPONSIVE
    =================================== */
 @media (max-width: 768px) {
     #scroll-to-top {

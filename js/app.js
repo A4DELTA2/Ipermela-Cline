@@ -86,7 +86,7 @@ import {
 } from './pricing.js';
 
 // Import UI
-import { showNotification, initNotificationStyles } from './ui.js';
+import { showNotification, initNotificationStyles, initDarkMode, toggleDarkMode, createDarkModeToggle } from './ui.js';
 
 // Import utils
 import {
@@ -387,6 +387,7 @@ function exposeGlobals() {
 
     // UI
     window.showNotification = showNotification;
+    window.toggleDarkMode = toggleDarkMode;
 
     // Utils
     window.scrollToAddProduct = scrollToAddProduct;
@@ -406,6 +407,9 @@ function exposeGlobals() {
 document.addEventListener('DOMContentLoaded', async () => {
     // Inizializza stili notifiche
     initNotificationStyles();
+
+    // Inizializza Dark Mode
+    initDarkMode();
 
     // Espone variabili globalmente
     exposeGlobals();

@@ -11,6 +11,16 @@ export let searchQuery = '';
 
 export function setCurrentFilter(filter) {
     currentFilter = filter;
+
+    // Show/hide Mac subcategories
+    const macSubcategories = document.getElementById('mac-subcategories');
+    if (macSubcategories) {
+        if (filter === 'mac') {
+            macSubcategories.classList.remove('hidden');
+        } else {
+            macSubcategories.classList.add('hidden');
+        }
+    }
 }
 
 export function setCurrentSubcategory(subcategory) {
