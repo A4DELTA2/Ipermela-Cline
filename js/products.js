@@ -218,7 +218,7 @@ function renderProductCard(product) {
                         <button
                             data-storage-btn
                             ${index === 0 ? 'data-storage-selected="true"' : ''}
-                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-apple-blue bg-apple-blue text-white shadow-md' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
+                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-apple-darkblue bg-apple-darkblue text-white shadow-md hover:shadow-lg' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
                             onclick="event.stopPropagation(); selectProductStorage(${product.id}, this)"
                         >
                             ${storage}
@@ -381,13 +381,13 @@ export function selectProductStorage(productId, storageBtn) {
     if (!card) return;
 
     card.querySelectorAll('[data-storage-btn]').forEach(btn => {
-        btn.classList.remove('border-apple-blue', 'bg-apple-blue', 'text-white');
-        btn.classList.add('border-gray-200', 'bg-white', 'text-gray-700');
+        btn.classList.remove('border-apple-darkblue', 'bg-apple-darkblue', 'text-white', 'shadow-md', 'hover:shadow-lg');
+        btn.classList.add('border-gray-200', 'bg-white', 'text-gray-700', 'hover:border-gray-300', 'hover:bg-gray-50');
         btn.removeAttribute('data-storage-selected');
     });
 
-    storageBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700');
-    storageBtn.classList.add('border-apple-blue', 'bg-apple-blue', 'text-white');
+    storageBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700', 'hover:border-gray-300', 'hover:bg-gray-50');
+    storageBtn.classList.add('border-apple-darkblue', 'bg-apple-darkblue', 'text-white', 'shadow-md', 'hover:shadow-lg');
     storageBtn.setAttribute('data-storage-selected', 'true');
 
     const storageText = storageBtn.textContent.trim();

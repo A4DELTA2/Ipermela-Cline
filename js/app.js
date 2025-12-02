@@ -256,11 +256,11 @@ function setupPriceManagement() {
     document.querySelectorAll('.price-category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.price-category-btn').forEach(b => {
-                b.classList.remove('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md', 'active');
+                b.classList.remove('bg-brand-dark', 'text-white', 'border-brand-dark', 'shadow-md', 'active');
                 b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
             });
             btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-            btn.classList.add('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md', 'active');
+            btn.classList.add('bg-brand-dark', 'text-white', 'border-brand-dark', 'shadow-md', 'active');
             updatePriceFilter(btn.dataset.category);
         });
     });

@@ -453,7 +453,7 @@ function renderPriceTable() {
                 </div>
                 <input
                     type="number"
-                    class="w-36 pl-8 pr-3 py-2.5 border-2 rounded-xl text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 ${hasChanges ? 'border-amber-400 bg-amber-50 text-amber-900 focus:border-amber-500 focus:ring-amber-500/20' : 'border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-orange-500/20'}"
+                    class="w-36 pl-8 pr-3 py-2.5 border-2 rounded-xl text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 ${hasChanges ? 'border-apple-darkorange bg-amber-50 text-amber-900 focus:border-apple-darkorange focus:ring-apple-darkorange/20' : 'border-gray-200 text-gray-900 focus:border-brand-dark focus:ring-brand-dark/20'}"
                     value="${pendingPrice !== undefined ? pendingPrice : currentPrice.toFixed(2)}"
                     min="0"
                     step="0.01"
@@ -467,7 +467,7 @@ function renderPriceTable() {
         <td class="px-4 py-4">
             <div class="flex items-center justify-center gap-2">
                 <button
-                    class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium rounded-lg transition-all duration-300 hover:from-green-600 hover:to-emerald-700 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                    class="px-4 py-2 bg-gradient-to-r from-apple-darkgreen to-apple-green text-white font-medium rounded-lg transition-all duration-300 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
                     onclick="window.pricingModule.savePriceChange(${product.id})"
                     title="Salva prezzo"
                 >
@@ -477,7 +477,7 @@ function renderPriceTable() {
                     <span class="hidden sm:inline">Salva</span>
                 </button>
                 <button
-                    class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-orange-500 hover:bg-orange-500 hover:text-white hover:scale-105 active:scale-95"
+                    class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-brand-dark hover:bg-brand-dark hover:text-white hover:scale-105 active:scale-95"
                     onclick="window.pricingModule.resetPrice(${product.id})"
                     title="Ripristina prezzo originale"
                 >

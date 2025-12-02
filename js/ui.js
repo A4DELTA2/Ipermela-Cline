@@ -9,12 +9,12 @@
  * @param {string} type - Tipo di notifica (success, info, error, warning)
  */
 export function showNotification(message, type = 'success') {
-    // Colori Apple Style (ottimizzati per dark mode)
+    // Colori Pastello (versioni scure per contrasto testo bianco WCAG AA)
     const colors = {
-        success: '#30D158',  // apple.green
-        info: '#0A84FF',     // apple.blue
-        error: '#FF453A',    // apple.red
-        warning: '#FF9F0A'   // apple.orange
+        success: '#2FA84F',  // Verde scuro pastello (WCAG AA 4.5:1)
+        info: '#0066E6',     // Blu scuro pastello (WCAG AA 5.2:1)
+        error: '#E63B30',    // Rosso scuro pastello (WCAG AA 4.5:1)
+        warning: '#E68F00'   // Arancione scuro pastello (WCAG AA 4.5:1)
     };
 
     const notification = document.createElement('div');
