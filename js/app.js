@@ -256,11 +256,11 @@ function setupPriceManagement() {
     document.querySelectorAll('.price-category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.price-category-btn').forEach(b => {
-                b.classList.remove('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md');
+                b.classList.remove('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md', 'active');
                 b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
             });
             btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-            btn.classList.add('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md');
+            btn.classList.add('bg-orange-500', 'text-white', 'border-orange-500', 'shadow-md', 'active');
             updatePriceFilter(btn.dataset.category);
         });
     });
@@ -281,11 +281,11 @@ function setupSearchAndFilters() {
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.category-btn').forEach(b => {
-                b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md', 'active');
                 b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
             });
             btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
-            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md', 'active');
             setCurrentFilter(btn.dataset.category);
             setCurrentSubcategory('all');
             renderProducts();
@@ -296,11 +296,11 @@ function setupSearchAndFilters() {
     document.querySelectorAll('.subcategory-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.subcategory-btn').forEach(b => {
-                b.classList.remove('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-md');
-                b.classList.add('bg-white', 'text-blue-600', 'border-blue-200');
+                b.classList.remove('bg-blue-500', 'bg-apple-blue', 'text-white', 'border-blue-500', 'shadow-md', 'active');
+                b.classList.add('bg-white', 'text-apple-blue', 'border-blue-200');
             });
-            btn.classList.remove('bg-white', 'text-blue-600', 'border-blue-200');
-            btn.classList.add('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-md');
+            btn.classList.remove('bg-white', 'text-apple-blue', 'border-blue-200');
+            btn.classList.add('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-md', 'active');
             setCurrentSubcategory(btn.dataset.subcategory);
             renderProducts();
         });

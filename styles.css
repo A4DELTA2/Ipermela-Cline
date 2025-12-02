@@ -533,25 +533,25 @@ body.dark-mode {
 }
 
 /* Category buttons in dark mode */
-.dark-mode .category-btn,
-.dark-mode .subcategory-btn,
-.dark-mode .price-category-btn {
+.dark-mode .category-btn:not(.active),
+.dark-mode .subcategory-btn:not(.active),
+.dark-mode .price-category-btn:not(.active) {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode .category-btn:hover,
-.dark-mode .subcategory-btn:hover,
-.dark-mode .price-category-btn:hover {
+.dark-mode .category-btn:not(.active):hover,
+.dark-mode .subcategory-btn:not(.active):hover,
+.dark-mode .price-category-btn:not(.active):hover {
     border-color: var(--accent-color) !important;
     color: var(--accent-color) !important;
 }
 
-/* Active category button */
+/* Active category button - Higher specificity to override Tailwind classes */
 .dark-mode .category-btn.active,
-.dark-mode .bg-blue-600,
-.dark-mode .bg-blue-500 {
+.dark-mode .subcategory-btn.active,
+.dark-mode .price-category-btn.active {
     background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
     border-color: var(--accent-color) !important;
     color: white !important;
@@ -563,16 +563,13 @@ body.dark-mode {
     border-color: var(--accent-color) !important;
 }
 
-.dark-mode #mac-subcategories .text-apple-blue,
-.dark-mode #mac-subcategories span {
+/* Color for header text and icon only, not buttons */
+.dark-mode #mac-subcategories > div > .text-apple-blue,
+.dark-mode #mac-subcategories > div > span {
     color: var(--accent-color) !important;
 }
 
-.dark-mode #mac-subcategories .text-blue-600 {
-    color: var(--accent-color) !important;
-}
-
-.dark-mode #mac-subcategories svg {
+.dark-mode #mac-subcategories > div > svg {
     color: var(--accent-color) !important;
 }
 
@@ -740,6 +737,85 @@ body.dark-mode {
 }
 
 /* ===================================
+   16. MOBILE DROPDOWN DARK MODE
+   =================================== */
+/* Mobile menu button */
+.dark-mode #mobile-menu-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark-mode #mobile-menu-btn:hover {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark-mode #mobile-menu-btn svg {
+    color: var(--text-primary) !important;
+}
+
+/* Mobile dropdown background */
+.dark-mode #mobile-dropdown {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* User info section in mobile dropdown */
+.dark-mode #mobile-dropdown .bg-gradient-to-r {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* User email and text */
+.dark-mode #mobile-dropdown #user-email-mobile {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode #mobile-dropdown .text-xs {
+    color: var(--text-secondary) !important;
+}
+
+/* Menu items in dropdown */
+.dark-mode #mobile-dropdown button {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode #mobile-dropdown button:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark-mode #mobile-dropdown .border-gray-100 {
+    border-color: var(--border-color) !important;
+}
+
+/* User icon background */
+.dark-mode #mobile-dropdown .bg-gradient-to-br.from-apple-purple {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
+}
+
+/* Icon backgrounds - mantieni colori brand per coerenza con desktop */
+/* Gestione Prezzi - arancione */
+.dark-mode #mobile-dropdown button[data-action="price-management"] .bg-gradient-to-r {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
+}
+
+/* Aggiungi Prodotto - arancione per richiamare il border del desktop */
+.dark-mode #mobile-dropdown button[data-action="quick-add"] .bg-gradient-to-r {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
+}
+
+/* Carrello - blu */
+.dark-mode #mobile-dropdown button[data-action="quick-cart"] .bg-gradient-to-r {
+    background: linear-gradient(to right, #3B82F6 0%, #2563EB 100%) !important;
+}
+
+/* Dark Mode toggle - grigio scuro */
+.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
+    background: linear-gradient(to right, #374151 0%, #111827 100%) !important;
+}
+
+/* Exit button in mobile menu already styled in HTML with bg-apple-red */
+
+/* ===================================
    15. MOBILE RESPONSIVE
    =================================== */
 @media (max-width: 768px) {
@@ -749,6 +825,48 @@ body.dark-mode {
         width: 3rem;
         height: 3rem;
     }
+}
+
+/* ===================================
+   17. CONFIGURATION BUTTONS ANIMATIONS
+   =================================== */
+/* Pulsanti configuratore Mac con animazioni evidenti */
+.config-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative;
+}
+
+/* Pulsante selezionato - effetto evidente */
+.config-btn.border-blue-600.bg-blue-600 {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Dark mode - pulsante selezionato con colori brand */
+.dark-mode .config-btn.border-blue-600.bg-blue-600 {
+    background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4) !important;
+}
+
+/* Animazione pulse quando si clicca */
+@keyframes configPulse {
+    0%, 100% {
+        transform: scale(1.05);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.config-btn-selected {
+    animation: configPulse 0.4s ease-out;
+}
+
+/* Hover per pulsanti non selezionati */
+.config-btn:not(.bg-blue-600):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* ===================================

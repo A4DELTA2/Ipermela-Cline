@@ -599,6 +599,13 @@ export function selectChipVariant(productId, chipName) {
             if (chipSelector && newChipSelector) chipSelector.replaceWith(newChipSelector);
             if (ramSelector && newRamSelector) ramSelector.replaceWith(newRamSelector);
             if (storageSelector && newStorageSelector) storageSelector.replaceWith(newStorageSelector);
+
+            // Triggera le animazioni sui nuovi elementi dopo il replace
+            setTimeout(() => {
+                updateConfigSelectors(productId, 'chip');
+                updateConfigSelectors(productId, 'ram');
+                updateConfigSelectors(productId, 'storage');
+            }, 50);
         }
     }
 }
@@ -654,6 +661,12 @@ export function updateConfigSelectors(productId, selectorType) {
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
                 }`;
+
+            // Aggiungi animazione pulse al pulsante selezionato
+            if (isSelected) {
+                btn.classList.add('config-btn-selected');
+                setTimeout(() => btn.classList.remove('config-btn-selected'), 400);
+            }
         });
     }
 
@@ -664,6 +677,12 @@ export function updateConfigSelectors(productId, selectorType) {
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
                 }`;
+
+            // Aggiungi animazione pulse al pulsante selezionato
+            if (isSelected) {
+                btn.classList.add('config-btn-selected');
+                setTimeout(() => btn.classList.remove('config-btn-selected'), 400);
+            }
         });
     }
 
@@ -674,6 +693,12 @@ export function updateConfigSelectors(productId, selectorType) {
                     ? 'border-blue-600 bg-blue-600 text-white'
                     : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
                 }`;
+
+            // Aggiungi animazione pulse al pulsante selezionato
+            if (isSelected) {
+                btn.classList.add('config-btn-selected');
+                setTimeout(() => btn.classList.remove('config-btn-selected'), 400);
+            }
         });
     }
 }
