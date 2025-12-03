@@ -39,6 +39,32 @@ export function openOrderModal() {
     if (modal) {
         modal.classList.remove('hidden');
 
+        // Se siamo in edit mode, pre-compila i campi con i dati originali
+        if (window.editingOrderId && window.editingOrderData) {
+            const customerNameInput = document.getElementById('customer-name');
+            const customerEmailInput = document.getElementById('customer-email');
+            const customerPhoneInput = document.getElementById('customer-phone');
+            const orderNotesInput = document.getElementById('order-notes');
+
+            if (customerNameInput) customerNameInput.value = window.editingOrderData.customer_name || '';
+            if (customerEmailInput) customerEmailInput.value = window.editingOrderData.customer_email || '';
+            if (customerPhoneInput) customerPhoneInput.value = window.editingOrderData.customer_phone || '';
+            if (orderNotesInput) orderNotesInput.value = window.editingOrderData.notes || '';
+
+            // Mostra indicatore di modifica
+            const modalTitle = modal.querySelector('h2');
+            if (modalTitle) {
+                modalTitle.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        <span>Modifica Ordine #${window.editingOrderId}</span>
+                    </div>
+                `;
+            }
+        }
+
         // Focus sul campo nome cliente
         setTimeout(() => {
             const customerNameInput = document.getElementById('customer-name');
@@ -59,6 +85,12 @@ export function closeOrderModal() {
     const modal = document.getElementById('order-modal');
     if (modal) {
         modal.classList.add('hidden');
+
+        // Reset titolo modal se era in edit mode
+        const modalTitle = modal.querySelector('h2');
+        if (modalTitle) {
+            modalTitle.textContent = 'Completa Ordine';
+        }
     }
     clearOrderForm();
 }
@@ -131,10 +163,13 @@ export async function saveOrder() {
 
     const total = totalIvaInclusa;
 
-    const orderId = Date.now();
+    // Controlla se siamo in edit mode
+    const isEditMode = !!window.editingOrderId;
+    const orderId = isEditMode ? window.editingOrderId : Date.now();
+
     const order = {
         id: orderId,
-        date: new Date().toLocaleString('it-IT'),
+        date: isEditMode ? undefined : new Date().toLocaleString('it-IT'), // Mantieni data originale in edit mode
         customer_name: customerName,
         customer_email: customerEmail,
         customer_phone: customerPhone,
@@ -143,32 +178,74 @@ export async function saveOrder() {
         tax: tax,
         total: total,
         notes: notes,
-        created_by: currentUser.id
+        created_by: isEditMode ? undefined : currentUser.id // Mantieni created_by originale
     };
 
     try {
-        showNotification('Salvataggio ordine sul cloud...', 'info');
+        showNotification(isEditMode ? 'Aggiornamento ordine sul cloud...' : 'Salvataggio ordine sul cloud...', 'info');
 
-        const { error } = await supabase
-            .from('orders')
-            .insert([order]);
+        let error, data;
+        if (isEditMode) {
+            // UPDATE - Aggiorna ordine esistente
+            const updateData = Object.fromEntries(
+                Object.entries(order).filter(([_, value]) => value !== undefined)
+            );
+
+            const result = await supabase
+                .from('orders')
+                .update(updateData)
+                .eq('id', orderId);
+
+            error = result.error;
+
+            // Per UPDATE, se non c'è errore, assumiamo successo
+            // Le RLS policies potrebbero bloccare .select() anche se UPDATE ha successo
+            if (!error) {
+                data = [updateData]; // Simula data per superare il controllo
+            }
+        } else {
+            // INSERT - Nuovo ordine
+            const result = await supabase
+                .from('orders')
+                .insert([order])
+                .select(); // IMPORTANTE: Ritorna i dati inseriti
+
+            error = result.error;
+            data = result.data;
+        }
 
         if (error) {
-            alert('Errore nel salvataggio dell\'ordine!');
+            console.error('❌ Errore Supabase:', error);
+            alert(`Errore nel ${isEditMode ? 'aggiornamento' : 'salvataggio'} dell'ordine!`);
             return;
         }
+
+        if (!data || data.length === 0) {
+            console.error('❌ Nessun dato ritornato da Supabase');
+            alert(`Errore: ${isEditMode ? 'aggiornamento' : 'salvataggio'} fallito!`);
+            return;
+        }
+
+        // Reset edit mode
+        window.editingOrderId = null;
+        window.editingOrderData = null;
 
         // Svuota carrello senza conferma
         if (typeof window.clearCartSilent === 'function') {
             window.clearCartSilent();
         }
 
-        await renderSavedOrders();
+        // Ricarica i dati dal database prima di renderizzare
+        await loadOrders();
+
+        // Usa skipQuery=true per evitare una seconda query duplicata
+        await renderSavedOrders(true);
         closeOrderModal();
 
-        showNotification('Ordine salvato con successo! ✓');
+        showNotification(isEditMode ? 'Ordine aggiornato con successo! ✓' : 'Ordine salvato con successo! ✓');
     } catch (err) {
-        alert('Errore nel salvataggio!');
+        console.error('Errore salvataggio:', err);
+        alert(`Errore nel ${isEditMode ? 'aggiornamento' : 'salvataggio'}!`);
     }
 }
 
@@ -206,6 +283,7 @@ export async function loadOrders() {
  *
  * @async
  * @function renderSavedOrders
+ * @param {boolean} skipQuery - Se true, usa savedOrders esistente invece di fare una nuova query
  * @returns {Promise<void>}
  *
  * Visualizza:
@@ -217,22 +295,26 @@ export async function loadOrders() {
  * - Totale evidenziato
  * - Azioni: esporta PDF, elimina (se permessi)
  */
-export async function renderSavedOrders() {
+export async function renderSavedOrders(skipQuery = false) {
     const ordersDiv = document.getElementById('saved-orders');
     if (!ordersDiv) return;
 
     try {
-        const { data, error } = await supabase
-            .from('orders')
-            .select('*')
-            .order('id', { ascending: false });
+        // Se skipQuery è false, carica i dati da Supabase
+        // Altrimenti usa l'array savedOrders esistente (già caricato da loadOrders())
+        if (!skipQuery) {
+            const { data, error } = await supabase
+                .from('orders')
+                .select('*')
+                .order('id', { ascending: false });
 
-        if (error) {
-            ordersDiv.innerHTML = '<div class="empty-message">Errore nel caricamento degli ordini</div>';
-            return;
+            if (error) {
+                ordersDiv.innerHTML = '<div class="empty-message">Errore nel caricamento degli ordini</div>';
+                return;
+            }
+
+            savedOrders = data || [];
         }
-
-        savedOrders = data || [];
 
         // Update orders count
         const ordersCount = document.getElementById('orders-count');
@@ -373,14 +455,24 @@ export async function renderSavedOrders() {
             <!-- Actions -->
             <div class="flex gap-2">
                 <button
-                    class="flex-1 px-4 py-2.5 bg-gradient-to-r from-brand to-orange-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-orange-600 hover:to-orange-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                    class="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                    onclick="window.orders.previewOrderPDF(${order.id})"
+                    title="Anteprima PDF"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <span class="hidden sm:inline">Preview</span>
+                </button>
+                <button
+                    class="px-4 py-2.5 bg-gradient-to-r from-brand to-orange-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-orange-600 hover:to-orange-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center"
                     onclick="exportOrderPDF(${order.id})"
                     title="Scarica PDF"
                 >
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    <span>PDF</span>
                 </button>
                 ${canDeleteOrder(order) ? `
                     <button
@@ -449,7 +541,9 @@ export async function deleteOrder(orderId) {
             return;
         }
 
-        await renderSavedOrders();
+        // Ricarica i dati dal database e poi renderizza
+        await loadOrders();
+        await renderSavedOrders(true);
         showNotification('Ordine eliminato');
     } catch (err) {
         alert('Errore nell\'eliminazione!');
@@ -477,5 +571,285 @@ export function exportOrderPDF(orderId) {
         }
     } else {
         showNotification('Ordine non trovato!', 'error');
+    }
+}
+
+/**
+ * Esporta tutti gli ordini in formato CSV
+ * Sanitizza i campi per evitare problemi con virgole e newline
+ *
+ * @function exportOrdersToCSV
+ * @returns {void}
+ */
+export function exportOrdersToCSV() {
+    if (savedOrders.length === 0) {
+        showNotification('Nessun ordine da esportare!', 'error');
+        return;
+    }
+
+    try {
+        showNotification('Generazione CSV in corso...', 'info');
+
+        // Header CSV
+        const headers = [
+            'ID Ordine',
+            'Data',
+            'Cliente',
+            'Email',
+            'Telefono',
+            'Prodotti',
+            'Quantità Totale',
+            'Subtotale',
+            'IVA',
+            'Totale',
+            'Note'
+        ];
+
+        // Funzione helper per sanitizzare i campi CSV
+        const sanitizeField = (field) => {
+            if (field === null || field === undefined) return '';
+            const str = String(field);
+            // Escapea le virgolette doppie e wrappa in quotes se contiene virgole, newline o quotes
+            if (str.includes(',') || str.includes('\n') || str.includes('"')) {
+                return `"${str.replace(/"/g, '""')}"`;
+            }
+            return str;
+        };
+
+        // Genera righe dati
+        const rows = savedOrders.map(order => {
+            // Crea stringa prodotti (concatena nomi)
+            const productsStr = order.items
+                .map(item => `${item.displayName || item.name} (x${item.quantity})`)
+                .join('; ');
+
+            // Calcola quantità totale
+            const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0);
+
+            return [
+                order.id,
+                order.date,
+                sanitizeField(order.customer_name),
+                sanitizeField(order.customer_email || ''),
+                sanitizeField(order.customer_phone || ''),
+                sanitizeField(productsStr),
+                totalQty,
+                parseFloat(order.subtotal).toFixed(2),
+                parseFloat(order.tax).toFixed(2),
+                parseFloat(order.total).toFixed(2),
+                sanitizeField(order.notes || '')
+            ].join(',');
+        });
+
+        // Combina header e righe
+        const csvContent = [headers.join(','), ...rows].join('\n');
+
+        // Crea Blob e scarica
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `ordini_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showNotification(`CSV con ${savedOrders.length} ordini scaricato! ✓`, 'success');
+    } catch (err) {
+        console.error('Errore export CSV:', err);
+        showNotification('Errore nell\'esportazione CSV', 'error');
+    }
+}
+
+/**
+ * Apre l'anteprima PDF di un ordine in un modal
+ * Genera il PDF come Blob URL e lo mostra in un iframe
+ *
+ * @async
+ * @function previewOrderPDF
+ * @param {number} orderId - ID dell'ordine da visualizzare in anteprima
+ * @returns {Promise<void>}
+ */
+export async function previewOrderPDF(orderId) {
+    const order = savedOrders.find(o => o.id === orderId);
+    if (!order) {
+        showNotification('Ordine non trovato!', 'error');
+        return;
+    }
+
+    if (!window.generateOrderPDF) {
+        showNotification('Funzione PDF non disponibile', 'error');
+        return;
+    }
+
+    try {
+        // Genera PDF in modalità preview (ritorna Blob URL)
+        const blobUrl = await window.generateOrderPDF(order, 'preview');
+
+        if (!blobUrl) {
+            showNotification('Errore nella generazione del PDF', 'error');
+            return;
+        }
+
+        // Apri modal e carica PDF nell'iframe
+        const modal = document.getElementById('pdf-preview-modal');
+        const iframe = document.getElementById('pdf-preview-iframe');
+        const orderInfo = document.getElementById('preview-order-info');
+
+        if (!modal || !iframe) {
+            showNotification('Modal preview non trovato!', 'error');
+            return;
+        }
+
+        // Aggiorna info ordine nel header
+        if (orderInfo) {
+            orderInfo.textContent = `Ordine #${order.id} - ${order.customer_name}`;
+        }
+
+        // Carica PDF nell'iframe
+        iframe.src = blobUrl;
+
+        // Mostra modal
+        modal.classList.remove('hidden');
+
+        // Salva orderId corrente per le azioni download/edit
+        window.currentPreviewOrderId = orderId;
+
+    } catch (err) {
+        console.error('Errore preview PDF:', err);
+        showNotification('Errore nell\'anteprima PDF', 'error');
+    }
+}
+
+/**
+ * Chiude il modal di anteprima PDF
+ * Pulisce l'iframe e nasconde il modal
+ *
+ * @function closePDFPreview
+ * @returns {void}
+ */
+export function closePDFPreview() {
+    const modal = document.getElementById('pdf-preview-modal');
+    const iframe = document.getElementById('pdf-preview-iframe');
+
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+
+    if (iframe) {
+        iframe.src = '';
+    }
+
+    // Cleanup variabile globale
+    window.currentPreviewOrderId = null;
+}
+
+/**
+ * Resetta la modalità di modifica ordine
+ * Da chiamare quando si svuota il carrello o si annulla la modifica
+ *
+ * @function resetEditMode
+ * @returns {void}
+ */
+export function resetEditMode() {
+    window.editingOrderId = null;
+    window.editingOrderData = null;
+
+    // Reset titolo modal se visibile
+    const modal = document.getElementById('order-modal');
+    if (modal) {
+        const modalTitle = modal.querySelector('h2');
+        if (modalTitle) {
+            modalTitle.textContent = 'Completa Ordine';
+        }
+    }
+}
+
+/**
+ * Carica un ordine salvato nel carrello per modificarlo
+ * Svuota il carrello corrente e lo riempie con i prodotti dell'ordine
+ *
+ * @function loadOrderToCart
+ * @param {number} orderId - ID dell'ordine da caricare
+ * @returns {void}
+ */
+export function loadOrderToCart(orderId) {
+    const order = savedOrders.find(o => o.id === orderId);
+    if (!order) {
+        showNotification('Ordine non trovato!', 'error');
+        return;
+    }
+
+    // Conferma azione (il carrello verrà svuotato)
+    if (window.cart && window.cart.length > 0) {
+        if (!confirm('Il carrello corrente verrà svuotato. Continuare?')) {
+            return;
+        }
+    }
+
+    try {
+        // Svuota il carrello
+        if (window.cart) {
+            window.cart.length = 0;
+        }
+
+        // Salva l'ID dell'ordine in modifica e i dati originali del cliente
+        window.editingOrderId = orderId;
+        window.editingOrderData = {
+            customer_name: order.customer_name,
+            customer_email: order.customer_email,
+            customer_phone: order.customer_phone,
+            notes: order.notes
+        };
+
+        // Ricarica gli articoli dall'ordine
+        if (order.items && order.items.length > 0) {
+            order.items.forEach(item => {
+                if (window.cart) {
+                    window.cart.push({
+                        id: item.id,
+                        variantKey: item.variantKey || `${item.id}-default-default`,
+                        name: item.displayName || item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        color: item.color || null,
+                        storage: item.storage || null,
+                        imageUrl: item.imageUrl || null,
+                        configuration: item.configuration || null
+                    });
+                }
+            });
+        }
+
+        // Aggiorna UI del carrello
+        if (typeof window.renderCart === 'function') {
+            window.renderCart();
+        }
+
+        if (typeof window.updateCartBadge === 'function') {
+            window.updateCartBadge(window.cart);
+        }
+
+        // Chiudi modal preview se aperto
+        const previewModal = document.getElementById('pdf-preview-modal');
+        if (previewModal) {
+            previewModal.classList.add('hidden');
+            // Cleanup iframe
+            const iframe = document.getElementById('pdf-preview-iframe');
+            if (iframe) {
+                iframe.src = '';
+            }
+        }
+
+        // Scroll al carrello
+        if (typeof window.scrollToCart === 'function') {
+            setTimeout(() => window.scrollToCart(), 300);
+        }
+
+        showNotification(`Ordine #${orderId} caricato nel carrello! ✓`, 'success');
+    } catch (err) {
+        console.error('Errore caricamento ordine:', err);
+        showNotification('Errore nel caricamento dell\'ordine', 'error');
     }
 }

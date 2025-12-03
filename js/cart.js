@@ -214,6 +214,12 @@ export function clearCart() {
 export function clearCartSilent() {
     cart.length = 0; // Svuota l'array mantenendo il riferimento
     window.cart = cart; // Sincronizza con window
+
+    // Reset edit mode quando si svuota il carrello
+    if (typeof window.orders?.resetEditMode === 'function') {
+        window.orders.resetEditMode();
+    }
+
     renderCart();
     updateCartBadge(cart);
 }

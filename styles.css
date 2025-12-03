@@ -769,6 +769,33 @@ body.dark-mode {
     color: var(--text-secondary) !important;
 }
 
+/* Cart items - dark mode styling for product cards */
+.dark-mode #cart-items > div {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+
+.dark-mode #cart-items > div:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Cart item remove button in dark mode */
+.dark-mode #cart-items button {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-secondary) !important;
+}
+
+/* Cart item text colors */
+.dark-mode #cart-items .text-gray-900 {
+    color: var(--text-primary) !important;
+}
+
+.dark-mode #cart-items .text-gray-600 {
+    color: var(--text-secondary) !important;
+}
+
 /* Cart buttons in dark mode - improve readability */
 .dark-mode #save-order-btn {
     color: white !important;

@@ -64,7 +64,12 @@ import {
     closeOrderModal,
     saveOrder,
     deleteOrder,
-    exportOrderPDF
+    exportOrderPDF,
+    exportOrdersToCSV,
+    previewOrderPDF,
+    loadOrderToCart,
+    closePDFPreview,
+    resetEditMode
 } from './orders.js';
 
 // Import gestione prezzi
@@ -186,6 +191,9 @@ function setupEventListeners() {
 
     // Order modal
     setupOrderModal();
+
+    // PDF Preview modal
+    setupPDFPreviewModal();
 
     // Scroll to top button
     setupScrollToTop();
@@ -333,6 +341,50 @@ function setupOrderModal() {
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', clearCart);
     }
+
+    // Bottone "Esporta CSV"
+    const exportCSVBtn = document.getElementById('export-csv-btn');
+    if (exportCSVBtn) {
+        exportCSVBtn.addEventListener('click', exportOrdersToCSV);
+    }
+}
+
+/**
+ * Setup PDF Preview Modal event listeners
+ */
+function setupPDFPreviewModal() {
+    // Close buttons
+    const closePDFPreviewBtn = document.getElementById('close-pdf-preview');
+    if (closePDFPreviewBtn) {
+        closePDFPreviewBtn.addEventListener('click', closePDFPreview);
+    }
+
+    const closePreviewBtn = document.getElementById('close-preview-btn');
+    if (closePreviewBtn) {
+        closePreviewBtn.addEventListener('click', closePDFPreview);
+    }
+
+    // Download PDF button
+    const downloadPDFBtn = document.getElementById('download-pdf-btn');
+    if (downloadPDFBtn) {
+        downloadPDFBtn.addEventListener('click', () => {
+            const orderId = window.currentPreviewOrderId;
+            if (orderId) {
+                exportOrderPDF(orderId);
+            }
+        });
+    }
+
+    // Edit Order button
+    const editOrderBtn = document.getElementById('edit-order-btn');
+    if (editOrderBtn) {
+        editOrderBtn.addEventListener('click', () => {
+            const orderId = window.currentPreviewOrderId;
+            if (orderId) {
+                loadOrderToCart(orderId);
+            }
+        });
+    }
 }
 
 /**
@@ -380,6 +432,17 @@ function exposeGlobals() {
     window.deleteOrder = deleteOrder;
     window.exportOrderPDF = exportOrderPDF;
     window.renderSavedOrders = renderSavedOrders;
+
+    // Orders - New Features (exposed as window.orders object for ES Module scope)
+    window.orders = {
+        exportOrdersToCSV,
+        previewOrderPDF,
+        loadOrderToCart,
+        closePDFPreview,
+        exportOrderPDF,
+        deleteOrder,
+        resetEditMode
+    };
 
     // Pricing
     window.openPriceManagement = () => openPriceManagement(userRole);

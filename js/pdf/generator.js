@@ -8,8 +8,16 @@ let logoBase64 = null;
 // logoBase64 = 'data:image/png;base64,iVBORw0KG...';
 
 // Genera PDF per un singolo ordine
-async function generateOrderPDF(order) {
+// @param {Object} order - Oggetto ordine da esportare
+// @param {string} action - 'download' (default) o 'preview' (ritorna Blob URL)
+async function generateOrderPDF(order, action = 'download') {
     try {
+        // Verifica che jsPDF sia caricato
+        if (!window.jspdf) {
+            showNotification('Libreria PDF non caricata', 'error');
+            return null;
+        }
+
         showNotification('Generazione PDF in corso...', 'info');
 
         const { jsPDF } = window.jspdf;
@@ -176,15 +184,25 @@ async function generateOrderPDF(order) {
         doc.setFont('helvetica', 'italic');
         doc.setTextColor(150, 150, 150);
         doc.text('Documento generato automaticamente da Ipermela Store Management System', pageWidth / 2, pageHeight - 10, { align: 'center' });
-        
-        // Salva PDF
-        const fileName = `Ordine_${order.id}_${order.customer_name.replace(/\s+/g, '_')}.pdf`;
-        doc.save(fileName);
-        
-        showNotification('PDF scaricato con successo! \u2713', 'success');
+
+        // Gestisci action: download o preview
+        if (action === 'preview') {
+            // Genera Blob URL per preview
+            const pdfBlob = doc.output('blob');
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            showNotification('PDF generato per anteprima! \u2713', 'success');
+            return blobUrl;
+        } else {
+            // Download diretto (comportamento default)
+            const fileName = `Ordine_${order.id}_${order.customer_name.replace(/\s+/g, '_')}.pdf`;
+            doc.save(fileName);
+            showNotification('PDF scaricato con successo! \u2713', 'success');
+            return null;
+        }
     } catch (err) {
         console.error('Errore generazione PDF:', err);
         showNotification('Errore nella generazione del PDF', 'error');
+        return null;
     }
 }
 
