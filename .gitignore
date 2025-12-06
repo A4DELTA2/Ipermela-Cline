@@ -30,7 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
-dist/
+# dist/ - removed to deploy CSS to Netlify
 build/
 *.min.js
 *.min.css
