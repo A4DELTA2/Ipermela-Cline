@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // Abilita dark mode con classe .dark
   content: [
     "./*.html",
     "./js/**/*.js",
@@ -10,9 +11,10 @@ module.exports = {
       colors: {
         // Colori Brand Ipermela - Palette Pastello
         brand: {
-          DEFAULT: '#FFB366', // Arancione pastello principale
-          light: '#FFD199',   // Arancione chiaro per hover
-          dark: '#E67300',    // Arancione scuro per testo/stati attivi (WCAG AA)
+          DEFAULT: '#FF9900',    // Arancione pastello principale (light mode)
+          light: '#FFD199',      // Arancione chiaro per hover
+          dark: '#E67300',       // Arancione scuro per testo/stati attivi (WCAG AA)
+          darkmode: '#FFBD7A',   // Arancione pastello (DARK MODE)
         },
         // Palette Sfondi (Soft Black - Apple Style)
         dark: {
@@ -36,26 +38,31 @@ module.exports = {
           purple: '#D4A5FF',    // Viola pastello
           darkpurple: '#4A2470', // Viola scuro
         },
-        // Colori Semantici (controllo centralizzato dei gradienti)
+        // Colori Semantici (controllo centralizzato con Dark Mode)
         success: {
-          light: '#90E0A8',    // apple.green
-          DEFAULT: '#1F6F35',  // apple.darkgreen
-          dark: '#1F6F35',
+          light: '#90E0A8',      // Verde pastello (light mode)
+          DEFAULT: '#1F6F35',    // Verde scuro (light mode)
+          dark: '#5BC77A',       // Verde brillante (DARK MODE)
         },
         info: {
-          light: '#66AFFF',    // apple.blue
-          DEFAULT: '#1B3A5F',  // apple.darkblue
-          dark: '#1B3A5F',
+          light: '#66AFFF',      // Azzurro pastello (light mode)
+          DEFAULT: '#1B3A5F',    // Blu scuro (light mode)
+          dark: '#5AAFFF',       // Blu brillante (DARK MODE)
         },
         warning: {
-          light: '#FFD17A',    // apple.orange
-          DEFAULT: '#674918',  // apple.darkorange
-          dark: '#674918',
+          light: '#FFD17A',      // Giallo pastello (light mode)
+          DEFAULT: '#674918',    // Arancione scuro (light mode)
+          dark: '#FFBE5C',       // Giallo brillante (DARK MODE)
         },
         danger: {
-          light: '#FFB3AD',    // apple.red
-          DEFAULT: '#882C25',  // apple.darkred
-          dark: '#882C25',
+          light: '#FFB3AD',      // Rosa pesca (light mode)
+          DEFAULT: '#882C25',    // Rosso scuro (light mode)
+          dark: '#FF8A80',       // Rosso brillante (DARK MODE)
+        },
+        // Colore Bottoni Catalogo Prodotti
+        catalog: {
+          DEFAULT: '#21A4F6',    // Blu catalogo (light mode)
+          dark: '#5AB9FF',       // Blu più chiaro (dark mode)
         },
       },
       animation: {

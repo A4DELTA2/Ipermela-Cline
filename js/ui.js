@@ -47,7 +47,7 @@ export function showNotification(message, type = 'success') {
  */
 export function toggleDarkMode() {
     const body = document.body;
-    const isDarkMode = body.classList.toggle('dark-mode');
+    const isDarkMode = body.classList.toggle('dark');
 
     // Salva la preferenza nel localStorage
     localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
@@ -101,16 +101,16 @@ export function initDarkMode() {
 
     // Se c'è una preferenza salvata, applicala
     if (savedTheme === 'enabled') {
-        document.body.classList.add('dark-mode');
+        document.body.classList.add('dark');
         isDarkMode = true;
     } else if (savedTheme === 'disabled') {
-        document.body.classList.remove('dark-mode');
+        document.body.classList.remove('dark');
         isDarkMode = false;
     } else {
         // Se non c'è preferenza salvata, controlla la preferenza del sistema
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) {
-            document.body.classList.add('dark-mode');
+            document.body.classList.add('dark');
             isDarkMode = true;
         }
     }
@@ -148,7 +148,7 @@ export function createDarkModeToggle(containerId = 'dark-mode-toggle-container')
     });
 
     // Imposta l'icona corretta all'avvio
-    const isDarkMode = document.body.classList.contains('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark');
     updateToggleIcon(toggleButton, isDarkMode);
 
     container.appendChild(toggleButton);

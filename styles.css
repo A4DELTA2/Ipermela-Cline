@@ -60,7 +60,7 @@
    =================================== */
 
 /* Dark Mode via class */
-body.dark-mode {
+body.dark {
     --bg-primary: #121212;
     --bg-secondary: #1E1E1E;
     --bg-tertiary: #2A2A2A;
@@ -159,75 +159,75 @@ body {
 }
 
 /* Dark mode - applicazione selettiva dei colori */
-.dark-mode {
+.dark {
     background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%) !important;
 }
 
 /* Override background Tailwind in dark mode */
-body.dark-mode {
+body.dark {
     background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%) !important;
 }
 
 /* App container background in dark mode */
-.dark-mode #app-container {
+.dark #app-container {
     background: transparent !important;
 }
 
 /* Main sections in dark mode */
-.dark-mode section,
-.dark-mode .bg-white {
+.dark section,
+.dark .bg-white {
     background-color: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
 }
 
 /* Cards and containers */
-.dark-mode .card,
-.dark-mode .bg-gray-50 {
+.dark .card,
+.dark .bg-gray-50 {
     background-color: var(--bg-tertiary) !important;
 }
 
 /* Text colors in dark mode */
-.dark-mode .text-gray-900,
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3 {
+.dark .text-gray-900,
+.dark h1,
+.dark h2,
+.dark h3 {
     color: var(--text-primary) !important;
 }
 
-.dark-mode .text-gray-600,
-.dark-mode .text-gray-700,
-.dark-mode p {
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark p {
     color: var(--text-secondary) !important;
 }
 
 /* Borders */
-.dark-mode .border-gray-200,
-.dark-mode border {
+.dark .border-gray-200,
+.dark border {
     border-color: var(--border-color) !important;
 }
 
 /* Input fields in dark mode */
-.dark-mode input,
-.dark-mode select,
-.dark-mode textarea {
+.dark input,
+.dark select,
+.dark textarea {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode input::placeholder,
-.dark-mode select::placeholder,
-.dark-mode textarea::placeholder {
+.dark input::placeholder,
+.dark select::placeholder,
+.dark textarea::placeholder {
     color: var(--text-secondary) !important;
 }
 
 /* Accenti arancioni in dark mode */
-.dark-mode button:not(.bg-red-50):not(#logout-btn):not(#mobile-logout-btn):not(.border-gray-200):hover {
+.dark button:not(.bg-red-50):not(#logout-btn):not(#mobile-logout-btn):not(.border-gray-200):hover {
     box-shadow: 0 0 20px rgba(255, 153, 0, 0.3) !important;
 }
 
 /* Header in dark mode */
-.dark-mode header {
+.dark header {
     background: rgba(30, 30, 30, 0.8) !important;
     backdrop-filter: blur(10px);
     border-color: var(--border-color) !important;
@@ -242,11 +242,11 @@ body.dark-mode {
     display: none;
 }
 
-.dark-mode .logo-light {
+.dark .logo-light {
     display: none !important;
 }
 
-.dark-mode .logo-dark {
+.dark .logo-dark {
     display: block !important;
 }
 
@@ -266,7 +266,7 @@ body.dark-mode {
     border: none !important;
 }
 
-.dark-mode #quick-add-btn {
+.dark #quick-add-btn {
     background: transparent !important;
     color: #FF9900 !important;
     border: none !important;
@@ -274,7 +274,7 @@ body.dark-mode {
     outline-offset: -4px !important;
 }
 
-.dark-mode #quick-add-btn:hover {
+.dark #quick-add-btn:hover {
     background: #FF9900 !important;
     color: white !important;
     outline: none !important;
@@ -501,14 +501,14 @@ body.dark-mode {
    12. DARK MODE - COMPONENTI SPECIFICI
    =================================== */
 /* Product cards in dark mode */
-.dark-mode .product-card {
+.dark .product-card {
     background-color: transparent !important;
     border: 1px solid var(--border-color) !important;
     position: relative;
 }
 
 /* Background as pseudo-element to control z-index */
-.dark-mode .product-card::before {
+.dark .product-card::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -517,42 +517,42 @@ body.dark-mode {
     border-radius: inherit;
 }
 
-.dark-mode .product-card:hover {
+.dark .product-card:hover {
     border-color: var(--accent-color) !important;
     box-shadow: 0 0 20px rgba(255, 153, 0, 0.2) !important;
 }
 
 /* Ensure all content stays on top of background */
-.dark-mode .product-card > * {
+.dark .product-card > * {
     position: relative;
     z-index: 1;
 }
 
 /* Product card labels and text */
-.dark-mode .product-card label,
-.dark-mode .product-card .text-sm,
-.dark-mode .product-card .font-semibold {
+.dark .product-card label,
+.dark .product-card .text-sm,
+.dark .product-card .font-semibold {
     color: var(--text-primary) !important;
 }
 
-.dark-mode .product-card .text-xs,
-.dark-mode .product-card .text-gray-500 {
+.dark .product-card .text-xs,
+.dark .product-card .text-gray-500 {
     color: var(--text-secondary) !important;
 }
 
 /* Product card image background in dark mode */
 /* Target all bg-gray-100 divs to change background color */
-.dark-mode .product-card .bg-gray-100 {
+.dark .product-card .bg-gray-100 {
     background-color: var(--bg-tertiary) !important;
 }
 
 /* Ensure image container stays visible on hover */
-.dark-mode .product-card:hover .bg-gray-100 {
+.dark .product-card:hover .bg-gray-100 {
     background-color: var(--bg-tertiary) !important;
 }
 
 /* Fix blend mode for product images in dark mode */
-.dark-mode .product-card img {
+.dark .product-card img {
     mix-blend-mode: normal !important;
 }
 
@@ -591,258 +591,258 @@ body.dark-mode {
    =================================== */
 
 /* Dark mode - Saved Orders Section */
-.dark-mode .saved-orders-section {
+.dark .saved-orders-section {
     background-color: var(--bg-secondary) !important;
 }
 
 /* Dark mode - Saved Orders Section Header */
-.dark-mode .saved-orders-section-header {
+.dark .saved-orders-section-header {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
 }
 
 /* Dark mode - Export button hover */
-.dark-mode #export-all-orders-btn:hover {
+.dark #export-all-orders-btn:hover {
     background: rgba(255, 255, 255, 0.95) !important;
     color: #FF9900 !important;
 }
 
 /* Dark mode - Saved Order Cards */
-.dark-mode .saved-order-card {
+.dark .saved-order-card {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode .saved-order-card:hover {
+.dark .saved-order-card:hover {
     border-color: var(--accent-color) !important;
     box-shadow: 0 10px 30px rgba(255, 153, 0, 0.3) !important;
 }
 
 /* Dark mode - Order Card Body */
-.dark-mode .saved-order-card .bg-gray-50 {
+.dark .saved-order-card .bg-gray-50 {
     background-color: var(--bg-tertiary) !important;
 }
 
-.dark-mode .saved-order-card .text-gray-500 {
+.dark .saved-order-card .text-gray-500 {
     color: var(--text-secondary) !important;
 }
 
-.dark-mode .saved-order-card .text-gray-600,
-.dark-mode .saved-order-card .text-gray-700 {
+.dark .saved-order-card .text-gray-600,
+.dark .saved-order-card .text-gray-700 {
     color: var(--text-secondary) !important;
 }
 
-.dark-mode .saved-order-card .text-gray-900 {
+.dark .saved-order-card .text-gray-900 {
     color: var(--text-primary) !important;
 }
 
-.dark-mode .saved-order-card .font-semibold {
+.dark .saved-order-card .font-semibold {
     color: var(--text-primary) !important;
 }
 
 /* Dark mode - Order Notes */
-.dark-mode .saved-order-card .bg-amber-50 {
+.dark .saved-order-card .bg-amber-50 {
     background-color: rgba(255, 153, 0, 0.1) !important;
     border-color: var(--accent-color) !important;
 }
 
-.dark-mode .saved-order-card .text-amber-600 {
+.dark .saved-order-card .text-amber-600 {
     color: var(--accent-color) !important;
 }
 
-.dark-mode .saved-order-card .text-amber-800 {
+.dark .saved-order-card .text-amber-800 {
     color: #FFAC33 !important;
 }
 
 /* Dark mode - Product Items */
-.dark-mode .saved-order-card .bg-white {
+.dark .saved-order-card .bg-white {
     background-color: var(--bg-primary) !important;
 }
 
-.dark-mode .saved-order-card .border-gray-100 {
+.dark .saved-order-card .border-gray-100 {
     border-color: var(--border-color) !important;
 }
 
 /* Dark mode - Saved Order Header (mantiene il gradiente arancione) */
-.dark-mode .saved-order-header {
+.dark .saved-order-header {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
 }
 
 /* Dark mode - Saved Order Total (mantiene il gradiente arancione) */
-.dark-mode .saved-order-total {
+.dark .saved-order-total {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
     box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4) !important;
 }
 
 /* Dark mode - PDF Export Button */
-.dark-mode .saved-order-card button[onclick^="exportOrderPDF"] {
+.dark .saved-order-card button[onclick^="exportOrderPDF"] {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
 }
 
-.dark-mode .saved-order-card button[onclick^="exportOrderPDF"]:hover {
+.dark .saved-order-card button[onclick^="exportOrderPDF"]:hover {
     background: linear-gradient(135deg, #FFAC33 0%, #FFB347 100%) !important;
     box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4) !important;
 }
 
 /* Dark mode - Delete Button */
-.dark-mode .saved-order-card button[onclick^="deleteOrder"] {
+.dark .saved-order-card button[onclick^="deleteOrder"] {
     background-color: transparent !important;
     border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
 }
 
-.dark-mode .saved-order-card button[onclick^="deleteOrder"]:hover {
+.dark .saved-order-card button[onclick^="deleteOrder"]:hover {
     border-color: var(--error-color) !important;
     background-color: var(--error-color) !important;
     color: white !important;
 }
 
 /* Saved orders cards - Deprecated (sostituito dalle nuove classi sopra) */
-.dark-mode #saved-orders > div {
+.dark #saved-orders > div {
     background-color: var(--bg-secondary) !important;
     border: 1px solid var(--border-color) !important;
 }
 
 /* Category buttons in dark mode */
-.dark-mode .category-btn:not(.active),
-.dark-mode .subcategory-btn:not(.active),
-.dark-mode .price-category-btn:not(.active) {
+.dark .category-btn:not(.active),
+.dark .subcategory-btn:not(.active),
+.dark .price-category-btn:not(.active) {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode .category-btn:not(.active):hover,
-.dark-mode .subcategory-btn:not(.active):hover,
-.dark-mode .price-category-btn:not(.active):hover {
+.dark .category-btn:not(.active):hover,
+.dark .subcategory-btn:not(.active):hover,
+.dark .price-category-btn:not(.active):hover {
     border-color: var(--accent-color) !important;
     color: var(--accent-color) !important;
 }
 
 /* Active category button - Higher specificity to override Tailwind classes */
-.dark-mode .category-btn.active,
-.dark-mode .subcategory-btn.active,
-.dark-mode .price-category-btn.active {
+.dark .category-btn.active,
+.dark .subcategory-btn.active,
+.dark .price-category-btn.active {
     background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
     border-color: var(--accent-color) !important;
     color: white !important;
 }
 
 /* Mac subcategories section in dark mode */
-.dark-mode #mac-subcategories {
+.dark #mac-subcategories {
     background: var(--bg-tertiary) !important;
     border-color: var(--accent-color) !important;
 }
 
 /* Color for header text and icon only, not buttons */
-.dark-mode #mac-subcategories > div > .text-apple-blue,
-.dark-mode #mac-subcategories > div > span {
+.dark #mac-subcategories > div > .text-apple-blue,
+.dark #mac-subcategories > div > span {
     color: var(--accent-color) !important;
 }
 
-.dark-mode #mac-subcategories > div > svg {
+.dark #mac-subcategories > div > svg {
     color: var(--accent-color) !important;
 }
 
 /* Shopping cart in dark mode */
-.dark-mode .cart-section {
+.dark .cart-section {
     background-color: var(--bg-secondary) !important;
 }
 
-.dark-mode .cart-section .bg-gray-50 {
+.dark .cart-section .bg-gray-50 {
     background-color: var(--bg-tertiary) !important;
 }
 
 /* Cart header gradient - mantiene il blu in dark mode */
-.dark-mode .bg-gradient-to-r.from-apple-blue {
+.dark .bg-gradient-to-r.from-apple-blue {
     background: linear-gradient(135deg, #0A84FF 0%, #0077ED 100%) !important;
 }
 
 /* Cart item count text */
-.dark-mode #cart-item-count,
-.dark-mode .cart-section p {
+.dark #cart-item-count,
+.dark .cart-section p {
     color: var(--text-primary) !important;
 }
 
 /* Cart labels and text */
-.dark-mode .cart-section .text-sm,
-.dark-mode .cart-section span:not(.text-white) {
+.dark .cart-section .text-sm,
+.dark .cart-section span:not(.text-white) {
     color: var(--text-secondary) !important;
 }
 
 /* Cart items - dark mode styling for product cards */
-.dark-mode #cart-items > div {
+.dark #cart-items > div {
     background: transparent !important;
     border-color: transparent !important;
 }
 
-.dark-mode #cart-items > div:hover {
+.dark #cart-items > div:hover {
     border-color: transparent !important;
     box-shadow: none !important;
 }
 
 /* Cart item remove button in dark mode */
-.dark-mode #cart-items button {
+.dark #cart-items button {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
     color: var(--text-secondary) !important;
 }
 
 /* Cart item text colors */
-.dark-mode #cart-items .text-gray-900 {
+.dark #cart-items .text-gray-900 {
     color: var(--text-primary) !important;
 }
 
-.dark-mode #cart-items .text-gray-600 {
+.dark #cart-items .text-gray-600 {
     color: var(--text-secondary) !important;
 }
 
 /* Cart buttons in dark mode - improve readability */
-.dark-mode #save-order-btn {
+.dark #save-order-btn {
     color: white !important;
 }
 
-.dark-mode #save-order-btn span,
-.dark-mode #save-order-btn svg {
+.dark #save-order-btn span,
+.dark #save-order-btn svg {
     color: white !important;
 }
 
-.dark-mode #clear-cart-btn {
+.dark #clear-cart-btn {
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode #clear-cart-btn span,
-.dark-mode #clear-cart-btn svg {
+.dark #clear-cart-btn span,
+.dark #clear-cart-btn svg {
     color: var(--text-primary) !important;
 }
 
 /* Modals in dark mode */
-.dark-mode #order-modal > div,
-.dark-mode #price-management-section > div {
+.dark #order-modal > div,
+.dark #price-management-section > div {
     background-color: var(--bg-primary) !important;
 }
 
 /* Modal headers with gradients - mantengono i loro colori originali in dark mode */
 
 /* Tables in dark mode */
-.dark-mode table thead {
+.dark table thead {
     background: var(--bg-tertiary) !important;
 }
 
-.dark-mode table tbody {
+.dark table tbody {
     background: var(--bg-secondary) !important;
 }
 
-.dark-mode table tbody tr {
+.dark table tbody tr {
     border-color: var(--border-color) !important;
 }
 
-.dark-mode table tbody tr:hover {
+.dark table tbody tr:hover {
     background-color: var(--bg-tertiary) !important;
 }
 
 /* Custom accessory form */
-.dark-mode .custom-accessory {
+.dark .custom-accessory {
     background: var(--bg-secondary) !important;
     border-color: var(--accent-color) !important;
 }
@@ -851,42 +851,42 @@ body.dark-mode {
    13. LOGIN SCREEN DARK MODE
    =================================== */
 /* Login screen background in dark mode */
-.dark-mode #login-screen .bg-gray-50 {
+.dark #login-screen .bg-gray-50 {
     background-color: var(--bg-primary) !important;
 }
 
 /* Login card in dark mode */
-.dark-mode #login-screen .bg-white {
+.dark #login-screen .bg-white {
     background-color: var(--bg-secondary) !important;
 }
 
 /* Logo visibility in dark mode - inverte il logo nero per renderlo bianco */
-.dark-mode #login-screen img[alt="Ipermela Logo"] {
+.dark #login-screen img[alt="Ipermela Logo"] {
     filter: brightness(0) invert(1);
 }
 
 /* Input fields in dark mode */
-.dark-mode #login-screen input {
+.dark #login-screen input {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
 
-.dark-mode #login-screen input::placeholder {
+.dark #login-screen input::placeholder {
     color: var(--text-secondary) !important;
 }
 
 /* Text colors in dark mode */
-.dark-mode #login-screen .text-gray-900 {
+.dark #login-screen .text-gray-900 {
     color: var(--text-primary) !important;
 }
 
-.dark-mode #login-screen .text-gray-600,
-.dark-mode #login-screen .text-gray-700 {
+.dark #login-screen .text-gray-600,
+.dark #login-screen .text-gray-700 {
     color: var(--text-secondary) !important;
 }
 
-.dark-mode #login-screen .border-gray-200 {
+.dark #login-screen .border-gray-200 {
     border-color: var(--border-color) !important;
 }
 
@@ -908,27 +908,27 @@ body.dark-mode {
 }
 
 /* Dark mode colors */
-.dark-mode #dark-mode-toggle-btn {
+.dark #dark-mode-toggle-btn {
     background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
     color: white !important;
     box-shadow: 0 0 20px rgba(255, 153, 0, 0.4) !important;
 }
 
-.dark-mode #dark-mode-toggle-btn:hover {
+.dark #dark-mode-toggle-btn:hover {
     box-shadow: 0 0 30px rgba(255, 153, 0, 0.6) !important;
     transform: translateY(-2px) !important;
 }
 
 /* Dark mode toggle in mobile menu */
-.dark-mode button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
+.dark button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
     background: linear-gradient(135deg, #FF9900 0%, #E68A00 100%) !important;
 }
 
-.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"] {
+.dark #mobile-dropdown button[onclick="toggleDarkMode()"] {
     background-color: var(--bg-tertiary) !important;
 }
 
-.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"]:hover {
+.dark #mobile-dropdown button[onclick="toggleDarkMode()"]:hover {
     background-color: var(--bg-secondary) !important;
     border-left: 3px solid var(--accent-color);
 }
@@ -937,76 +937,76 @@ body.dark-mode {
    16. MOBILE DROPDOWN DARK MODE
    =================================== */
 /* Mobile menu button */
-.dark-mode #mobile-menu-btn {
+.dark #mobile-menu-btn {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
 }
 
-.dark-mode #mobile-menu-btn:hover {
+.dark #mobile-menu-btn:hover {
     background-color: var(--bg-secondary) !important;
 }
 
-.dark-mode #mobile-menu-btn svg {
+.dark #mobile-menu-btn svg {
     color: var(--text-primary) !important;
 }
 
 /* Mobile dropdown background */
-.dark-mode #mobile-dropdown {
+.dark #mobile-dropdown {
     background-color: var(--bg-secondary) !important;
     border-color: var(--border-color) !important;
 }
 
 /* User info section in mobile dropdown */
-.dark-mode #mobile-dropdown .bg-gradient-to-r {
+.dark #mobile-dropdown .bg-gradient-to-r {
     background: var(--bg-tertiary) !important;
     border-color: var(--border-color) !important;
 }
 
 /* User email and text */
-.dark-mode #mobile-dropdown #user-email-mobile {
+.dark #mobile-dropdown #user-email-mobile {
     color: var(--text-primary) !important;
 }
 
-.dark-mode #mobile-dropdown .text-xs {
+.dark #mobile-dropdown .text-xs {
     color: var(--text-secondary) !important;
 }
 
 /* Menu items in dropdown */
-.dark-mode #mobile-dropdown button {
+.dark #mobile-dropdown button {
     color: var(--text-primary) !important;
 }
 
-.dark-mode #mobile-dropdown button:hover {
+.dark #mobile-dropdown button:hover {
     background-color: var(--bg-tertiary) !important;
 }
 
-.dark-mode #mobile-dropdown .border-gray-100 {
+.dark #mobile-dropdown .border-gray-100 {
     border-color: var(--border-color) !important;
 }
 
 /* User icon background */
-.dark-mode #mobile-dropdown .bg-gradient-to-br.from-apple-purple {
+.dark #mobile-dropdown .bg-gradient-to-br.from-apple-purple {
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
 }
 
 /* Icon backgrounds - mantieni colori brand per coerenza con desktop */
 /* Gestione Prezzi - arancione */
-.dark-mode #mobile-dropdown button[data-action="price-management"] .bg-gradient-to-r {
+.dark #mobile-dropdown button[data-action="price-management"] .bg-gradient-to-r {
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
 }
 
 /* Aggiungi Prodotto - arancione per richiamare il border del desktop */
-.dark-mode #mobile-dropdown button[data-action="quick-add"] .bg-gradient-to-r {
+.dark #mobile-dropdown button[data-action="quick-add"] .bg-gradient-to-r {
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%) !important;
 }
 
 /* Carrello - blu */
-.dark-mode #mobile-dropdown button[data-action="quick-cart"] .bg-gradient-to-r {
+.dark #mobile-dropdown button[data-action="quick-cart"] .bg-gradient-to-r {
     background: linear-gradient(to right, #3B82F6 0%, #2563EB 100%) !important;
 }
 
 /* Dark Mode toggle - grigio scuro */
-.dark-mode #mobile-dropdown button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
+.dark #mobile-dropdown button[onclick="toggleDarkMode()"] .bg-gradient-to-r {
     background: linear-gradient(to right, #374151 0%, #111827 100%) !important;
 }
 
@@ -1051,7 +1051,7 @@ body.dark-mode {
 }
 
 /* Dark mode - pulsante selezionato con colore scuro come i filtri */
-.dark-mode .config-btn.border-blue-600.bg-blue-600 {
+.dark .config-btn.border-blue-600.bg-blue-600 {
     /* Usa lo stesso colore dei filtri per coerenza (WCAG AA 4.6:1) */
     background: var(--accent-active) !important;
     border-color: var(--accent-active) !important;
@@ -1060,9 +1060,9 @@ body.dark-mode {
 }
 
 /* Dark mode - forza testo bianco anche sui figli */
-.dark-mode .config-btn.border-blue-600.bg-blue-600 *,
-.dark-mode .config-btn.border-blue-600.bg-blue-600 span,
-.dark-mode .config-btn.border-blue-600.bg-blue-600 div {
+.dark .config-btn.border-blue-600.bg-blue-600 *,
+.dark .config-btn.border-blue-600.bg-blue-600 span,
+.dark .config-btn.border-blue-600.bg-blue-600 div {
     color: white !important;
 }
 

@@ -218,7 +218,7 @@ function renderProductCard(product) {
                         <button
                             data-storage-btn
                             ${index === 0 ? 'data-storage-selected="true"' : ''}
-                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-apple-darkblue bg-apple-darkblue text-white shadow-md hover:shadow-lg' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
+                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white shadow-md hover:shadow-lg' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
                             onclick="event.stopPropagation(); selectProductStorage(${product.id}, this)"
                         >
                             ${storage}
@@ -242,7 +242,7 @@ function renderProductCard(product) {
                 </div>
                 ` : ''}
 
-                <button class="w-full py-4 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-bold rounded-xl hover:from-apple-darkblue hover:to-indigo-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
+                <button class="w-full py-4 bg-catalog dark:bg-catalog-dark text-white font-bold rounded-xl hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
@@ -381,13 +381,13 @@ export function selectProductStorage(productId, storageBtn) {
     if (!card) return;
 
     card.querySelectorAll('[data-storage-btn]').forEach(btn => {
-        btn.classList.remove('border-apple-darkblue', 'bg-apple-darkblue', 'text-white', 'shadow-md', 'hover:shadow-lg');
+        btn.classList.remove('border-catalog', 'bg-catalog', 'dark:bg-catalog-dark', 'text-white', 'shadow-md', 'hover:shadow-lg');
         btn.classList.add('border-gray-200', 'bg-white', 'text-gray-700', 'hover:border-gray-300', 'hover:bg-gray-50');
         btn.removeAttribute('data-storage-selected');
     });
 
     storageBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700', 'hover:border-gray-300', 'hover:bg-gray-50');
-    storageBtn.classList.add('border-apple-darkblue', 'bg-apple-darkblue', 'text-white', 'shadow-md', 'hover:shadow-lg');
+    storageBtn.classList.add('border-catalog', 'bg-catalog', 'dark:bg-catalog-dark', 'text-white', 'shadow-md', 'hover:shadow-lg');
     storageBtn.setAttribute('data-storage-selected', 'true');
 
     const storageText = storageBtn.textContent.trim();
@@ -480,8 +480,8 @@ export function renderConfigurationSelectors(product) {
             return `
                     <button
                         class="config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${isSelected
-                    ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                 }"
                         onclick="event.stopPropagation(); selectChipVariant(${product.id}, '${chip.name}')"
                         data-chip="${chip.name}"
@@ -510,8 +510,8 @@ export function renderConfigurationSelectors(product) {
                 return `
                     <button
                         class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
-                        ? 'border-blue-600 bg-blue-600 text-white'
-                        : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                        ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                     }"
                         onclick="event.stopPropagation(); selectRamOption(${product.id}, '${ram.size}')"
                         data-ram="${ram.size}"
@@ -539,8 +539,8 @@ export function renderConfigurationSelectors(product) {
                 return `
                     <button
                         class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
-                        ? 'border-blue-600 bg-blue-600 text-white'
-                        : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                        ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                     }"
                         onclick="event.stopPropagation(); selectStorageOption(${product.id}, '${storage.size}')"
                         data-storage="${storage.size}"
@@ -658,8 +658,8 @@ export function updateConfigSelectors(productId, selectorType) {
         card.querySelectorAll(`#chip-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.chip === product.currentConfig.chip;
             btn.className = `config-btn px-3 py-2.5 border-2 rounded-lg text-sm transition-all ${isSelected
-                    ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                 }`;
 
             // Aggiungi animazione pulse al pulsante selezionato
@@ -674,8 +674,8 @@ export function updateConfigSelectors(productId, selectorType) {
         card.querySelectorAll(`#ram-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.ram === product.currentConfig.ram;
             btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
-                    ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                 }`;
 
             // Aggiungi animazione pulse al pulsante selezionato
@@ -690,8 +690,8 @@ export function updateConfigSelectors(productId, selectorType) {
         card.querySelectorAll(`#storage-selector-${productId} button`).forEach(btn => {
             const isSelected = btn.dataset.storage === product.currentConfig.storage;
             btn.className = `config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
-                    ? 'border-blue-600 bg-blue-600 text-white'
-                    : 'border-gray-200 bg-white text-gray-700 hover:border-blue-600'
+                    ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                 }`;
 
             // Aggiungi animazione pulse al pulsante selezionato
