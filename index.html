@@ -179,7 +179,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
-<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen">
+<body class="bg-gray-100 min-h-screen">
 
     <!-- Schermata di Login - Modern Split Design -->
     <div id="login-screen" class="fixed inset-0 z-50 overflow-hidden">
@@ -187,7 +187,7 @@
         <div class="flex h-full w-full">
             <!-- Left Side - Branding (Hidden on mobile) -->
             <div
-                class="hidden lg:flex lg:w-1/2 lg:min-w-[50%] bg-gradient-to-br from-slate-50 via-orange-50 to-slate-100 dark:from-dark-bg dark:via-dark-card dark:to-dark-bg relative overflow-hidden">
+                class="hidden lg:flex lg:w-1/2 lg:min-w-[50%] bg-orange-50 dark:bg-dark-bg relative overflow-hidden">
                 <!-- Animated Background Pattern -->
                 <div class="absolute inset-0 opacity-20">
                     <div
@@ -307,10 +307,10 @@
                             <!-- Submit Button -->
                             <button type="submit" class="relative w-full group">
                                 <div
-                                    class="absolute -inset-0.5 bg-gradient-to-r from-brand-dark to-brand-dark rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-300">
+                                    class="absolute -inset-0.5 bg-brand-dark rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-300">
                                 </div>
                                 <div
-                                    class="relative w-full py-4 bg-gradient-to-r from-brand-dark to-apple-darkorange text-white font-semibold rounded-xl text-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 shadow-lg shadow-brand-dark/30">
+                                    class="relative w-full py-4 bg-brand-dark text-white font-semibold rounded-xl text-lg transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 shadow-lg shadow-brand-dark/30">
                                     <span>Accedi</span>
                                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -354,7 +354,7 @@
                 <div class="hidden md:flex items-center gap-2">
                     <!-- Price Management -->
                     <button id="price-management-btn" title="Gestione Prezzi"
-                        class="hidden md:flex px-4 py-2.5 items-center gap-2 bg-gradient-to-r from-apple-darkorange to-brand-dark text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand-dark/30 hover:-translate-y-0.5">
+                        class="hidden md:flex px-4 py-2.5 items-center gap-2 bg-warning text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-warning/30 hover:-translate-y-0.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -373,7 +373,7 @@
 
                     <!-- Cart -->
                     <button id="quick-cart-btn" title="Vai al carrello"
-                        class="relative px-4 py-2.5 flex items-center gap-2 bg-gradient-to-r from-info-light to-info text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-info/30 hover:-translate-y-0.5">
+                        class="relative px-4 py-2.5 flex items-center gap-2 bg-info text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-info/30 hover:-translate-y-0.5">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -421,10 +421,10 @@
             <div id="mobile-dropdown"
                 class="hidden absolute top-20 right-4 bg-white rounded-2xl shadow-2xl min-w-[280px] overflow-hidden animate-slide-down z-50 border border-gray-200">
                 <!-- User Info -->
-                <div class="px-5 py-4 bg-gradient-to-r from-apple-purple/10 to-blue-50 border-b border-gray-200">
+                <div class="px-5 py-4 bg-purple-50 border-b border-gray-200">
                     <div class="flex items-center gap-3">
                         <div
-                            class="w-10 h-10 bg-gradient-to-br from-apple-purple to-apple-darkpurple rounded-xl flex items-center justify-center">
+                            class="w-10 h-10 bg-apple-purple rounded-xl flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -443,7 +443,7 @@
                     class="hidden w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 transition-colors hover:bg-gray-50"
                     data-action="price-management">
                     <div
-                        class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+                        class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -456,7 +456,7 @@
                     class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 transition-colors hover:bg-gray-50"
                     data-action="quick-add">
                     <div
-                        class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+                        class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
@@ -468,7 +468,7 @@
                     class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 transition-colors hover:bg-gray-50"
                     data-action="quick-cart">
                     <div
-                        class="w-10 h-10 bg-gradient-to-r from-info-light to-info rounded-xl flex items-center justify-center relative">
+                        class="w-10 h-10 bg-info rounded-xl flex items-center justify-center relative">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -481,7 +481,7 @@
 
                 <button onclick="toggleDarkMode()"
                     class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 transition-colors hover:bg-gray-50">
-                    <div class="w-10 h-10 bg-gradient-to-r from-gray-700 to-gray-900 rounded-xl flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -560,7 +560,7 @@
 
             <!-- Mac Subcategories -->
             <div id="mac-subcategories"
-                class="hidden p-4 mb-5 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl">
+                class="hidden p-4 mb-5 bg-blue-50 border-2 border-blue-200 rounded-xl">
                 <div class="flex items-center gap-2 mb-3">
                     <svg class="w-5 h-5 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -596,7 +596,7 @@
 
             <!-- Custom Accessory Form -->
             <div
-                class="custom-accessory relative overflow-hidden p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-dashed border-apple-blue rounded-2xl">
+                class="custom-accessory relative overflow-hidden p-6 bg-blue-50 border-2 border-dashed border-apple-blue rounded-2xl">
                 <!-- Decorative background -->
                 <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-apple-blue/5 rounded-full blur-2xl">
                 </div>
@@ -634,7 +634,7 @@
                         <input type="number" id="custom-price" placeholder="Prezzo (€)" min="0" step="0.01"
                             class="sm:w-40 px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/20 transition-all duration-300" />
                         <button id="add-custom-btn"
-                            class="px-6 py-3 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-apple-darkblue hover:to-indigo-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                            class="px-6 py-3 bg-info text-white font-semibold rounded-xl transition-all duration-300 hover:bg-info-dark hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -650,7 +650,7 @@
         <section
             class="cart-section lg:col-span-1 bg-white rounded-2xl shadow-lg overflow-hidden lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] flex flex-col">
             <!-- Cart Header -->
-            <div class="bg-gradient-to-r from-apple-blue to-indigo-600 p-6">
+            <div class="bg-info p-6">
                 <div class="flex items-center gap-3 text-white">
                     <div class="flex items-center justify-center w-10 h-10 bg-white/20 rounded-xl backdrop-blur-sm">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -702,7 +702,7 @@
                 <!-- Cart Actions -->
                 <div class="space-y-2">
                     <button id="save-order-btn"
-                        class="w-full py-3.5 bg-gradient-to-r from-apple-blue to-indigo-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-apple-darkblue hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        class="w-full py-3.5 bg-info text-white font-semibold rounded-xl transition-all duration-300 hover:bg-info-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
@@ -724,7 +724,7 @@
     <!-- Saved Orders Section -->
     <section class="saved-orders-section bg-white rounded-2xl shadow-lg overflow-hidden">
         <!-- Header with gradient -->
-        <div class="saved-orders-section-header bg-gradient-to-r from-brand to-orange-600 p-6">
+        <div class="saved-orders-section-header bg-brand p-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div class="flex items-center gap-3 text-white">
                     <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl backdrop-blur-sm">
@@ -774,7 +774,7 @@
         class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-fade-in">
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-success-light via-success to-success-dark p-6">
+            <div class="bg-success p-6">
                 <div class="flex items-center justify-between text-white">
                     <div class="flex items-center gap-3">
                         <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl backdrop-blur-sm">
@@ -875,7 +875,7 @@
 
                     <!-- Confirm Button -->
                     <button id="confirm-order-btn"
-                        class="w-full py-3.5 bg-gradient-to-r from-success-light to-success text-white font-semibold rounded-xl transition-all duration-300 hover:from-success hover:to-success-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mt-6">
+                        class="w-full py-3.5 bg-success text-white font-semibold rounded-xl transition-all duration-300 hover:bg-success-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mt-6">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
@@ -891,7 +891,7 @@
         class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[90vh] overflow-hidden animate-fade-in flex flex-col">
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-brand to-orange-600 p-4 flex-shrink-0">
+            <div class="bg-brand p-4 flex-shrink-0">
                 <div class="flex items-center justify-between text-white">
                     <div class="flex items-center gap-3">
                         <div class="flex items-center justify-center w-10 h-10 bg-white/20 rounded-xl backdrop-blur-sm">
@@ -924,7 +924,7 @@
             <div class="bg-gray-50 p-4 border-t-2 border-gray-200 flex-shrink-0">
                 <div class="flex flex-col sm:flex-row gap-3">
                     <button id="download-pdf-btn"
-                        class="flex-1 px-6 py-3 bg-gradient-to-r from-brand to-orange-600 text-white font-semibold rounded-xl transition-all duration-300 hover:from-orange-600 hover:to-orange-700 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        class="flex-1 px-6 py-3 bg-brand text-white font-semibold rounded-xl transition-all duration-300 hover:bg-brand-dark hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -932,7 +932,7 @@
                         <span>Scarica PDF</span>
                     </button>
                     <button id="edit-order-btn"
-                        class="flex-1 px-6 py-3 bg-gradient-to-r from-info-light to-info text-white font-semibold rounded-xl transition-all duration-300 hover:from-info hover:to-info-dark hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        class="flex-1 px-6 py-3 bg-info text-white font-semibold rounded-xl transition-all duration-300 hover:bg-info-dark hover:shadow-lg hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -958,7 +958,7 @@
         <div class="bg-white max-w-7xl mx-auto rounded-2xl shadow-2xl overflow-hidden my-8 animate-fade-in">
 
             <!-- Header with gradient -->
-            <div class="bg-gradient-to-r from-warning to-brand to-warning-light p-6">
+            <div class="bg-warning p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3 text-white">
                         <div class="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl backdrop-blur-sm">
@@ -1030,7 +1030,7 @@
             <!-- Price Table -->
             <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
                 <table id="price-table" class="w-full">
-                    <thead class="bg-gradient-to-r from-gray-100 to-gray-50 sticky top-0 z-10 shadow-sm">
+                    <thead class="bg-gray-100 sticky top-0 z-10 shadow-sm">
                         <tr>
                             <th
                                 class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider border-b-2 border-gray-200">
@@ -1059,7 +1059,7 @@
             <div class="p-6 bg-gray-50 border-t-2 border-gray-200">
                 <div class="flex flex-col sm:flex-row gap-3">
                     <button id="save-all-prices-btn"
-                        class="flex-1 py-3.5 bg-gradient-to-r from-success-light to-success text-white font-semibold rounded-xl transition-all duration-300 hover:from-success hover:to-success-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        class="flex-1 py-3.5 bg-success text-white font-semibold rounded-xl transition-all duration-300 hover:bg-success-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -1067,7 +1067,7 @@
                         <span>Salva Tutte le Modifiche</span>
                     </button>
                     <button id="reset-all-prices-btn"
-                        class="flex-1 py-3.5 bg-gradient-to-r from-warning to-danger text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                        class="flex-1 py-3.5 bg-danger text-white font-semibold rounded-xl transition-all duration-300 hover:bg-danger-dark hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
