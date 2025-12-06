@@ -26,7 +26,7 @@ module.exports = {
         // Colori Funzionali - Palette Pastello
         apple: {
           blue: '#66AFFF',      // Azzurro pastello (sfondo/badge)
-          darkblue: '#1B3A5F',  // Blu scuro per testo/link (WCAG AA)
+          darkblue: '#0066E6',  // Blu scuro per testo/link (WCAG AA)
           red: '#FFB3AD',       // Rosa pesca pastello (sfondo)
           darkred: '#882C25',   // Rosso scuro per testo (WCAG AA)
           green: '#90E0A8',     // Verde pastello (sfondo)
