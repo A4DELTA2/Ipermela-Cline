@@ -24,15 +24,14 @@ export const productPricing = {
     },
     // iPhone Air
     3: {
+        '256GB': 1099,
         '512GB': 1259,
         '1TB': 1599
     },
     // iPhone 17
     4: {
-        '128GB': 999,
         '256GB': 1249,
-        '512GB': 1499,
-        '1TB': 1759
+        '512GB': 1499
     },
     // iPhone 16 Plus
     5: {
@@ -115,12 +114,12 @@ export const defaultProducts = [
             { name: 'Nero Siderale', code: 'spaceblack', gradient: 'linear-gradient(135deg, #000000 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/iPhone%20Air-black.png' },
             { name: 'Bianco Nuvola', code: 'cloudwhite', gradient: 'linear-gradient(135deg, #FCFCFC 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%20Air/iPhone%20Air-cloudwhite.png' }
         ],
-        storage: ['512GB', '1TB']
+        storage: ['256GB', '512GB', '1TB']
     },
     {
         id: 4,
         name: 'iPhone 17',
-        price: 999,
+        price: 1249,
         category: 'iphone',
         icon: '📱',
         imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017/iPhone%2017-lavanda.png',
@@ -131,7 +130,7 @@ export const defaultProducts = [
             { name: 'Nero', code: 'black', gradient: 'linear-gradient(135deg, #353839 0%, #1C1C1E 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017/iPhone%2017-black.png' },
             { name: 'Bianco', code: 'white', gradient: 'linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%)', imageUrl: 'https://prldireomgijzfppeunp.supabase.co/storage/v1/object/public/product-icons/iPhone%2017/iPhone%2017-white.png' }
         ],
-        storage: ['128GB', '256GB', '512GB', '1TB']
+        storage: ['256GB', '512GB']
     },
 
 
