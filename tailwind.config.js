@@ -26,16 +26,37 @@ module.exports = {
         // Colori Funzionali - Palette Pastello
         apple: {
           blue: '#66AFFF',      // Azzurro pastello (sfondo/badge)
-          darkblue: '#0066E6',  // Blu scuro per testo/link (WCAG AA)
+          darkblue: '#1B3A5F',  // Blu scuro per testo/link (WCAG AA)
           red: '#FFB3AD',       // Rosa pesca pastello (sfondo)
-          darkred: '#E63B30',   // Rosso scuro per testo (WCAG AA)
+          darkred: '#882C25',   // Rosso scuro per testo (WCAG AA)
           green: '#90E0A8',     // Verde pastello (sfondo)
-          darkgreen: '#2FA84F', // Verde scuro per testo (WCAG AA)
+          darkgreen: '#1F6F35', // Verde scuro per testo (WCAG AA)
           orange: '#FFD17A',    // Giallo pesca pastello (sfondo)
-          darkorange: '#E68F00', // Arancione scuro per testo (WCAG AA)
+          darkorange: '#674918', // Arancione scuro per testo (WCAG AA)
           purple: '#D4A5FF',    // Viola pastello
-          darkpurple: '#9B5FD9', // Viola scuro
-        }
+          darkpurple: '#4A2470', // Viola scuro
+        },
+        // Colori Semantici (controllo centralizzato dei gradienti)
+        success: {
+          light: '#90E0A8',    // apple.green
+          DEFAULT: '#1F6F35',  // apple.darkgreen
+          dark: '#1F6F35',
+        },
+        info: {
+          light: '#66AFFF',    // apple.blue
+          DEFAULT: '#1B3A5F',  // apple.darkblue
+          dark: '#1B3A5F',
+        },
+        warning: {
+          light: '#FFD17A',    // apple.orange
+          DEFAULT: '#674918',  // apple.darkorange
+          dark: '#674918',
+        },
+        danger: {
+          light: '#FFB3AD',    // apple.red
+          DEFAULT: '#882C25',  // apple.darkred
+          dark: '#882C25',
+        },
       },
       animation: {
         'slide-in': 'slideIn 0.5s ease-out',
