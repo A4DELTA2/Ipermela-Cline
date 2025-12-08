@@ -467,7 +467,7 @@ function renderPriceTable() {
         <td class="px-4 py-4">
             <div class="flex items-center justify-center gap-2">
                 <button
-                    class="px-4 py-2 bg-gradient-to-r from-apple-darkgreen to-apple-green text-white font-medium rounded-lg transition-all duration-300 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                    class="px-4 py-2 bg-[#5BC77A] text-white font-medium rounded-lg transition-all duration-300 hover:opacity-90 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
                     onclick="window.pricingModule.savePriceChange(${product.id})"
                     title="Salva prezzo"
                 >
