@@ -40,23 +40,23 @@ module.exports = {
         },
         // Colori Semantici (controllo centralizzato con Dark Mode)
         success: {
-          light: '#90E0A8',      // Verde pastello (light mode)
-          DEFAULT: '#1F6F35',    // Verde scuro (light mode)
+          light: '#90E0A8',      // Verde pastello
+          DEFAULT: '#5BC77A',    // Verde brillante (LIGHT MODE)
           dark: '#5BC77A',       // Verde brillante (DARK MODE)
         },
         info: {
-          light: '#66AFFF',      // Azzurro pastello (light mode)
-          DEFAULT: '#1B3A5F',    // Blu scuro (light mode)
+          light: '#66AFFF',      // Azzurro pastello
+          DEFAULT: '#5AAFFF',    // Blu brillante (LIGHT MODE)
           dark: '#5AAFFF',       // Blu brillante (DARK MODE)
         },
         warning: {
-          light: '#FFD17A',      // Giallo pastello (light mode)
-          DEFAULT: '#674918',    // Arancione scuro (light mode)
+          light: '#FFD17A',      // Giallo pastello
+          DEFAULT: '#FFBE5C',    // Giallo brillante (LIGHT MODE)
           dark: '#FFBE5C',       // Giallo brillante (DARK MODE)
         },
         danger: {
-          light: '#FFB3AD',      // Rosa pesca (light mode)
-          DEFAULT: '#882C25',    // Rosso scuro (light mode)
+          light: '#FFB3AD',      // Rosa pesca
+          DEFAULT: '#FF8A80',    // Rosso brillante (LIGHT MODE)
           dark: '#FF8A80',       // Rosso brillante (DARK MODE)
         },
         // Colore Bottoni Catalogo Prodotti
