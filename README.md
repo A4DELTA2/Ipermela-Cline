@@ -1,112 +1,94 @@
 # 🍎 Ipermela Store - Sistema Gestione Ordini
 
-Applicazione web per la gestione degli ordini del negozio Ipermela Store, specializzato in prodotti Apple.
+Applicazione web moderna per la gestione degli ordini del negozio Ipermela Store, specializzato in prodotti Apple.
+Il progetto è stato recentemente rifattorizzato passando da un'architettura monolitica a una struttura **modulare ES6** scalabile.
 
 ## 📋 Descrizione
 
-Ipermela Store è un'applicazione moderna e intuitiva che permette di:
-- 📱 Gestire un catalogo completo di prodotti Apple (iPhone, Mac, iPad, Accessori)
-- 🛒 Creare ordini con carrello dinamico
-- ➕ Aggiungere accessori personalizzati al catalogo
-- 💾 Salvare ordini nel cloud tramite Supabase
-- 📊 Visualizzare lo storico degli ordini
-- 🔍 Filtrare prodotti per categoria
+Ipermela Store permette di gestire l'intero ciclo di vendita, dal catalogo all'ordine finale, con funzionalità avanzate quali:
+- 📱 **Catalogo Completo**: iPhone, Mac, iPad e Accessori con prezzi aggiornati.
+- 🛒 **Carrello Dinamico**: Calcolo automatico di subtotale, IVA (22%) e totale.
+- 👥 **Gestione Ruoli**: Sistema di autenticazione con permessi differenziati (Admin, Operator, Viewer).
+- 📄 **Export PDF**: Generazione professionale di preventivi/ordini in PDF (singolo o massivo).
+- ☁️ **Cloud Storage**: Salvataggio sicuro di ordini e configurazioni su Supabase.
+- 🎨 **Interfaccia Apple-style**: UI pulita, responsive e intuitiva.
 
 ## 🚀 Tecnologie Utilizzate
 
-- **HTML5** - Struttura dell'applicazione
-- **CSS3** - Stili moderni e responsive
-- **JavaScript (Vanilla)** - Logica dell'applicazione
-- **Supabase** - Database cloud e backend
-- **Design Apple-inspired** - UI pulita e professionale
+- **HTML5** - Struttura semantica
+- **CSS3** - Design responsive e animazioni fluide
+- **JavaScript (ES6 Modules)** - Architettura modulare moderna
+- **Supabase** - Database PostgreSQL e Autenticazione
+- **jsPDF** - Libreria per la generazione dei documenti PDF
 
-## ✨ Funzionalità Principali
+## 📁 Struttura del Progetto
 
-### Header Intelligente
-- Pulsante rapido per aggiungere prodotti
-- Pulsante carrello con badge che mostra il numero di articoli
-- Completamente responsive per mobile e tablet
+Il codice è organizzato in moduli specifici per garantire manutenibilità e scalabilità:
 
-### Catalogo Prodotti
-- Oltre 30 prodotti Apple predefiniti
-- Filtri per categoria (iPhone, Mac, iPad, Accessori)
-- Possibilità di aggiungere accessori personalizzati
-- Prezzi sempre aggiornati
+```text
+Ipermela-Cline/
+│
+├── index.html                  # Entry point dell'applicazione
+├── styles.css                  # Fogli di stile globali
+│
+├── js/                         # 📂 Moduli JavaScript (Logica Core)
+│   ├── app.js                  # Main entry point e inizializzazione
+│   ├── auth.js                 # Gestione utenti e permessi (Login/Logout)
+│   ├── cart.js                 # Logica del carrello
+│   ├── config.js               # Configurazioni Supabase e costanti
+│   ├── data.js                 # Database statico prodotti base
+│   ├── orders.js               # Gestione CRUD ordini su Cloud
+│   ├── pricing.js              # Gestione listini personalizzati
+│   ├── products.js             # Rendering e filtro prodotti
+│   ├── ui.js                   # Gestione interfaccia (Toast, Modali)
+│   ├── utils.js                # Funzioni di utilità (Formattazione, Date)
+│   │
+│   └── pdf/
+│       └── generator.js        # Motore di generazione PDF
+│
+└── supabase-setup.sql          # Script inizializzazione database
 
-### Gestione Carrello
-- Aggiungi/rimuovi prodotti
-- Modifica quantità
-- Calcolo automatico di subtotale, IVA (22%) e totale
-- Sticky sidebar per visualizzazione costante
+✨ Funzionalità Principali
+1. Gestione Ordini e PDF
+ * Creazione ordini con dati cliente.
+ * Salvataggio storico nel cloud.
+ * NUOVO: Pulsante "📄 PDF" per scaricare il preventivo di un singolo ordine.
+ * NUOVO: Pulsante "Esporta Tutti" per report completi.
 
-### Salvataggio Ordini
-- Salvataggio sicuro su database cloud
-- Informazioni cliente (nome, email, telefono)
-- Note aggiuntive opzionali
-- Storico completo degli ordini
+2. Catalogo e Prezzi
+ * Filtri per categoria (iPhone, Mac, iPad, Accessori).
+ * Ricerca testuale rapida.
+ * Gestione prezzi personalizzati (solo per ruoli autorizzati).
+ * Supporto per prodotti "Custom" aggiunti al volo.
 
-## 🛠️ Configurazione
+3. Sicurezza
+ * Login obbligatorio per accedere al sistema.
+ * Row Level Security (RLS) su Supabase per proteggere i dati.
+🛠️ Installazione e Avvio
+⚠️ Importante: Poiché il progetto utilizza ES6 Modules, non è possibile aprire direttamente il file index.html dal file system. È necessario un server web locale.
+Prerequisiti
+ * Un browser moderno (Chrome, Safari, Edge).
+ * Un account Supabase (per il backend).
+Come avviare in locale
+ * Clona o scarica la repository.
+ * Avvia un server locale. Puoi usare uno dei seguenti metodi:
+   Opzione A (Visual Studio Code - Consigliata):
+   * Installa l'estensione "Live Server".
+   * Clicca su "Go Live" in basso a destra.
+   Opzione B (Python):
+   # Nella cartella del progetto
+python -m http.server 8000
 
-### Prerequisiti
-- Browser moderno (Chrome, Firefox, Safari, Edge)
-- Connessione internet per Supabase
+   Opzione C (Node.js):
+   npx http-server
 
-### Configurazione Supabase
-1. I dettagli di connessione sono già configurati in `script.js`
-2. Il database viene inizializzato usando `supabase-setup.sql`
-3. Le tabelle `custom_products` e `orders` vengono create automaticamente
+ * Apri il browser all'indirizzo indicato (es. http://localhost:5500 o http://localhost:8000).
+📝 Note per gli Sviluppatori
+ * Il file script.js presente nella root è DEPRECATO e mantenuto solo come backup storico. Non modificarlo.
+ * Tutte le modifiche vanno apportate ai file dentro la cartella js/.
+ * Per aggiornare la logica dei PDF, modificare js/pdf/generator.js.
+Versione: 2.0.0 (Refactored)
 
-### Avvio Applicazione
-1. Apri `index.html` nel tuo browser
-2. L'applicazione caricherà automaticamente i dati dal cloud
-3. Inizia a creare ordini!
+Ultimo aggiornamento: Dicembre 2025
+Sviluppato per Ipermela Store
 
-## 📱 Responsive Design
-
-L'applicazione è ottimizzata per:
-- 🖥️ **Desktop** (1400px+) - Layout a due colonne
-- 💻 **Tablet** (768px - 1024px) - Layout adattivo
-- 📱 **Mobile** (fino a 768px) - Layout a colonna singola, header compatto
-
-## 🎨 Caratteristiche UI/UX
-
-- Design ispirato ad Apple con colori e tipografia puliti
-- Animazioni fluide e transizioni smooth
-- Notifiche toast per feedback immediato
-- Modal eleganti per le azioni importanti
-- Icone emoji per una UX moderna e friendly
-
-## 📁 Struttura File
-
-```
-Ipermela-ordini/
-├── index.html           # Struttura HTML principale
-├── styles.css           # Stili e responsive design
-├── script.js            # Logica JavaScript e integrazione Supabase
-├── supabase-setup.sql   # Schema database Supabase
-├── .gitignore          # File da escludere da Git
-└── README.md           # Questa documentazione
-```
-
-## 🔐 Sicurezza
-
-- Le chiavi Supabase sono configurate con restrizioni RLS (Row Level Security)
-- Nessuna informazione sensibile memorizzata localmente
-- Connessione sicura HTTPS con Supabase
-
-## 📝 Note
-
-- I prezzi sono in Euro (€)
-- IVA calcolata al 22%
-- I prodotti personalizzati vengono salvati nel database cloud
-- Gli ordini includono timestamp automatico
-
-## 🤝 Supporto
-
-Per problemi o domande, contatta il team di sviluppo.
-
----
-
-**Versione:** 1.0.0  
-**Ultimo aggiornamento:** Novembre 2024  
-**Sviluppato con ❤️ per Ipermela Store**
