@@ -232,7 +232,13 @@ export function updateUIBasedOnRole() {
                 priceManagementBtn.classList.add('flex');
             }
         }
-        if (mobilePriceItem) mobilePriceItem.classList.remove('hidden');
+        if (mobilePriceItem) {
+            mobilePriceItem.classList.remove('hidden');
+            // Aggiungi flex per mostrare correttamente il pulsante mobile
+            if (!mobilePriceItem.classList.contains('flex')) {
+                mobilePriceItem.classList.add('flex');
+            }
+        }
     } else {
         console.log('❌ Ruolo non autorizzato - Nascondo pulsante Prezzi');
         if (priceManagementBtn) priceManagementBtn.classList.add('hidden');

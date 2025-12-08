@@ -38,6 +38,7 @@ export function openOrderModal() {
     const modal = document.getElementById('order-modal');
     if (modal) {
         modal.classList.remove('hidden');
+        modal.classList.add('flex', 'items-center', 'justify-center');
 
         // Se siamo in edit mode, pre-compila i campi con i dati originali
         if (window.editingOrderId && window.editingOrderData) {
@@ -85,6 +86,7 @@ export function closeOrderModal() {
     const modal = document.getElementById('order-modal');
     if (modal) {
         modal.classList.add('hidden');
+        modal.classList.remove('flex', 'items-center', 'justify-center');
 
         // Reset titolo modal se era in edit mode
         const modalTitle = modal.querySelector('h2');
@@ -712,6 +714,7 @@ export async function previewOrderPDF(orderId) {
 
         // Mostra modal
         modal.classList.remove('hidden');
+        modal.classList.add('flex', 'items-center', 'justify-center');
 
         // Salva orderId corrente per le azioni download/edit
         window.currentPreviewOrderId = orderId;
@@ -735,6 +738,7 @@ export function closePDFPreview() {
 
     if (modal) {
         modal.classList.add('hidden');
+        modal.classList.remove('flex', 'items-center', 'justify-center');
     }
 
     if (iframe) {
