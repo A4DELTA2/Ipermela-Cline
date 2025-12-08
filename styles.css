@@ -824,6 +824,12 @@ body.dark {
 
 /* Modal headers with gradients - mantengono i loro colori originali in dark mode */
 
+/* Price Management Modal subtitle - color specifico richiesto dall'utente */
+#price-management-section .bg-warning p.text-sm,
+.dark #price-management-section .bg-warning-dark p.text-sm {
+    color: #F5F5F7 !important;
+}
+
 /* Tables in dark mode */
 .dark table thead {
     background: var(--bg-tertiary) !important;
@@ -976,7 +982,7 @@ body.dark {
     color: var(--text-primary) !important;
 }
 
-.dark #mobile-dropdown button:hover {
+.dark #mobile-dropdown button:not(#mobile-logout-btn):hover {
     background-color: var(--bg-tertiary) !important;
 }
 
