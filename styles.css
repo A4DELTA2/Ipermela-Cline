@@ -17,19 +17,30 @@
     --text-secondary: #6E6E73;
 
     /* Brand Ipermela - Palette Pastello */
-    --accent-color: #FFB366;        /* Arancione pastello principale */
-    --accent-hover: #FFA347;        /* Arancione pastello hover */
-    --accent-active: #E67300;       /* Arancione scuro per testi (WCAG AA 4.6:1) */
+    --accent-color: #FFB366;
+    /* Arancione pastello principale */
+    --accent-hover: #FFA347;
+    /* Arancione pastello hover */
+    --accent-active: #E67300;
+    /* Arancione scuro per testi (WCAG AA 4.6:1) */
 
     /* Colori Funzionali - Palette Pastello */
-    --success-color: #81D99B;       /* Verde pastello (sfondo) */
-    --success-dark: #2FA84F;        /* Verde scuro per testo (WCAG AA 4.5:1) */
-    --error-color: #FF9B94;         /* Rosa pesca pastello (sfondo) */
-    --error-dark: #E63B30;          /* Rosso scuro per testo (WCAG AA 4.5:1) */
-    --warning-color: #FFD17A;       /* Giallo pesca pastello (sfondo) */
-    --warning-dark: #E68F00;        /* Arancione scuro per testo (WCAG AA 4.5:1) */
-    --info-color: #66AFFF;          /* Azzurro pastello (sfondo) */
-    --info-dark: #0066E6;           /* Blu scuro per testo (WCAG AA 5.2:1) */
+    --success-color: #81D99B;
+    /* Verde pastello (sfondo) */
+    --success-dark: #2FA84F;
+    /* Verde scuro per testo (WCAG AA 4.5:1) */
+    --error-color: #FF9B94;
+    /* Rosa pesca pastello (sfondo) */
+    --error-dark: #E63B30;
+    /* Rosso scuro per testo (WCAG AA 4.5:1) */
+    --warning-color: #FFD17A;
+    /* Giallo pesca pastello (sfondo) */
+    --warning-dark: #E68F00;
+    /* Arancione scuro per testo (WCAG AA 4.5:1) */
+    --info-color: #66AFFF;
+    /* Azzurro pastello (sfondo) */
+    --info-dark: #0066E6;
+    /* Blu scuro per testo (WCAG AA 5.2:1) */
 
     /* Bordi e Divisori */
     --border-color: #D2D2D7;
@@ -68,19 +79,30 @@ body.dark {
     --text-secondary: #A1A1AA;
 
     /* Brand Ipermela - Dark Mode Pastello */
-    --accent-color: #FFBD7A;        /* Arancione pastello più luminoso per dark */
-    --accent-hover: #FFD199;        /* Arancione pastello hover chiaro */
-    --accent-active: #FFA347;       /* Arancione medio per active */
+    --accent-color: #FFBD7A;
+    /* Arancione pastello più luminoso per dark */
+    --accent-hover: #FFD199;
+    /* Arancione pastello hover chiaro */
+    --accent-active: #FFA347;
+    /* Arancione medio per active */
 
     /* Colori Funzionali - Dark Mode Pastello */
-    --success-color: #90E0A8;       /* Verde pastello luminoso */
-    --success-dark: #5BC77A;        /* Verde medio per enfasi */
-    --error-color: #FFB3AD;         /* Rosa pesca luminoso */
-    --error-dark: #FF8A80;          /* Rosa salmone per enfasi */
-    --warning-color: #FFDB99;       /* Giallo pesca luminoso */
-    --warning-dark: #FFBE5C;        /* Giallo arancio per enfasi */
-    --info-color: #85C4FF;          /* Azzurro pastello luminoso */
-    --info-dark: #5AAFFF;           /* Azzurro medio per enfasi */
+    --success-color: #90E0A8;
+    /* Verde pastello luminoso */
+    --success-dark: #5BC77A;
+    /* Verde medio per enfasi */
+    --error-color: #FFB3AD;
+    /* Rosa pesca luminoso */
+    --error-dark: #FF8A80;
+    /* Rosa salmone per enfasi */
+    --warning-color: #FFDB99;
+    /* Giallo pesca luminoso */
+    --warning-dark: #FFBE5C;
+    /* Giallo arancio per enfasi */
+    --info-color: #85C4FF;
+    /* Azzurro pastello luminoso */
+    --info-dark: #5AAFFF;
+    /* Azzurro medio per enfasi */
 
     --border-color: #333333;
     --border-color-light: #2A2A2A;
@@ -108,7 +130,7 @@ body.dark {
         --bg-secondary: #1E1E1E;
         --bg-tertiary: #2A2A2A;
         --text-primary: #F5F5F7;
-        --text-secondary: #A1A1AA;
+        --text-secondary: #FFFFFF;
 
         /* Brand Ipermela - Dark Mode Pastello */
         --accent-color: #FFBD7A;
@@ -523,7 +545,7 @@ body.dark {
 }
 
 /* Ensure all content stays on top of background */
-.dark .product-card > * {
+.dark .product-card>* {
     position: relative;
     z-index: 1;
 }
@@ -697,7 +719,7 @@ body.dark {
 }
 
 /* Saved orders cards - Deprecated (sostituito dalle nuove classi sopra) */
-.dark #saved-orders > div {
+.dark #saved-orders>div {
     background-color: var(--bg-secondary) !important;
     border: 1px solid var(--border-color) !important;
 }
@@ -734,12 +756,12 @@ body.dark {
 }
 
 /* Color for header text and icon only, not buttons */
-.dark #mac-subcategories > div > .text-apple-blue,
-.dark #mac-subcategories > div > span {
+.dark #mac-subcategories>div>.text-apple-blue,
+.dark #mac-subcategories>div>span {
     color: var(--accent-color) !important;
 }
 
-.dark #mac-subcategories > div > svg {
+.dark #mac-subcategories>div>svg {
     color: var(--accent-color) !important;
 }
 
@@ -770,12 +792,12 @@ body.dark {
 }
 
 /* Cart items - dark mode styling for product cards */
-.dark #cart-items > div {
+.dark #cart-items>div {
     background: transparent !important;
     border-color: transparent !important;
 }
 
-.dark #cart-items > div:hover {
+.dark #cart-items>div:hover {
     border-color: transparent !important;
     box-shadow: none !important;
 }
@@ -817,8 +839,8 @@ body.dark {
 }
 
 /* Modals in dark mode */
-.dark #order-modal > div,
-.dark #price-management-section > div {
+.dark #order-modal>div,
+.dark #price-management-section>div {
     background-color: var(--bg-primary) !important;
 }
 
@@ -1074,9 +1096,12 @@ body.dark {
 
 /* Animazione pulse quando si clicca */
 @keyframes configPulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1.05);
     }
+
     50% {
         transform: scale(1.1);
     }

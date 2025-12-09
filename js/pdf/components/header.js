@@ -45,6 +45,15 @@ export const HeaderComponent = {
         const dateStr = data.created_at ? new Date(data.created_at).toLocaleDateString('it-IT') : new Date().toLocaleDateString('it-IT');
         doc.text(`${CONSTANTS.document.dateLabel} ${dateStr}`, orderNumX, header.orderInfoY + 4);
 
+        // Sede (se presente)
+        if (data.sede) {
+            doc.setFontSize(STYLES.fonts.tiny.size);
+            doc.setFont('helvetica', 'bold');
+            const sedeColor = data.sede === 'Thiene' ? [0, 100, 200] : [0, 150, 100]; // Blu per Thiene, Verde per Bassano
+            doc.setTextColor(...sedeColor);
+            doc.text(`Sede: ${data.sede}`, orderNumX, header.orderInfoY + 8);
+        }
+
         return headerBgHeight + 5;
     },
 

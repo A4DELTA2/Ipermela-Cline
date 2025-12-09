@@ -6,6 +6,13 @@ module.exports = {
     "./js/**/*.js",
     "./js/**/**/*.js",
   ],
+  safelist: [
+    'from-[#FF9900]',
+    'to-[#FF7700]',
+    'to-[#FFAC33]',
+    'dark:from-[#FF9900]',
+    'dark:to-[#FFAC33]',
+  ],
   theme: {
     extend: {
       colors: {
@@ -15,6 +22,8 @@ module.exports = {
           light: '#FFD199',      // Arancione chiaro per hover
           dark: '#E67300',       // Arancione scuro per testo/stati attivi (WCAG AA)
           darkmode: '#FFBD7A',   // Arancione pastello (DARK MODE)
+          'gradient-end': '#FF7700',     // Arancione scuro per gradienti
+          'gradient-end-dark': '#FFAC33', // Arancione chiaro per gradienti dark mode
         },
         // Palette Sfondi (Soft Black - Apple Style)
         dark: {
@@ -50,9 +59,9 @@ module.exports = {
           dark: '#5AAFFF',       // Blu brillante (DARK MODE)
         },
         warning: {
-          light: '#FFD17A',      // Giallo pastello
-          DEFAULT: '#FFBE5C',    // Giallo brillante (LIGHT MODE)
-          dark: '#FFBE5C',       // Giallo brillante (DARK MODE)
+          light: '##FFBD7A',      // Arancione pastello (DARK MODE)
+          DEFAULT: '#FFBD7A',      // Arancione pastello (DARK MODE)
+          dark: '#FFBD7A',      // Arancione pastello (DARK MODE)
         },
         danger: {
           light: '#FFB3AD',      // Rosa pesca

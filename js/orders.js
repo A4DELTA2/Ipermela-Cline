@@ -52,6 +52,12 @@ export function openOrderModal() {
             if (customerPhoneInput) customerPhoneInput.value = window.editingOrderData.customer_phone || '';
             if (orderNotesInput) orderNotesInput.value = window.editingOrderData.notes || '';
 
+            // Carica sede
+            if (window.editingOrderData.sede) {
+                const sedeRadio = document.querySelector(`input[name="order-sede"][value="${window.editingOrderData.sede}"]`);
+                if (sedeRadio) sedeRadio.checked = true;
+            }
+
             // Mostra indicatore di modifica
             const modalTitle = modal.querySelector('h2');
             if (modalTitle) {
@@ -113,6 +119,10 @@ export function clearOrderForm() {
     if (customerEmail) customerEmail.value = '';
     if (customerPhone) customerPhone.value = '';
     if (orderNotes) orderNotes.value = '';
+
+    // Reset radio buttons sede
+    const sedeRadios = document.querySelectorAll('input[name="order-sede"]');
+    sedeRadios.forEach(radio => radio.checked = false);
 }
 
 /**
@@ -137,6 +147,7 @@ export async function saveOrder() {
     const customerEmailInput = document.getElementById('customer-email');
     const customerPhoneInput = document.getElementById('customer-phone');
     const orderNotesInput = document.getElementById('order-notes');
+    const sedeSelected = document.querySelector('input[name="order-sede"]:checked');
 
     if (!customerNameInput) return;
 
@@ -144,9 +155,15 @@ export async function saveOrder() {
     const customerEmail = customerEmailInput?.value.trim() || null;
     const customerPhone = customerPhoneInput?.value.trim() || null;
     const notes = orderNotesInput?.value.trim() || null;
+    const sede = sedeSelected?.value || null;
 
     if (!customerName) {
         alert('Inserisci il nome del cliente!');
+        return;
+    }
+
+    if (!sede) {
+        alert('Per favore, seleziona la sede (Thiene o Bassano)');
         return;
     }
 
@@ -180,6 +197,7 @@ export async function saveOrder() {
         tax: tax,
         total: total,
         notes: notes,
+        sede: sede,
         created_by: isEditMode ? undefined : currentUser.id // Mantieni created_by originale
     };
 
@@ -344,7 +362,7 @@ export async function renderSavedOrders(skipQuery = false) {
             return `
     <div class="saved-order-card group bg-white rounded-2xl border-2 border-gray-200 overflow-hidden transition-all duration-300 hover:border-brand hover:shadow-xl hover:-translate-y-1">
         <!-- Order Header -->
-        <div class="saved-order-header bg-brand dark:bg-brand-darkmode p-4">
+        <div class="saved-order-header bg-gradient-to-br from-[#FF9900] to-[#FF7700] dark:from-[#FF9900] dark:to-[#FFAC33] p-4">
             <div class="flex items-center justify-between text-white">
                 <div class="flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -390,6 +408,17 @@ export async function renderSavedOrders(skipQuery = false) {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
                         <span>${order.customer_phone}</span>
+                    </div>
+                ` : ''}
+                ${order.sede ? `
+                    <div class="flex items-center gap-2 text-xs">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span class="font-semibold ${order.sede === 'Thiene' ? 'text-blue-600' : 'text-green-600'}">
+                            Sede ${order.sede}
+                        </span>
                     </div>
                 ` : ''}
             </div>
@@ -449,7 +478,7 @@ export async function renderSavedOrders(skipQuery = false) {
             ` : ''}
 
             <!-- Total -->
-            <div class="saved-order-total flex items-center justify-between p-4 bg-brand dark:bg-brand-darkmode rounded-xl mb-4">
+            <div class="saved-order-total flex items-center justify-between p-4 bg-gradient-to-br from-[#FF9900] to-[#FF7700] dark:from-[#FF9900] dark:to-[#FFAC33] rounded-xl mb-4">
                 <span class="text-sm font-semibold text-white">Totale</span>
                 <span class="text-2xl font-bold text-white">€${parseFloat(order.total).toFixed(2)}</span>
             </div>
@@ -595,10 +624,12 @@ export function exportOrdersToCSV() {
         // Header CSV
         const headers = [
             'ID Ordine',
+            'Numero Ordine',
             'Data',
             'Cliente',
             'Email',
             'Telefono',
+            'Sede',
             'Prodotti',
             'Quantità Totale',
             'Subtotale',
@@ -630,10 +661,12 @@ export function exportOrdersToCSV() {
 
             return [
                 order.id,
+                order.order_number || '',
                 order.date,
                 sanitizeField(order.customer_name),
                 sanitizeField(order.customer_email || ''),
                 sanitizeField(order.customer_phone || ''),
+                sanitizeField(order.sede || ''),
                 sanitizeField(productsStr),
                 totalQty,
                 parseFloat(order.subtotal).toFixed(2),
@@ -804,7 +837,8 @@ export function loadOrderToCart(orderId) {
             customer_name: order.customer_name,
             customer_email: order.customer_email,
             customer_phone: order.customer_phone,
-            notes: order.notes
+            notes: order.notes,
+            sede: order.sede
         };
 
         // Ricarica gli articoli dall'ordine
