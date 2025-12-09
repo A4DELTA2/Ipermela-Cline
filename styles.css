@@ -130,7 +130,7 @@ body.dark {
         --bg-secondary: #1E1E1E;
         --bg-tertiary: #2A2A2A;
         --text-primary: #F5F5F7;
-        --text-secondary: #A1A1AA;
+        --text-secondary: #FFFFFF;
 
         /* Brand Ipermela - Dark Mode Pastello */
         --accent-color: #FFBD7A;
@@ -582,6 +582,10 @@ body.dark {
    SAVED ORDERS SECTION - LIGHT & DARK MODE
    =================================== */
 
+/* Saved Orders Section Header */
+.saved-orders-section-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+}
 
 /* Saved Order Cards */
 .saved-order-card {
@@ -593,19 +597,16 @@ body.dark {
     box-shadow: 0 10px 30px rgba(255, 153, 0, 0.15) !important;
 }
 
-/* Saved Orders Section Header - Gradients */
-.saved-orders-section-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%);
-}
-
+/* Saved Order Header */
 .saved-order-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%);
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
 }
 
+/* Saved Order Total */
 .saved-order-total {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%);
+    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.2);
 }
-
 
 /* ===================================
    DARK MODE - SAVED ORDERS
@@ -616,6 +617,10 @@ body.dark {
     background-color: var(--bg-secondary) !important;
 }
 
+/* Dark mode - Saved Orders Section Header */
+.dark .saved-orders-section-header {
+    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+}
 
 /* Dark mode - Export button hover */
 .dark #export-all-orders-btn:hover {
@@ -679,21 +684,16 @@ body.dark {
     border-color: var(--border-color) !important;
 }
 
-/* Dark mode - Saved Orders Section Header - Gradients */
-.dark .saved-orders-section-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
-}
-
+/* Dark mode - Saved Order Header (mantiene il gradiente arancione) */
 .dark .saved-order-header {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
 }
 
+/* Dark mode - Saved Order Total (mantiene il gradiente arancione) */
 .dark .saved-order-total {
     background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4) !important;
 }
-
-
-
 
 /* Dark mode - PDF Export Button */
 .dark .saved-order-card button[onclick^="exportOrderPDF"] {
