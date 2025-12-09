@@ -39,9 +39,9 @@ export const STYLES = {
             fillColor: [250, 250, 250]
         },
         columnStyles: {
-            0: { cellWidth: 90, halign: 'left' },   // Prodotto
-            1: { cellWidth: 25, halign: 'center' }, // Q.tà
-            2: { cellWidth: 35, halign: 'right' },  // Prezzo Cad.
+            0: { cellWidth: 85, halign: 'left' },   // Descrizione
+            1: { cellWidth: 20, halign: 'center' }, // Q.tà
+            2: { cellWidth: 35, halign: 'right' },  // Prezzo
             3: { cellWidth: 40, halign: 'right', fontStyle: 'bold' } // Totale
         }
     }

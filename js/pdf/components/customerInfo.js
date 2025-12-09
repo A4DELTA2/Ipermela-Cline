@@ -8,45 +8,36 @@ export const CustomerInfoComponent = {
     render(doc, data, startY) {
         const { margin } = LAYOUT.page;
         const { customer } = LAYOUT;
-        let y = startY;
+        let y = startY + 2;
 
-        // Box con sfondo grigio
-        const boxHeight = this.calculateBoxHeight(data);
-        doc.setFillColor(...STYLES.colors.headerBg);
-        doc.roundedRect(
+        // Box con sfondo grigio chiaro
+        const boxHeight = 20;
+        doc.setFillColor(245, 245, 245);
+        doc.rect(
             margin,
-            y - 5,
+            y,
             LAYOUT.page.width - 2 * margin,
             boxHeight,
-            2,
-            2,
             'F'
         );
 
         // Testo saluto personalizzato
-        doc.setFontSize(STYLES.fonts.body.size);
+        y += 6;
+        doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...STYLES.colors.text);
+        doc.setTextColor(0, 0, 0);
 
-        const greetingLine1 = `${CONSTANTS.customer.greetingPrefix} ${data.customer_name.toUpperCase()}${CONSTANTS.customer.greetingSuffix}`;
-        doc.text(greetingLine1, margin + 5, y);
-        y += customer.lineHeight;
+        const customerName = data.customer_name || 'Cliente';
+        const greetingLine1 = `${CONSTANTS.customer.greetingPrefix} ${customerName.toUpperCase()}${CONSTANTS.customer.greetingSuffix}`;
 
-        doc.text(CONSTANTS.customer.message1, margin + 5, y);
-        y += customer.lineHeight + 5;
+        // Splitting del testo lungo
+        const splitText = doc.splitTextToSize(greetingLine1, LAYOUT.page.width - 2 * margin - 10);
+        doc.text(splitText, margin + 3, y);
+        y += splitText.length * 4;
 
-        // Q.tà e Descrizione headers sopra la tabella
-        y += 3;
-        doc.setFont('helvetica', 'bold');
-        doc.text('Q.tà', margin + 5, y);
-        doc.text('Descrizione', margin + 30, y);
-        doc.text('Prezzo', LAYOUT.page.width - margin - 70, y);
+        const splitText2 = doc.splitTextToSize(CONSTANTS.customer.message1, LAYOUT.page.width - 2 * margin - 10);
+        doc.text(splitText2, margin + 3, y);
 
-        return y + 5;
-    },
-
-    calculateBoxHeight(data) {
-        // Altezza fissa per il box cliente
-        return 25;
+        return startY + boxHeight + 8;
     }
 };

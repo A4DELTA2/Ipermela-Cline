@@ -11,60 +11,53 @@ export const FooterComponent = {
         const { colors, fonts } = STYLES;
         const { company, legal } = CONSTANTS;
 
-        let currentY = Math.max(startY, footer.notesStartY);
+        let currentY = Math.max(startY + 10, footer.notesStartY);
 
-        // Note ordine (se presenti)
-        if (data.notes && data.notes.trim().length > 0) {
-            doc.setFontSize(fonts.small.size);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(...colors.text);
-            doc.text('Note:', margin, currentY);
-            currentY += 5;
-
-            doc.setFont('helvetica', 'normal');
-            const noteLines = doc.splitTextToSize(data.notes, 170);
-            doc.text(noteLines, margin, currentY);
-            currentY += (noteLines.length * 4) + 10;
-        }
-
-        // Note legali
-        currentY = Math.max(currentY, footer.legalNotesY);
-
-        doc.setFontSize(fonts.tiny.size);
+        // Note legali condensate
+        doc.setFontSize(7);
         doc.setFont('helvetica', 'italic');
-        doc.setTextColor(...colors.lightText);
+        doc.setTextColor(100, 100, 100);
 
-        const legalText1 = doc.splitTextToSize(legal.message1, 170);
-        doc.text(legalText1, margin, currentY);
-        currentY += (legalText1.length * 3.5) + 3;
+        // Messaggio pagamento
+        const allLegalText = `${legal.message1} ${legal.message2}`;
+        const legalLines1 = doc.splitTextToSize(allLegalText, LAYOUT.page.width - 2 * margin);
+        doc.text(legalLines1, margin, currentY);
+        currentY += legalLines1.length * 2.5 + 2;
 
-        const legalText2 = doc.splitTextToSize(legal.message2, 170);
-        doc.text(legalText2, margin, currentY);
-        currentY += (legalText2.length * 3.5) + 8;
+        // Altri messaggi legali
+        const legalText3 = doc.splitTextToSize(legal.message3 + ' ' + legal.message4, LAYOUT.page.width - 2 * margin);
+        doc.text(legalText3, margin, currentY);
+        currentY += legalText3.length * 2.5 + 2;
+
+        const legalText5 = doc.splitTextToSize(legal.message5 + ' ' + legal.message6, LAYOUT.page.width - 2 * margin);
+        doc.text(legalText5, margin, currentY);
+        currentY += legalText5.length * 2.5 + 2;
+
+        const legalText7 = doc.splitTextToSize(legal.message7, LAYOUT.page.width - 2 * margin);
+        doc.text(legalText7, margin, currentY);
+        currentY += legalText7.length * 2.5 + 5;
 
         // Informazioni azienda
-        currentY = Math.max(currentY, footer.companyInfoY);
-
-        doc.setFontSize(fonts.tiny.size);
+        doc.setFontSize(7);
         doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...colors.text);
+        doc.setTextColor(0, 0, 0);
 
         const companyInfo = [
             `${company.name} - ${company.legalForm}`,
             `${company.address}`,
             `P.IVA: ${company.piva} | C.F.: ${company.cf} | SDI: ${company.sdi}`,
-            `${company.phone} | ${company.email}`
+            `Tel: ${company.phone} | ${company.email}`
         ];
 
         companyInfo.forEach(line => {
             doc.text(line, margin, currentY);
-            currentY += 3.5;
+            currentY += 3;
         });
 
         // Data e firma
-        currentY = Math.max(currentY + 5, footer.signatureY);
+        currentY += 3;
 
-        doc.setFontSize(fonts.small.size);
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'normal');
 
         // Data a sinistra
@@ -72,7 +65,7 @@ export const FooterComponent = {
         doc.text(`Data: ${currentDate}`, margin, currentY);
 
         // Firma a destra
-        doc.text('Staff IPERMELA', 170, currentY, { align: 'right' });
+        doc.text('Staff IPERMELA', LAYOUT.page.width - margin, currentY, { align: 'right' });
 
         return currentY;
     }

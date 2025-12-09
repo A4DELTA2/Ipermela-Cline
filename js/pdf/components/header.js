@@ -8,57 +8,50 @@ export const HeaderComponent = {
     render(doc, data) {
         const { margin } = LAYOUT.page;
         const { header } = LAYOUT;
-        let y = header.logoY;
 
-        // Logo (se disponibile)
-        if (CONSTANTS.logos.default) {
+        // Sfondo grigio per l'header (altezza ridotta)
+        const headerBgHeight = 25;
+        doc.setFillColor(...STYLES.colors.headerBg);
+        doc.rect(0, 0, LAYOUT.page.width, headerBgHeight, 'F');
+
+        // Logo allineato verticalmente con numero ordine
+        const logoY = header.logoY;
+        if (CONSTANTS.logos.base64) {
             try {
                 doc.addImage(
-                    CONSTANTS.logos.default,
+                    CONSTANTS.logos.base64,
                     'PNG',
                     header.logoX,
-                    y,
+                    logoY,
                     header.logoWidth,
                     header.logoHeight
                 );
             } catch (err) {
                 console.warn('Logo non disponibile, uso fallback testo');
-                this.renderFallbackLogo(doc, header.logoX, y);
+                this.renderFallbackLogo(doc, header.logoX, logoY);
             }
         } else {
-            this.renderFallbackLogo(doc, header.logoX, y);
+            this.renderFallbackLogo(doc, header.logoX, logoY);
         }
 
-        // Info azienda sotto il logo
-        y = header.companyInfoY;
+        // Numero e data ordine (in alto a destra, allineati con il logo)
         doc.setFontSize(STYLES.fonts.small.size);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...STYLES.colors.text);
-        doc.text(CONSTANTS.company.subtitle, margin, y);
-        y += 5;
-        doc.text(CONSTANTS.company.locations, margin, y);
-
-        // Linea separatore
-        y = header.separatorY;
-        doc.setDrawColor(...STYLES.colors.border);
-        doc.setLineWidth(0.5);
-        doc.line(margin, y, LAYOUT.page.width - margin, y);
-
-        // Numero e data ordine (in alto a destra)
-        y = header.orderInfoY;
-        doc.setFontSize(STYLES.fonts.body.size);
         doc.setFont('helvetica', 'bold');
-        doc.text(`${CONSTANTS.document.numberLabel} ${data.id}`, LAYOUT.page.width - margin - 50, y - 10);
+        doc.setTextColor(...STYLES.colors.text);
+        const orderNumX = LAYOUT.page.width - margin - 60;
+        doc.text(`${CONSTANTS.document.numberLabel} ${data.order_number || data.id}`, orderNumX, header.orderInfoY);
         doc.setFont('helvetica', 'normal');
-        doc.text(`${CONSTANTS.document.dateLabel} ${data.date}`, LAYOUT.page.width - margin - 50, y - 5);
+        doc.setFontSize(STYLES.fonts.tiny.size);
+        const dateStr = data.created_at ? new Date(data.created_at).toLocaleDateString('it-IT') : new Date().toLocaleDateString('it-IT');
+        doc.text(`${CONSTANTS.document.dateLabel} ${dateStr}`, orderNumX, header.orderInfoY + 4);
 
-        return y;
+        return headerBgHeight + 5;
     },
 
     renderFallbackLogo(doc, x, y) {
-        doc.setFontSize(STYLES.fonts.title.size);
+        doc.setFontSize(16);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(...STYLES.colors.primary);
-        doc.text('IPERMELA', x, y + 10);
+        doc.text('IPERMELA', x, y + 8);
     }
 };

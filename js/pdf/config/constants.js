@@ -32,7 +32,7 @@ export const CONSTANTS = {
     },
 
     table: {
-        headers: ['Descrizione', 'Q.tà', 'Prezzo', 'Totale'],
+        headers: ['Descrizione', 'Q.tà', 'Prezzo (imponibile)', 'Totale (IVA incl.)'],
         emptyMessage: 'Nessun prodotto'
     },
 

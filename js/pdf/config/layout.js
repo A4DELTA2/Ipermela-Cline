@@ -8,45 +8,45 @@ export const LAYOUT = {
         format: 'a4',
         width: 210,  // mm
         height: 297, // mm
-        margin: 20
+        margin: 15
     },
 
     header: {
-        logoX: 20,
-        logoY: 15,
-        logoWidth: 50,
-        logoHeight: 18,
-        companyInfoY: 38,
-        separatorY: 48,
-        titleY: 58,
-        orderInfoY: 68
+        logoX: 15,
+        logoY: 10,
+        logoWidth: 40,
+        logoHeight: 10,
+        companyInfoY: 28,
+        separatorY: 40,
+        orderInfoY: 15
     },
 
     customer: {
-        startY: 78,
-        boxPadding: 8,
-        lineHeight: 6
+        startY: 35,
+        boxPadding: 5,
+        lineHeight: 5
     },
 
     table: {
-        startY: 110,
+        startY: 68,
         columnWidths: {
-            description: 90,
-            quantity: 25,
-            unitPrice: 35,
-            total: 40
+            description: 100,
+            quantity: 20,
+            unitPrice: 30,
+            total: 30
         }
     },
 
     totals: {
-        xRight: 170,
-        lineHeight: 7
+        xRight: 180,
+        startX: 120,
+        lineHeight: 6
     },
 
     footer: {
-        notesStartY: 230,
-        legalNotesY: 250,
-        companyInfoY: 270,
-        signatureY: 285
+        notesStartY: 220,
+        legalNotesY: 240,
+        companyInfoY: 265,
+        signatureY: 280
     }
 };

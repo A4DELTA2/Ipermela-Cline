@@ -8,13 +8,21 @@ export const ProductsTableComponent = {
     render(doc, data, startY) {
         const { margin } = LAYOUT.page;
 
-        // Prepara dati tabella
-        const tableData = data.items.map(item => [
-            this.formatProductName(item),
-            item.quantity.toString(),
-            `${item.price.toFixed(2)} €`,
-            `${(item.price * item.quantity).toFixed(2)} €`
-        ]);
+        // Prepara dati tabella (prezzi sono IVA inclusa, scorporiamo per mostrare imponibile)
+        const IVA_RATE = 1.22; // 22%
+
+        const tableData = data.items.map(item => {
+            const priceWithVAT = item.price; // Prezzo IVA inclusa
+            const priceWithoutVAT = priceWithVAT / IVA_RATE; // Imponibile
+            const totalWithVAT = priceWithVAT * item.quantity; // Totale IVA inclusa
+
+            return [
+                this.formatProductName(item),
+                item.quantity.toString(),
+                `${priceWithoutVAT.toFixed(2)} €`, // Prezzo unitario imponibile
+                `${totalWithVAT.toFixed(2)} €` // Totale IVA inclusa
+            ];
+        });
 
         // Rendering con autoTable
         doc.autoTable({
@@ -22,6 +30,7 @@ export const ProductsTableComponent = {
             head: [[...CONSTANTS.table.headers]],
             body: tableData,
             margin: { left: margin, right: margin },
+            tableWidth: 180, // Larghezza fissa per allineamento perfetto
 
             // Stili da config
             headStyles: STYLES.table.headStyles,
@@ -35,7 +44,8 @@ export const ProductsTableComponent = {
             theme: 'grid',
             styles: {
                 lineColor: STYLES.colors.border,
-                lineWidth: 0.1
+                lineWidth: 0.1,
+                cellPadding: 2
             },
 
             // Callback per personalizzazioni
