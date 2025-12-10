@@ -131,26 +131,51 @@ export async function savePriceChange(productId, newPrice) {
     try {
         showNotification('Salvataggio prezzo...', 'info');
 
-        const { error } = await supabase
-            .from('product_prices')
-            .upsert({
-                product_id: productId,
-                custom_price: finalPrice,
-                updated_by: window.currentUser.id
-            }, {
-                onConflict: 'product_id'
-            });
+        // Verifica che l'utente sia autenticato
+        if (!window.currentUser || !window.currentUser.id) {
+            showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
+            return false;
+        }
+
+        // Trova il prodotto per verificare se è custom
+        const product = window.products.find(p => p.id === productId);
+
+        if (!product) {
+            showNotification('Errore: prodotto non trovato!', 'error');
+            return false;
+        }
+
+        let error = null;
+
+        // Gestisci in modo diverso prodotti custom vs normali
+        if (product.custom) {
+            // Per prodotti custom, aggiorna direttamente custom_products
+            const { error: customError } = await supabase
+                .from('custom_products')
+                .update({ price: finalPrice })
+                .eq('id', productId);
+            error = customError;
+        } else {
+            // Per prodotti normali, usa product_prices
+            const { error: priceError } = await supabase
+                .from('product_prices')
+                .upsert({
+                    product_id: productId,
+                    custom_price: finalPrice,
+                    updated_by: window.currentUser.id
+                }, {
+                    onConflict: 'product_id'
+                });
+            error = priceError;
+        }
 
         if (error) {
             showNotification(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`, 'error');
             return false;
         }
 
-        // Aggiorna il prodotto
-        const product = window.products.find(p => p.id === productId);
-        if (product) {
-            product.price = finalPrice;
-        }
+        // Aggiorna il prodotto locale
+        product.price = finalPrice;
 
         delete modifiedPrices[productId];
         renderPriceManagement();
@@ -377,8 +402,8 @@ function renderPriceTable() {
         return;
     }
 
-    // Filtra i prodotti
-    let filteredProducts = window.products.filter(p => !p.custom);
+    // Filtra i prodotti (includi anche i custom products)
+    let filteredProducts = window.products;
 
     if (priceFilter !== 'all') {
         filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
@@ -424,7 +449,10 @@ function renderPriceTable() {
             <div class="flex items-center gap-3">
                 <div class="text-3xl">${product.icon}</div>
                 <div>
-                    <div class="font-semibold text-gray-900">${product.name}</div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-gray-900">${product.name}</span>
+                        ${product.custom ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-info dark:bg-info-dark text-white">Personalizzato</span>' : ''}
+                    </div>
                     ${hasChanges ? '<div class="text-xs text-amber-600 font-medium mt-1">● Modifiche in sospeso</div>' : ''}
                 </div>
             </div>
@@ -476,6 +504,7 @@ function renderPriceTable() {
                     </svg>
                     <span class="hidden sm:inline">Salva</span>
                 </button>
+                ${!product.custom ? `
                 <button
                     class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-brand-dark hover:bg-brand-dark hover:text-white hover:scale-105 active:scale-95"
                     onclick="window.pricingModule.resetPrice(${product.id})"
@@ -485,6 +514,18 @@ function renderPriceTable() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                 </button>
+                ` : `
+                <button
+                    class="px-3 py-2 bg-danger dark:bg-danger-dark text-white font-medium rounded-lg transition-all duration-300 hover:bg-red-700 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                    onclick="window.pricingModule.deleteCustomProduct(${product.id})"
+                    title="Elimina prodotto personalizzato"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    <span class="hidden sm:inline">Elimina</span>
+                </button>
+                `}
             </div>
         </td>
     </tr>
@@ -600,6 +641,12 @@ export async function saveAllPrices() {
     try {
         showNotification('Salvataggio modifiche...', 'info');
 
+        // Verifica che l'utente sia autenticato
+        if (!window.currentUser || !window.currentUser.id) {
+            showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
+            return false;
+        }
+
         const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
             product_id: parseInt(productId),
             custom_price: price,
@@ -642,6 +689,68 @@ export async function saveAllPrices() {
     }
 }
 
+/**
+ * Elimina un prodotto personalizzato
+ * Richiede conferma dell'utente
+ *
+ * @async
+ * @function deleteCustomProduct
+ * @param {number} productId - ID del prodotto custom da eliminare
+ * @returns {Promise<boolean>} true se l'eliminazione ha avuto successo, false altrimenti
+ */
+export async function deleteCustomProduct(productId) {
+    const product = window.products.find(p => p.id === productId);
+
+    if (!product || !product.custom) {
+        showNotification('Errore: prodotto non valido!', 'error');
+        return false;
+    }
+
+    if (!confirm(`Eliminare definitivamente "${product.name}"? Questa azione non può essere annullata!`)) {
+        return false;
+    }
+
+    try {
+        showNotification('Eliminazione prodotto...', 'info');
+
+        // Elimina dal database
+        const { error } = await supabase
+            .from('custom_products')
+            .delete()
+            .eq('id', productId);
+
+        if (error) {
+            showNotification(`Errore nell'eliminazione: ${error.message || 'Errore sconosciuto'}`, 'error');
+            return false;
+        }
+
+        // Rimuovi dal catalogo locale
+        const productIndex = window.products.findIndex(p => p.id === productId);
+        if (productIndex !== -1) {
+            window.products.splice(productIndex, 1);
+        }
+
+        // Rimuovi anche dal prezzo originale se presente
+        delete originalPrices[productId];
+        delete modifiedPrices[productId];
+
+        // Re-render della tabella prezzi
+        renderPriceTable();
+
+        // Re-render del catalogo prodotti se disponibile
+        const renderProductsFunc = window.renderProducts;
+        if (typeof renderProductsFunc === 'function') {
+            renderProductsFunc();
+        }
+
+        showNotification('Prodotto eliminato! ✓', 'success');
+        return true;
+    } catch (err) {
+        showNotification(`Errore nell'eliminazione: ${err.message || 'Errore sconosciuto'}`, 'error');
+        return false;
+    }
+}
+
 // ===== ESPORTAZIONE MODULO GLOBALE =====
 
 // Rendi disponibili le funzioni anche globalmente per gli onclick inline
@@ -658,6 +767,7 @@ if (typeof window !== 'undefined') {
         getProductPrice,
         updatePriceInput,
         resetPrice,
-        saveAllPrices
+        saveAllPrices,
+        deleteCustomProduct
     };
 }
