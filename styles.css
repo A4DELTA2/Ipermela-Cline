@@ -619,7 +619,7 @@ body.dark {
 
 /* Dark mode - Saved Orders Section Header */
 .dark .saved-orders-section-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FFAC33 100%) !important;
+    background: rgb(255, 153, 0) !important;
 }
 
 /* Dark mode - Export button hover */
