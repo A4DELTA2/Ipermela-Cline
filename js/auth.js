@@ -34,6 +34,7 @@ export async function checkAuth() {
 
     if (session) {
         currentUser = session.user;
+        window.currentUser = currentUser; // 🔧 FIX: Sincronizza con window
         await getUserRole();
         showApp();
         await initializeApp();
@@ -139,6 +140,7 @@ export async function handleLogin(e) {
         }
 
         currentUser = data.user;
+        window.currentUser = currentUser; // 🔧 FIX: Sincronizza con window
 
         await getUserRole();
         showApp();
@@ -166,6 +168,8 @@ export async function handleLogout() {
         await supabase.auth.signOut();
         currentUser = null;
         userRole = null;
+        window.currentUser = null; // 🔧 FIX: Sincronizza con window
+        window.userRole = null; // 🔧 FIX: Sincronizza con window
 
         // Ripulisci il carrello se disponibile (importato da altro modulo)
         if (typeof window.cart !== 'undefined') {

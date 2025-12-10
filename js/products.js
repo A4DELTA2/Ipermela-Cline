@@ -120,7 +120,8 @@ function renderProductCard(product) {
     const hasColors = product.colors && product.colors.length > 0;
     const hasStorage = product.storage && product.storage.length > 0;
     const hasConfigurations = product.configurations;
-    const hasExpandableContent = hasColors || hasStorage || hasConfigurations || product.imageUrl;
+    // Tutti i prodotti hanno contenuto espandibile (per mostrare il bottone aggiungi)
+    const hasExpandableContent = true;
     
     // Use the product.imageUrl if available, otherwise check for color images
     const displayImage = product.imageUrl || (hasColors ? product.colors[0].imageUrl : null);
@@ -171,18 +172,16 @@ function renderProductCard(product) {
                     </div>
                     <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
                 </div>
-                
+
                 <!-- Bottom: Expand Button -->
-                ${hasExpandableContent ? `
                 <div class="flex justify-end mt-auto">
                     <button class="text-sm font-medium text-gray-400 hover:text-apple-blue transition-colors flex items-center gap-1 group-hover/text:text-apple-blue">
-                        <span>personalizza</span>
+                        <span>${hasColors || hasStorage || hasConfigurations ? 'personalizza' : 'vedi dettagli'}</span>
                         <svg class="expand-arrow w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                 </div>
-                ` : ''}
             </div>
         </div>
 

@@ -32,6 +32,7 @@ import {
     toggleProductCard,
     selectProductColor,
     selectProductStorage,
+    addCustomAccessory,
     // Nuove funzioni per configuratore dinamico
     calculateConfiguredPrice,
     getAvailableRamOptions,
@@ -189,6 +190,9 @@ function setupEventListeners() {
     // Search and filters
     setupSearchAndFilters();
 
+    // Custom accessory
+    setupCustomAccessory();
+
     // Order modal
     setupOrderModal();
 
@@ -316,6 +320,16 @@ function setupSearchAndFilters() {
 }
 
 /**
+ * Setup custom accessory button
+ */
+function setupCustomAccessory() {
+    const addCustomBtn = document.getElementById('add-custom-btn');
+    if (addCustomBtn) {
+        addCustomBtn.addEventListener('click', addCustomAccessory);
+    }
+}
+
+/**
  * Setup modal ordini
  */
 function setupOrderModal() {
@@ -403,6 +417,7 @@ function exposeGlobals() {
     window.toggleProductCard = toggleProductCard;
     window.selectProductColor = selectProductColor;
     window.selectProductStorage = selectProductStorage;
+    window.addCustomAccessory = addCustomAccessory;
     // Nuove funzioni configuratore dinamico
     window.calculateConfiguredPrice = calculateConfiguredPrice;
     window.getAvailableRamOptions = getAvailableRamOptions;

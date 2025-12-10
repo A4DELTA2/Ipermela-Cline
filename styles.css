@@ -584,7 +584,7 @@ body.dark {
 
 /* Saved Orders Section Header */
 .saved-orders-section-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+    background: rgb(255, 153, 0) !important;
 }
 
 /* Saved Order Cards */
@@ -599,12 +599,12 @@ body.dark {
 
 /* Saved Order Header */
 .saved-order-header {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+    background: linear-gradient(135deg, #FF9900 0%, #FF9900 100%) !important;
 }
 
 /* Saved Order Total */
 .saved-order-total {
-    background: linear-gradient(135deg, #FF9900 0%, #FF7700 100%) !important;
+    background: linear-gradient(135deg, #FF9900 0%, #FF9900 100%) !important;
     box-shadow: 0 4px 12px rgba(255, 153, 0, 0.2);
 }
 
