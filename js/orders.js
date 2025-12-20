@@ -20,6 +20,67 @@ import { userRole, currentUser } from './auth.js';
 export let savedOrders = [];
 
 /**
+ * Configura i listener per la gestione ordini
+ */
+export function setupOrderEventListeners() {
+    // Bottone "Salva Ordine" nel carrello - apre il modal
+    const saveOrderBtn = document.getElementById('save-order-btn');
+    if (saveOrderBtn) {
+        saveOrderBtn.addEventListener('click', openOrderModal);
+    }
+
+    // Bottone "Conferma Ordine" nel modal - salva effettivamente
+    const confirmOrderBtn = document.getElementById('confirm-order-btn');
+    if (confirmOrderBtn) {
+        confirmOrderBtn.addEventListener('click', saveOrder);
+    }
+
+    const closeOrderBtn = document.getElementById('close-order-modal');
+    if (closeOrderBtn) {
+        closeOrderBtn.addEventListener('click', closeOrderModal);
+    }
+
+    // Bottone "Esporta CSV"
+    const exportCSVBtn = document.getElementById('export-csv-btn');
+    if (exportCSVBtn) {
+        exportCSVBtn.addEventListener('click', exportOrdersToCSV);
+    }
+
+    // PDF Preview Modal listeners
+    const closePDFPreviewBtn = document.getElementById('close-pdf-preview');
+    if (closePDFPreviewBtn) {
+        closePDFPreviewBtn.addEventListener('click', closePDFPreview);
+    }
+
+    const closePreviewBtn = document.getElementById('close-preview-btn');
+    if (closePreviewBtn) {
+        closePreviewBtn.addEventListener('click', closePDFPreview);
+    }
+
+    // Download PDF button
+    const downloadPDFBtn = document.getElementById('download-pdf-btn');
+    if (downloadPDFBtn) {
+        downloadPDFBtn.addEventListener('click', () => {
+            const orderId = window.currentPreviewOrderId;
+            if (orderId) {
+                exportOrderPDF(orderId);
+            }
+        });
+    }
+
+    // Edit Order button
+    const editOrderBtn = document.getElementById('edit-order-btn');
+    if (editOrderBtn) {
+        editOrderBtn.addEventListener('click', () => {
+            const orderId = window.currentPreviewOrderId;
+            if (orderId) {
+                loadOrderToCart(orderId);
+            }
+        });
+    }
+}
+
+/**
  * Apre il modal per la creazione di un nuovo ordine
  * Valida che il carrello non sia vuoto prima di aprire
  *
@@ -133,14 +194,6 @@ export function clearOrderForm() {
  * @function saveOrder
  * @returns {Promise<void>}
  * @throws {Error} Se il salvataggio nel database fallisce
- *
- * Processi:
- * - Raccoglie dati dal form
- * - Valida il nome del cliente (obbligatorio)
- * - Calcola prezzi: subtotale = totale / 1.22, IVA = totale - subtotale
- * - Genera ordine con ID basato su timestamp
- * - Salva su Supabase
- * - Svuota il carrello e aggiorna UI
  */
 export async function saveOrder() {
     const customerNameInput = document.getElementById('customer-name');
@@ -305,23 +358,12 @@ export async function loadOrders() {
  * @function renderSavedOrders
  * @param {boolean} skipQuery - Se true, usa savedOrders esistente invece di fare una nuova query
  * @returns {Promise<void>}
- *
- * Visualizza:
- * - Numero ordine e count articoli
- * - Data creazione
- * - Informazioni cliente (nome, email, telefono)
- * - Lista prodotti con quantità e prezzo
- * - Note ordine (se presenti)
- * - Totale evidenziato
- * - Azioni: esporta PDF, elimina (se permessi)
  */
 export async function renderSavedOrders(skipQuery = false) {
     const ordersDiv = document.getElementById('saved-orders');
     if (!ordersDiv) return;
 
     try {
-        // Se skipQuery è false, carica i dati da Supabase
-        // Altrimenti usa l'array savedOrders esistente (già caricato da loadOrders())
         if (!skipQuery) {
             const { data, error } = await supabase
                 .from('orders')
@@ -528,31 +570,14 @@ export async function renderSavedOrders(skipQuery = false) {
 
 /**
  * Verifica se l'utente attuale ha i permessi per eliminare un ordine
- * Admin può eliminare qualsiasi ordine
- * Altri utenti possono eliminare solo gli ordini che hanno creato
- *
- * @function canDeleteOrder
- * @param {Object} order - Oggetto ordine con proprietà 'created_by'
- * @param {string} order.created_by - ID dell'utente che ha creato l'ordine
- * @returns {boolean} true se l'utente può eliminare l'ordine, false altrimenti
  */
 export function canDeleteOrder(order) {
-    // Admin può eliminare tutto
     if (userRole === 'admin') return true;
-    // Gli altri utenti possono eliminare solo i propri ordini
     return order.created_by === currentUser.id;
 }
 
 /**
  * Elimina un ordine dal database Supabase
- * Richiede conferma dell'utente prima di procedere
- * Solo gli admin o l'utente che ha creato l'ordine può eliminarlo
- *
- * @async
- * @function deleteOrder
- * @param {number} orderId - ID dell'ordine da eliminare
- * @returns {Promise<void>}
- * @throws {Error} Se l'eliminazione dal database fallisce
  */
 export async function deleteOrder(orderId) {
     if (!confirm('Sei sicuro di voler eliminare questo ordine?')) {
@@ -572,7 +597,6 @@ export async function deleteOrder(orderId) {
             return;
         }
 
-        // Ricarica i dati dal database e poi renderizza
         await loadOrders();
         await renderSavedOrders(true);
         showNotification('Ordine eliminato');
@@ -583,14 +607,6 @@ export async function deleteOrder(orderId) {
 
 /**
  * Wrapper per l'esportazione in PDF di un singolo ordine
- * Cerca l'ordine in savedOrders e lo passa a generateOrderPDF()
- *
- * @function exportOrderPDF
- * @param {number} orderId - ID dell'ordine da esportare
- * @returns {void}
- *
- * @note Richiede che la funzione generateOrderPDF() sia disponibile globalmente
- * @note Mostra un messaggio di errore se l'ordine non viene trovato
  */
 export function exportOrderPDF(orderId) {
     const order = savedOrders.find(o => o.id === orderId);
@@ -607,10 +623,6 @@ export function exportOrderPDF(orderId) {
 
 /**
  * Esporta tutti gli ordini in formato CSV
- * Sanitizza i campi per evitare problemi con virgole e newline
- *
- * @function exportOrdersToCSV
- * @returns {void}
  */
 export function exportOrdersToCSV() {
     if (savedOrders.length === 0) {
@@ -621,7 +633,6 @@ export function exportOrdersToCSV() {
     try {
         showNotification('Generazione CSV in corso...', 'info');
 
-        // Header CSV
         const headers = [
             'ID Ordine',
             'Numero Ordine',
@@ -638,25 +649,20 @@ export function exportOrdersToCSV() {
             'Note'
         ];
 
-        // Funzione helper per sanitizzare i campi CSV
         const sanitizeField = (field) => {
             if (field === null || field === undefined) return '';
             const str = String(field);
-            // Escapea le virgolette doppie e wrappa in quotes se contiene virgole, newline o quotes
             if (str.includes(',') || str.includes('\n') || str.includes('"')) {
                 return `"${str.replace(/"/g, '""')}"`;
             }
             return str;
         };
 
-        // Genera righe dati
         const rows = savedOrders.map(order => {
-            // Crea stringa prodotti (concatena nomi)
             const productsStr = order.items
                 .map(item => `${item.displayName || item.name} (x${item.quantity})`)
                 .join('; ');
 
-            // Calcola quantità totale
             const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
             return [
@@ -676,10 +682,7 @@ export function exportOrdersToCSV() {
             ].join(',');
         });
 
-        // Combina header e righe
         const csvContent = [headers.join(','), ...rows].join('\n');
-
-        // Crea Blob e scarica
         const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -699,12 +702,6 @@ export function exportOrdersToCSV() {
 
 /**
  * Apre l'anteprima PDF di un ordine in un modal
- * Genera il PDF come Blob URL e lo mostra in un iframe
- *
- * @async
- * @function previewOrderPDF
- * @param {number} orderId - ID dell'ordine da visualizzare in anteprima
- * @returns {Promise<void>}
  */
 export async function previewOrderPDF(orderId) {
     const order = savedOrders.find(o => o.id === orderId);
@@ -719,7 +716,6 @@ export async function previewOrderPDF(orderId) {
     }
 
     try {
-        // Genera PDF in modalità preview (ritorna Blob URL)
         const blobUrl = await window.generateOrderPDF(order, 'preview');
 
         if (!blobUrl) {
@@ -727,7 +723,6 @@ export async function previewOrderPDF(orderId) {
             return;
         }
 
-        // Apri modal e carica PDF nell'iframe
         const modal = document.getElementById('pdf-preview-modal');
         const iframe = document.getElementById('pdf-preview-iframe');
         const orderInfo = document.getElementById('preview-order-info');
@@ -737,19 +732,13 @@ export async function previewOrderPDF(orderId) {
             return;
         }
 
-        // Aggiorna info ordine nel header
         if (orderInfo) {
             orderInfo.textContent = `Ordine #${order.id} - ${order.customer_name}`;
         }
 
-        // Carica PDF nell'iframe
         iframe.src = blobUrl;
-
-        // Mostra modal
         modal.classList.remove('hidden');
         modal.classList.add('flex', 'items-center', 'justify-center');
-
-        // Salva orderId corrente per le azioni download/edit
         window.currentPreviewOrderId = orderId;
 
     } catch (err) {
@@ -760,10 +749,6 @@ export async function previewOrderPDF(orderId) {
 
 /**
  * Chiude il modal di anteprima PDF
- * Pulisce l'iframe e nasconde il modal
- *
- * @function closePDFPreview
- * @returns {void}
  */
 export function closePDFPreview() {
     const modal = document.getElementById('pdf-preview-modal');
@@ -778,22 +763,16 @@ export function closePDFPreview() {
         iframe.src = '';
     }
 
-    // Cleanup variabile globale
     window.currentPreviewOrderId = null;
 }
 
 /**
  * Resetta la modalità di modifica ordine
- * Da chiamare quando si svuota il carrello o si annulla la modifica
- *
- * @function resetEditMode
- * @returns {void}
  */
 export function resetEditMode() {
     window.editingOrderId = null;
     window.editingOrderData = null;
 
-    // Reset titolo modal se visibile
     const modal = document.getElementById('order-modal');
     if (modal) {
         const modalTitle = modal.querySelector('h2');
@@ -805,11 +784,6 @@ export function resetEditMode() {
 
 /**
  * Carica un ordine salvato nel carrello per modificarlo
- * Svuota il carrello corrente e lo riempie con i prodotti dell'ordine
- *
- * @function loadOrderToCart
- * @param {number} orderId - ID dell'ordine da caricare
- * @returns {void}
  */
 export function loadOrderToCart(orderId) {
     const order = savedOrders.find(o => o.id === orderId);
@@ -818,7 +792,6 @@ export function loadOrderToCart(orderId) {
         return;
     }
 
-    // Conferma azione (il carrello verrà svuotato)
     if (window.cart && window.cart.length > 0) {
         if (!confirm('Il carrello corrente verrà svuotato. Continuare?')) {
             return;
@@ -826,12 +799,10 @@ export function loadOrderToCart(orderId) {
     }
 
     try {
-        // Svuota il carrello
         if (window.cart) {
             window.cart.length = 0;
         }
 
-        // Salva l'ID dell'ordine in modifica e i dati originali del cliente
         window.editingOrderId = orderId;
         window.editingOrderData = {
             customer_name: order.customer_name,
@@ -841,7 +812,6 @@ export function loadOrderToCart(orderId) {
             sede: order.sede
         };
 
-        // Ricarica gli articoli dall'ordine
         if (order.items && order.items.length > 0) {
             order.items.forEach(item => {
                 if (window.cart) {
@@ -860,7 +830,6 @@ export function loadOrderToCart(orderId) {
             });
         }
 
-        // Aggiorna UI del carrello
         if (typeof window.renderCart === 'function') {
             window.renderCart();
         }
@@ -869,18 +838,15 @@ export function loadOrderToCart(orderId) {
             window.updateCartBadge(window.cart);
         }
 
-        // Chiudi modal preview se aperto
         const previewModal = document.getElementById('pdf-preview-modal');
         if (previewModal) {
             previewModal.classList.add('hidden');
-            // Cleanup iframe
             const iframe = document.getElementById('pdf-preview-iframe');
             if (iframe) {
                 iframe.src = '';
             }
         }
 
-        // Scroll al carrello
         if (typeof window.scrollToCart === 'function') {
             setTimeout(() => window.scrollToCart(), 300);
         }

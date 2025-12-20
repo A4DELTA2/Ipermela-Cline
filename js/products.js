@@ -1,4 +1,3 @@
-
 import { supabase } from './config.js';
 import { defaultProducts, productPricing } from './data.js';
 import { showNotification } from './ui.js';
@@ -8,6 +7,53 @@ export let nextProductId = 400;
 export let currentFilter = 'all';
 export let currentSubcategory = 'all';
 export let searchQuery = '';
+
+/**
+ * Configura i listener per la gestione prodotti (ricerca, filtri, custom)
+ */
+export function setupProductEventListeners() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            setSearchQuery(e.target.value);
+            renderProducts();
+        });
+    }
+
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.category-btn').forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md', 'active');
+                b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+            });
+            btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md', 'active');
+            setCurrentFilter(btn.dataset.category);
+            setCurrentSubcategory('all');
+            renderProducts();
+        });
+    });
+
+    // Subcategory filters (Mac only)
+    document.querySelectorAll('.subcategory-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.subcategory-btn').forEach(b => {
+                b.classList.remove('bg-blue-500', 'bg-apple-blue', 'text-white', 'border-blue-500', 'shadow-md', 'active');
+                b.classList.add('bg-white', 'text-apple-blue', 'border-blue-200');
+            });
+            btn.classList.remove('bg-white', 'text-apple-blue', 'border-blue-200');
+            btn.classList.add('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-md', 'active');
+            setCurrentSubcategory(btn.dataset.subcategory);
+            renderProducts();
+        });
+    });
+
+    // Custom Accessory Button
+    const addCustomBtn = document.getElementById('add-custom-btn');
+    if (addCustomBtn) {
+        addCustomBtn.addEventListener('click', addCustomAccessory);
+    }
+}
 
 export function setCurrentFilter(filter) {
     currentFilter = filter;
@@ -33,7 +79,6 @@ export function setSearchQuery(query) {
 
 /**
  * Carica i prodotti personalizzati da Supabase
- * 🔧 BUG FIX: Aggiunta gestione errori con logging
  */
 export async function loadProducts() {
     try {
@@ -57,13 +102,12 @@ export async function loadProducts() {
                 custom: true
             }));
 
-            products = [...products, ...customProducts];
+            products = [...defaultProducts, ...customProducts]; // Reset to default + custom
             nextProductId = Math.max(...products.map(p => p.id)) + 1;
             console.log(`✓ Caricati ${customProducts.length} prodotti personalizzati`);
         }
     } catch (err) {
         console.error('Errore imprevisto nel caricamento prodotti:', err);
-        // Non mostrare notifica all'utente, solo log per debug
     }
 }
 
@@ -120,7 +164,6 @@ function renderProductCard(product) {
     const hasColors = product.colors && product.colors.length > 0;
     const hasStorage = product.storage && product.storage.length > 0;
     const hasConfigurations = product.configurations;
-    // Tutti i prodotti hanno contenuto espandibile (per mostrare il bottone aggiungi)
     const hasExpandableContent = true;
     
     // Use the product.imageUrl if available, otherwise check for color images
@@ -138,13 +181,6 @@ function renderProductCard(product) {
     const currentPrice = hasConfigurations
         ? calculateConfiguredPrice(product, product.currentConfig)
         : (product.price || product.basePrice);
-
-    // If it's the iPhone 17 Pro Max and has the coral color, we can force the image for testing if it's not set
-    // This is just a temporary check to align with the user request if the data doesn't have it yet.
-    // However, ideally, the data should be updated. Assuming the user wants to see the image *here* based on the screenshot.
-    // The screenshot shows the image on the left side of the card.
-    
-    // We'll trust the displayImage logic above, but ensure the image path is correct if passed.
 
     return `
     <div class="product-card bg-white rounded-3xl shadow-lg border-2 border-gray-100 hover:border-apple-blue transition-all duration-300 mb-4 overflow-hidden group" data-id="${product.id}" onclick="toggleProductCard(${product.id})">

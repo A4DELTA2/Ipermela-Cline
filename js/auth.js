@@ -22,6 +22,28 @@ export let userRole = null;
 // ===== FUNZIONI ESPORTATE =====
 
 /**
+ * Configura i listener per l'autenticazione
+ */
+export function setupAuthEventListeners() {
+    // Login form
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Logout buttons
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+
+    const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+    if (mobileLogoutBtn) {
+        mobileLogoutBtn.addEventListener('click', handleLogout);
+    }
+}
+
+/**
  * Verifica se l'utente è già loggato al caricamento della pagina
  * Se loggato, carica il ruolo e mostra l'app principale
  * Se non loggato, mostra la schermata di login
@@ -37,7 +59,11 @@ export async function checkAuth() {
         window.currentUser = currentUser; // 🔧 FIX: Sincronizza con window
         await getUserRole();
         showApp();
-        await initializeApp();
+        
+        // Trigger initialization if app functions are available
+        if (typeof window.initializeApp === 'function') {
+            await window.initializeApp();
+        }
     } else {
         showLoginScreen();
     }
@@ -144,7 +170,8 @@ export async function handleLogin(e) {
 
         await getUserRole();
         showApp();
-        await initializeApp();
+        
+        // Initialization handled by checkAuth or auth state change listener in app.js
         showNotification('Login effettuato! ✓', 'success');
     } catch (err) {
         console.error('Errore imprevisto durante login:', err);
@@ -209,6 +236,12 @@ export function showApp() {
     if (userEmailSpan && currentUser) {
         userEmailSpan.textContent = currentUser.email;
     }
+    
+    // Also update mobile email if exists
+    const mobileUserEmail = document.getElementById('user-email-mobile');
+    if (mobileUserEmail && currentUser) {
+        mobileUserEmail.textContent = currentUser.email;
+    }
 
     // Mostra/nascondi pulsante gestione prezzi in base al ruolo
     updateUIBasedOnRole();
@@ -228,74 +261,31 @@ export function updateUIBasedOnRole() {
 
     // Solo admin e operator possono modificare i prezzi
     if (userRole === 'admin' || userRole === 'operator') {
-        console.log('✅ Ruolo autorizzato - Mostro pulsante Prezzi');
         if (priceManagementBtn) {
             priceManagementBtn.classList.remove('hidden');
-            // Aggiungi flex per mostrare correttamente il pulsante
             if (!priceManagementBtn.classList.contains('flex')) {
                 priceManagementBtn.classList.add('flex');
             }
         }
         if (mobilePriceItem) {
             mobilePriceItem.classList.remove('hidden');
-            // Aggiungi flex per mostrare correttamente il pulsante mobile
             if (!mobilePriceItem.classList.contains('flex')) {
                 mobilePriceItem.classList.add('flex');
             }
         }
     } else {
-        console.log('❌ Ruolo non autorizzato - Nascondo pulsante Prezzi');
         if (priceManagementBtn) priceManagementBtn.classList.add('hidden');
         if (mobilePriceItem) mobilePriceItem.classList.add('hidden');
     }
 }
 
-// ===== FUNZIONI INTERNE (NON ESPORTATE) =====
-
 /**
- * Inizializza l'app principale caricando i dati dal cloud
- * Carica prodotti, prezzi personalizzati, ordini salvati e renderizza l'interfaccia
- * @async
- * @function initializeApp
- * @returns {Promise<void>}
- * @private
- */
-async function initializeApp() {
-    showNotification('Caricamento dati dal cloud...', 'info');
-
-    // Queste funzioni devono essere disponibili nel scope globale o importate
-    if (typeof window.loadProducts === 'function') {
-        await window.loadProducts();
-    }
-    if (typeof window.loadCustomPrices === 'function') {
-        await window.loadCustomPrices();
-    }
-    if (typeof window.renderProducts === 'function') {
-        window.renderProducts();
-    }
-    if (typeof window.renderCart === 'function') {
-        window.renderCart();
-    }
-    if (typeof window.renderSavedOrders === 'function') {
-        await window.renderSavedOrders();
-    }
-
-    showNotification('Dati caricati! ✓', 'success');
-}
-
-/**
- * Mostra una notifica all'utente
- * @function showNotification
- * @param {string} message - Messaggio da visualizzare
- * @param {string} type - Tipo di notifica: 'success', 'error', 'info'
- * @returns {void}
- * @private
+ * Mostra una notifica all'utente (Internal helper wrapper)
  */
 function showNotification(message, type) {
-    // Usa la funzione globale se disponibile, altrimenti mostra un alert
     if (typeof window.showNotification === 'function') {
         window.showNotification(message, type);
     } else {
-        console.log(`[${type.toUpperCase()}] ${message}`);
+        console.log(`[${type}] ${message}`);
     }
 }

@@ -16,46 +16,63 @@
 
 import { supabase } from './config.js';
 import { showNotification } from './ui.js';
+import { userRole } from './auth.js';
 
 // ===== VARIABILI ESPORTATE =====
 
-/**
- * Oggetto contenente i prezzi originali dei prodotti
- * Mappa: productId -> originalPrice
- * @type {Object<number, number>}
- */
 export let originalPrices = {};
-
-/**
- * Oggetto contenente i prezzi modificati non ancora salvati
- * Mappa: productId -> newPrice
- * @type {Object<number, number>}
- */
 export let modifiedPrices = {};
-
-/**
- * Filtro categoria corrente per la lista prezzi
- * Valori possibili: 'all', 'iphone', 'mac', 'ipad', 'accessori'
- * @type {string}
- */
 export let priceFilter = 'all';
-
-/**
- * Query di ricerca per filtrare prodotti per nome
- * @type {string}
- */
 export let priceSearchQuery = '';
 
 // ===== FUNZIONI ESPORTATE =====
 
 /**
+ * Configura i listener per la gestione prezzi
+ */
+export function setupPricingEventListeners() {
+    const priceManagementBtn = document.getElementById('price-management-btn');
+    if (priceManagementBtn) {
+        priceManagementBtn.addEventListener('click', () => openPriceManagement(userRole));
+    }
+
+    const closePriceBtn = document.getElementById('close-price-management');
+    if (closePriceBtn) {
+        closePriceBtn.addEventListener('click', closePriceManagement);
+    }
+
+    const saveAllPricesBtn = document.getElementById('save-all-prices-btn');
+    if (saveAllPricesBtn) {
+        saveAllPricesBtn.addEventListener('click', saveAllPrices);
+    }
+
+    const resetAllPricesBtn = document.getElementById('reset-all-prices-btn');
+    if (resetAllPricesBtn) {
+        resetAllPricesBtn.addEventListener('click', resetAllPrices);
+    }
+
+    const priceSearchInput = document.getElementById('price-search-input');
+    if (priceSearchInput) {
+        priceSearchInput.addEventListener('input', (e) => {
+            updatePriceSearch(e.target.value);
+        });
+    }
+
+    document.querySelectorAll('.price-category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.price-category-btn').forEach(b => {
+                b.classList.remove('bg-brand-dark', 'text-white', 'border-brand-dark', 'shadow-md', 'active');
+                b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+            });
+            btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+            btn.classList.add('bg-brand-dark', 'text-white', 'border-brand-dark', 'shadow-md', 'active');
+            updatePriceFilter(btn.dataset.category);
+        });
+    });
+}
+
+/**
  * Carica i prezzi personalizzati da Supabase
- * Inizializza anche i prezzi originali se non già presenti
- *
- * @async
- * @function loadCustomPrices
- * @returns {Promise<void>}
- * @throws {Error} Se si verificano errori nella query Supabase
  */
 export async function loadCustomPrices() {
     try {
@@ -91,19 +108,6 @@ export async function loadCustomPrices() {
 
 /**
  * Salva un prezzo personalizzato per un singolo prodotto
- * Aggiorna il database Supabase e lo stato locale
- *
- * @async
- * @function savePriceChange
- * @param {number} productId - ID del prodotto
- * @param {number} newPrice - Nuovo prezzo da salvare
- * @returns {Promise<boolean>} true se il salvataggio ha avuto successo, false altrimenti
- *
- * @example
- * const success = await savePriceChange(1, 1299.99);
- * if (success) {
- *   console.log('Prezzo salvato con successo');
- * }
  */
 export async function savePriceChange(productId, newPrice) {
     let finalPrice = newPrice;
@@ -131,13 +135,11 @@ export async function savePriceChange(productId, newPrice) {
     try {
         showNotification('Salvataggio prezzo...', 'info');
 
-        // Verifica che l'utente sia autenticato
         if (!window.currentUser || !window.currentUser.id) {
             showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
             return false;
         }
 
-        // Trova il prodotto per verificare se è custom
         const product = window.products.find(p => p.id === productId);
 
         if (!product) {
@@ -147,16 +149,13 @@ export async function savePriceChange(productId, newPrice) {
 
         let error = null;
 
-        // Gestisci in modo diverso prodotti custom vs normali
         if (product.custom) {
-            // Per prodotti custom, aggiorna direttamente custom_products
             const { error: customError } = await supabase
                 .from('custom_products')
                 .update({ price: finalPrice })
                 .eq('id', productId);
             error = customError;
         } else {
-            // Per prodotti normali, usa product_prices
             const { error: priceError } = await supabase
                 .from('product_prices')
                 .upsert({
@@ -174,16 +173,12 @@ export async function savePriceChange(productId, newPrice) {
             return false;
         }
 
-        // Aggiorna il prodotto locale
         product.price = finalPrice;
-
         delete modifiedPrices[productId];
         renderPriceManagement();
 
-        // Trigger render prodotti se disponibile
-        const renderProductsFunc = window.renderProducts;
-        if (typeof renderProductsFunc === 'function') {
-            renderProductsFunc();
+        if (typeof window.renderProducts === 'function') {
+            window.renderProducts();
         }
 
         showNotification('Prezzo aggiornato! ✓');
@@ -196,15 +191,10 @@ export async function savePriceChange(productId, newPrice) {
 
 /**
  * Apre il modal di gestione prezzi
- * Verifica i permessi utente (solo admin e operator)
- *
- * @function openPriceManagement
- * @returns {void}
  */
 export function openPriceManagement() {
     console.log('💰 Tentativo apertura gestione prezzi. Ruolo corrente:', window.userRole);
 
-    // Verifica permessi
     if (window.userRole !== 'admin' && window.userRole !== 'operator') {
         console.error('❌ Permesso negato. Ruolo:', window.userRole);
         showNotification('Non hai i permessi per modificare i prezzi', 'error');
@@ -217,9 +207,6 @@ export function openPriceManagement() {
 
 /**
  * Chiude il modal di gestione prezzi e resetta i filtri
- *
- * @function closePriceManagement
- * @returns {void}
  */
 export function closePriceManagement() {
     const section = document.getElementById('price-management-section');
@@ -228,7 +215,6 @@ export function closePriceManagement() {
         document.body.style.overflow = 'auto';
     }
 
-    // Resetta filtri
     priceFilter = 'all';
     priceSearchQuery = '';
     modifiedPrices = {};
@@ -236,11 +222,6 @@ export function closePriceManagement() {
 
 /**
  * Renderizza il modal di gestione prezzi con la lista prodotti
- * Carica i prezzi custom e mostra la tabella interattiva
- *
- * @async
- * @function renderPriceManagement
- * @returns {Promise<void>}
  */
 export async function renderPriceManagement() {
     renderPriceTable();
@@ -248,15 +229,6 @@ export async function renderPriceManagement() {
 
 /**
  * Filtra la lista prezzi in base a categoria e query di ricerca
- * Aggiorna e renderizza la tabella
- *
- * @function filterPriceList
- * @param {string} [filterValue='all'] - Categoria da filtrare ('all', 'iphone', 'mac', 'ipad', 'accessori')
- * @param {string} [searchValue=''] - Termine di ricerca per nome prodotto
- * @returns {void}
- *
- * @example
- * filterPriceList('iphone', 'pro');
  */
 export function filterPriceList(filterValue = 'all', searchValue = '') {
     priceFilter = filterValue;
@@ -264,21 +236,11 @@ export function filterPriceList(filterValue = 'all', searchValue = '') {
     renderPriceTable();
 }
 
-/**
- * Aggiorna solo la ricerca prezzi mantenendo il filtro corrente
- * @function updatePriceSearch
- * @param {string} searchValue - Termine di ricerca
- */
 export function updatePriceSearch(searchValue) {
     priceSearchQuery = searchValue.toLowerCase();
     renderPriceTable();
 }
 
-/**
- * Aggiorna solo il filtro categoria mantenendo la ricerca corrente
- * @function updatePriceFilter
- * @param {string} filterValue - Categoria da filtrare
- */
 export function updatePriceFilter(filterValue) {
     priceFilter = filterValue;
     renderPriceTable();
@@ -286,11 +248,6 @@ export function updatePriceFilter(filterValue) {
 
 /**
  * Resetta TUTTI i prezzi ai valori originali
- * Richiede conferma dell'utente (azione irreversibile)
- *
- * @async
- * @function resetAllPrices
- * @returns {Promise<boolean>} true se il reset ha avuto successo, false altrimenti
  */
 export async function resetAllPrices() {
     if (!confirm('Ripristinare TUTTI i prezzi originali? Questa azione non può essere annullata!')) {
@@ -310,7 +267,6 @@ export async function resetAllPrices() {
             return false;
         }
 
-        // Ripristina tutti i prezzi originali
         window.products.forEach(product => {
             if (originalPrices[product.id]) {
                 product.price = originalPrices[product.id];
@@ -320,10 +276,8 @@ export async function resetAllPrices() {
         modifiedPrices = {};
         renderPriceTable();
 
-        // Trigger render prodotti se disponibile
-        const renderProductsFunc = window.renderProducts;
-        if (typeof renderProductsFunc === 'function') {
-            renderProductsFunc();
+        if (typeof window.renderProducts === 'function') {
+            window.renderProducts();
         }
 
         showNotification('Tutti i prezzi ripristinati! ✓');
@@ -334,34 +288,12 @@ export async function resetAllPrices() {
     }
 }
 
-/**
- * Ottiene il prezzo attuale di un prodotto
- * Ritorna il prezzo personalizzato se presente, altrimenti il prezzo originale
- *
- * @function getProductPrice
- * @param {Object} product - Oggetto prodotto
- * @param {number} product.id - ID del prodotto
- * @param {number} product.price - Prezzo attuale del prodotto
- * @returns {number} Il prezzo del prodotto
- *
- * @example
- * const price = getProductPrice(productObject);
- * console.log(`Prezzo: €${price.toFixed(2)}`);
- */
 export function getProductPrice(product) {
     return product.price || 0;
 }
 
 // ===== FUNZIONI INTERNE =====
 
-/**
- * Mostra il modal di gestione prezzi
- * Carica i prezzi custom e configura l'interfaccia
- *
- * @async
- * @private
- * @returns {Promise<void>}
- */
 async function showPriceManagementModal() {
     await loadCustomPrices();
     const section = document.getElementById('price-management-section');
@@ -372,18 +304,10 @@ async function showPriceManagementModal() {
     }
 }
 
-/**
- * Renderizza la tabella prezzi con filtri applicati
- * Mostra i prodotti con opzioni di modifica e salvataggio
- *
- * @private
- * @returns {void}
- */
 function renderPriceTable() {
     const tbody = document.getElementById('price-table-body');
     if (!tbody) return;
 
-    // 🔧 FIX: Verifica che window.products esista e non sia vuoto
     if (!window.products || !Array.isArray(window.products) || window.products.length === 0) {
         console.warn('⚠️ window.products non disponibile o vuoto');
         tbody.innerHTML = `
@@ -402,7 +326,6 @@ function renderPriceTable() {
         return;
     }
 
-    // Filtra i prodotti (includi anche i custom products)
     let filteredProducts = window.products;
 
     if (priceFilter !== 'all') {
@@ -415,7 +338,6 @@ function renderPriceTable() {
         );
     }
 
-    // Se nessun prodotto, mostra messaggio vuoto
     if (filteredProducts.length === 0) {
         tbody.innerHTML = `
     <tr>
@@ -433,9 +355,7 @@ function renderPriceTable() {
         return;
     }
 
-    // Renderizza le righe della tabella
     tbody.innerHTML = filteredProducts.map(product => {
-        // 🔧 FIX: Gestisci prodotti senza prezzo definito
         const originalPrice = originalPrices[product.id] || product.price || 0;
         const currentPrice = product.price || 0;
         const pendingPrice = modifiedPrices[product.id];
@@ -533,15 +453,6 @@ function renderPriceTable() {
     }).join('');
 }
 
-/**
- * Ottiene le informazioni di stile per una categoria
- *
- * @private
- * @param {string} category - Codice categoria ('iphone', 'mac', 'ipad', 'accessori')
- * @returns {Object} Oggetto con label e classi Tailwind CSS
- * @returns {string} returns.label - Etichetta categoria
- * @returns {string} returns.color - Classi Tailwind per il colore
- */
 function getCategoryInfo(category) {
     const categories = {
         'iphone': { label: 'iPhone', color: 'bg-purple-100 text-purple-700 border-purple-200' },
@@ -552,15 +463,6 @@ function getCategoryInfo(category) {
     return categories[category] || { label: category, color: 'bg-gray-100 text-gray-700 border-gray-200' };
 }
 
-/**
- * Aggiorna il valore di un input prezzo
- * Verifica la validità e aggiorna modifiedPrices
- *
- * @private
- * @param {number} productId - ID del prodotto
- * @param {string|number} value - Nuovo valore prezzo
- * @returns {void}
- */
 export function updatePriceInput(productId, value) {
     const price = parseFloat(value);
     if (!isNaN(price) && price >= 0) {
@@ -569,15 +471,6 @@ export function updatePriceInput(productId, value) {
     }
 }
 
-/**
- * Resetta il prezzo di un singolo prodotto al valore originale
- * Richiede conferma dell'utente
- *
- * @async
- * @private
- * @param {number} productId - ID del prodotto
- * @returns {Promise<boolean>} true se il reset ha avuto successo, false altrimenti
- */
 export async function resetPrice(productId) {
     if (!confirm('Ripristinare il prezzo originale per questo prodotto?')) {
         return false;
@@ -604,10 +497,8 @@ export async function resetPrice(productId) {
         delete modifiedPrices[productId];
         renderPriceTable();
 
-        // Trigger render prodotti se disponibile
-        const renderProductsFunc = window.renderProducts;
-        if (typeof renderProductsFunc === 'function') {
-            renderProductsFunc();
+        if (typeof window.renderProducts === 'function') {
+            window.renderProducts();
         }
 
         showNotification('Prezzo ripristinato! ✓');
@@ -618,14 +509,6 @@ export async function resetPrice(productId) {
     }
 }
 
-/**
- * Salva tutti i prezzi modificati in una singola operazione
- * Richiede conferma dell'utente
- *
- * @async
- * @private
- * @returns {Promise<boolean>} true se il salvataggio ha avuto successo, false altrimenti
- */
 export async function saveAllPrices() {
     const modifiedCount = Object.keys(modifiedPrices).length;
 
@@ -641,7 +524,6 @@ export async function saveAllPrices() {
     try {
         showNotification('Salvataggio modifiche...', 'info');
 
-        // Verifica che l'utente sia autenticato
         if (!window.currentUser || !window.currentUser.id) {
             showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
             return false;
@@ -664,7 +546,6 @@ export async function saveAllPrices() {
             return false;
         }
 
-        // Aggiorna tutti i prodotti modificati
         Object.entries(modifiedPrices).forEach(([productId, price]) => {
             const product = window.products.find(p => p.id === parseInt(productId));
             if (product) {
@@ -675,10 +556,8 @@ export async function saveAllPrices() {
         modifiedPrices = {};
         renderPriceTable();
 
-        // Trigger render prodotti se disponibile
-        const renderProductsFunc = window.renderProducts;
-        if (typeof renderProductsFunc === 'function') {
-            renderProductsFunc();
+        if (typeof window.renderProducts === 'function') {
+            window.renderProducts();
         }
 
         showNotification(`${modifiedCount} prezzi aggiornati! ✓`);
@@ -689,15 +568,6 @@ export async function saveAllPrices() {
     }
 }
 
-/**
- * Elimina un prodotto personalizzato
- * Richiede conferma dell'utente
- *
- * @async
- * @function deleteCustomProduct
- * @param {number} productId - ID del prodotto custom da eliminare
- * @returns {Promise<boolean>} true se l'eliminazione ha avuto successo, false altrimenti
- */
 export async function deleteCustomProduct(productId) {
     const product = window.products.find(p => p.id === productId);
 
@@ -713,7 +583,6 @@ export async function deleteCustomProduct(productId) {
     try {
         showNotification('Eliminazione prodotto...', 'info');
 
-        // Elimina dal database
         const { error } = await supabase
             .from('custom_products')
             .delete()
@@ -724,23 +593,18 @@ export async function deleteCustomProduct(productId) {
             return false;
         }
 
-        // Rimuovi dal catalogo locale
         const productIndex = window.products.findIndex(p => p.id === productId);
         if (productIndex !== -1) {
             window.products.splice(productIndex, 1);
         }
 
-        // Rimuovi anche dal prezzo originale se presente
         delete originalPrices[productId];
         delete modifiedPrices[productId];
 
-        // Re-render della tabella prezzi
         renderPriceTable();
 
-        // Re-render del catalogo prodotti se disponibile
-        const renderProductsFunc = window.renderProducts;
-        if (typeof renderProductsFunc === 'function') {
-            renderProductsFunc();
+        if (typeof window.renderProducts === 'function') {
+            window.renderProducts();
         }
 
         showNotification('Prodotto eliminato! ✓', 'success');

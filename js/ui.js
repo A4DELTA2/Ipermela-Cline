@@ -3,6 +3,68 @@
  * @module ui
  */
 
+import { openPriceManagement } from './pricing.js';
+import { scrollToAddProduct, scrollToCart, setupScrollToTop } from './utils.js';
+import { userRole } from './auth.js';
+
+/**
+ * Configura i listener per l'interfaccia utente (navigazione, dark mode, menu mobile)
+ */
+export function setupUIEventListeners() {
+    // Header buttons
+    const quickAddBtn = document.getElementById('quick-add-btn');
+    if (quickAddBtn) {
+        quickAddBtn.addEventListener('click', scrollToAddProduct);
+    }
+
+    const quickCartBtn = document.getElementById('quick-cart-btn');
+    if (quickCartBtn) {
+        quickCartBtn.addEventListener('click', scrollToCart);
+    }
+
+    // Mobile menu setup
+    setupMobileMenu();
+
+    // Scroll to Top setup
+    setupScrollToTop();
+}
+
+/**
+ * Setup menu mobile
+ */
+function setupMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileDropdown = document.getElementById('mobile-dropdown');
+
+    if (!mobileMenuBtn || !mobileDropdown) return;
+
+    mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!mobileDropdown.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            mobileDropdown.classList.add('hidden');
+        }
+    });
+
+    document.querySelectorAll('[data-action]').forEach(item => {
+        item.addEventListener('click', () => {
+            const action = item.dataset.action;
+            mobileDropdown.classList.add('hidden');
+
+            if (action === 'price-management') {
+                openPriceManagement(userRole);
+            } else if (action === 'quick-add') {
+                scrollToAddProduct();
+            } else if (action === 'quick-cart') {
+                scrollToCart();
+            }
+        });
+    });
+}
+
 /**
  * Mostra una notifica toast
  * @param {string} message - Messaggio da mostrare

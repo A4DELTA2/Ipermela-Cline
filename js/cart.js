@@ -18,6 +18,17 @@ export let cart = [];
 // ===== FUNZIONI ESPORTATE =====
 
 /**
+ * Configura i listener per il carrello
+ */
+export function setupCartEventListeners() {
+    // Bottone "Svuota Carrello"
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    if (clearCartBtn) {
+        clearCartBtn.addEventListener('click', clearCart);
+    }
+}
+
+/**
  * Aggiunge un prodotto al carrello con gestione varianti (colore/storage)
  * Se il prodotto con stesse varianti esiste già, incrementa la quantità
  *
