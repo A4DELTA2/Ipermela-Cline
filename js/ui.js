@@ -3,14 +3,15 @@
  * @module ui
  */
 
-import { openPriceManagement } from './pricing.js';
 import { scrollToAddProduct, scrollToCart, setupScrollToTop } from './utils.js';
-import { userRole } from './auth.js';
+// Removed: import { openPriceManagement } from './pricing.js'; -> Passed as callback
+// Removed: import { userRole } from './auth.js'; -> Accessed via window or passed context
 
 /**
  * Configura i listener per l'interfaccia utente (navigazione, dark mode, menu mobile)
+ * @param {Object} callbacks - Oggetto contenente le funzioni di callback (es. openPriceManagement)
  */
-export function setupUIEventListeners() {
+export function setupUIEventListeners(callbacks = {}) {
     // Header buttons
     const quickAddBtn = document.getElementById('quick-add-btn');
     if (quickAddBtn) {
@@ -23,7 +24,7 @@ export function setupUIEventListeners() {
     }
 
     // Mobile menu setup
-    setupMobileMenu();
+    setupMobileMenu(callbacks);
 
     // Scroll to Top setup
     setupScrollToTop();
@@ -31,8 +32,9 @@ export function setupUIEventListeners() {
 
 /**
  * Setup menu mobile
+ * @param {Object} callbacks - Funzioni callback
  */
-function setupMobileMenu() {
+function setupMobileMenu(callbacks) {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileDropdown = document.getElementById('mobile-dropdown');
 
@@ -55,7 +57,9 @@ function setupMobileMenu() {
             mobileDropdown.classList.add('hidden');
 
             if (action === 'price-management') {
-                openPriceManagement(userRole);
+                if (callbacks.openPriceManagement) {
+                    callbacks.openPriceManagement();
+                }
             } else if (action === 'quick-add') {
                 scrollToAddProduct();
             } else if (action === 'quick-cart') {

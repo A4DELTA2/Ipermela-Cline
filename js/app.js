@@ -168,7 +168,11 @@ function setupAllEventListeners() {
     setupCartEventListeners();
     setupOrderEventListeners();
     setupPricingEventListeners();
-    setupUIEventListeners();
+    
+    // Inject dependencies for UI event listeners to avoid circular deps
+    setupUIEventListeners({
+        openPriceManagement: () => openPriceManagement(window.userRole)
+    });
 }
 
 /**
