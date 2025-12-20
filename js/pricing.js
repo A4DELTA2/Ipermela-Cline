@@ -11,12 +11,14 @@
  * @module pricing
  * @requires config - Per accesso a Supabase
  * @requires ui - Per notifiche utente
- * @requires ./products - Per accesso al catalogo prodotti
+ * @requires products/state - Per accesso al catalogo prodotti
  */
 
 import { supabase } from './config.js';
 import { showNotification } from './ui.js';
 import { userRole } from './auth.js';
+import { products } from './products/state.js';
+import { renderProducts } from './products/dom.js';
 
 // ===== VARIABILI ESPORTATE =====
 
@@ -33,7 +35,8 @@ export let priceSearchQuery = '';
 export function setupPricingEventListeners() {
     const priceManagementBtn = document.getElementById('price-management-btn');
     if (priceManagementBtn) {
-        priceManagementBtn.addEventListener('click', () => openPriceManagement(userRole));
+        // userRole viene importato, ma per sicurezza passiamo una funzione che legge il valore corrente
+        priceManagementBtn.addEventListener('click', () => openPriceManagement(window.userRole || userRole));
     }
 
     const closePriceBtn = document.getElementById('close-price-management');
@@ -85,8 +88,8 @@ export async function loadCustomPrices() {
             return;
         }
 
-        // Inizializza i prezzi originali
-        window.products.forEach(p => {
+        // Usa l'array importato products invece di window.products
+        products.forEach(p => {
             if (!originalPrices[p.id]) {
                 originalPrices[p.id] = p.price;
             }
@@ -95,7 +98,7 @@ export async function loadCustomPrices() {
         // Applica i prezzi personalizzati caricati
         if (data && data.length > 0) {
             data.forEach(priceData => {
-                const product = window.products.find(p => p.id === priceData.product_id);
+                const product = products.find(p => p.id === priceData.product_id);
                 if (product) {
                     product.price = parseFloat(priceData.custom_price);
                 }
@@ -135,12 +138,14 @@ export async function savePriceChange(productId, newPrice) {
     try {
         showNotification('Salvataggio prezzo...', 'info');
 
-        if (!window.currentUser || !window.currentUser.id) {
+        const currentUser = window.currentUser; // Usa window.currentUser per essere sicuri di avere l'ultimo stato
+
+        if (!currentUser || !currentUser.id) {
             showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
             return false;
         }
 
-        const product = window.products.find(p => p.id === productId);
+        const product = products.find(p => p.id === productId);
 
         if (!product) {
             showNotification('Errore: prodotto non trovato!', 'error');
@@ -161,7 +166,7 @@ export async function savePriceChange(productId, newPrice) {
                 .upsert({
                     product_id: productId,
                     custom_price: finalPrice,
-                    updated_by: window.currentUser.id
+                    updated_by: currentUser.id
                 }, {
                     onConflict: 'product_id'
                 });
@@ -177,7 +182,10 @@ export async function savePriceChange(productId, newPrice) {
         delete modifiedPrices[productId];
         renderPriceManagement();
 
-        if (typeof window.renderProducts === 'function') {
+        // Aggiorna la UI principale
+        if (typeof renderProducts === 'function') {
+            renderProducts();
+        } else if (typeof window.renderProducts === 'function') {
             window.renderProducts();
         }
 
@@ -193,10 +201,12 @@ export async function savePriceChange(productId, newPrice) {
  * Apre il modal di gestione prezzi
  */
 export function openPriceManagement() {
-    console.log('💰 Tentativo apertura gestione prezzi. Ruolo corrente:', window.userRole);
+    // Usa window.userRole per avere lo stato più recente
+    const currentRole = window.userRole || userRole;
+    console.log('💰 Tentativo apertura gestione prezzi. Ruolo corrente:', currentRole);
 
-    if (window.userRole !== 'admin' && window.userRole !== 'operator') {
-        console.error('❌ Permesso negato. Ruolo:', window.userRole);
+    if (currentRole !== 'admin' && currentRole !== 'operator') {
+        console.error('❌ Permesso negato. Ruolo:', currentRole);
         showNotification('Non hai i permessi per modificare i prezzi', 'error');
         return;
     }
@@ -267,7 +277,7 @@ export async function resetAllPrices() {
             return false;
         }
 
-        window.products.forEach(product => {
+        products.forEach(product => {
             if (originalPrices[product.id]) {
                 product.price = originalPrices[product.id];
             }
@@ -276,7 +286,9 @@ export async function resetAllPrices() {
         modifiedPrices = {};
         renderPriceTable();
 
-        if (typeof window.renderProducts === 'function') {
+        if (typeof renderProducts === 'function') {
+            renderProducts();
+        } else if (typeof window.renderProducts === 'function') {
             window.renderProducts();
         }
 
@@ -308,8 +320,8 @@ function renderPriceTable() {
     const tbody = document.getElementById('price-table-body');
     if (!tbody) return;
 
-    if (!window.products || !Array.isArray(window.products) || window.products.length === 0) {
-        console.warn('⚠️ window.products non disponibile o vuoto');
+    if (!products || !Array.isArray(products) || products.length === 0) {
+        console.warn('⚠️ products non disponibile o vuoto');
         tbody.innerHTML = `
     <tr>
         <td colspan="5" class="py-16 text-center">
@@ -326,7 +338,7 @@ function renderPriceTable() {
         return;
     }
 
-    let filteredProducts = window.products;
+    let filteredProducts = products;
 
     if (priceFilter !== 'all') {
         filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
@@ -489,7 +501,7 @@ export async function resetPrice(productId) {
             return false;
         }
 
-        const product = window.products.find(p => p.id === productId);
+        const product = products.find(p => p.id === productId);
         if (product && originalPrices[productId]) {
             product.price = originalPrices[productId];
         }
@@ -497,7 +509,9 @@ export async function resetPrice(productId) {
         delete modifiedPrices[productId];
         renderPriceTable();
 
-        if (typeof window.renderProducts === 'function') {
+        if (typeof renderProducts === 'function') {
+            renderProducts();
+        } else if (typeof window.renderProducts === 'function') {
             window.renderProducts();
         }
 
@@ -524,7 +538,9 @@ export async function saveAllPrices() {
     try {
         showNotification('Salvataggio modifiche...', 'info');
 
-        if (!window.currentUser || !window.currentUser.id) {
+        const currentUser = window.currentUser;
+
+        if (!currentUser || !currentUser.id) {
             showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
             return false;
         }
@@ -532,7 +548,7 @@ export async function saveAllPrices() {
         const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
             product_id: parseInt(productId),
             custom_price: price,
-            updated_by: window.currentUser.id
+            updated_by: currentUser.id
         }));
 
         const { error } = await supabase
@@ -547,7 +563,7 @@ export async function saveAllPrices() {
         }
 
         Object.entries(modifiedPrices).forEach(([productId, price]) => {
-            const product = window.products.find(p => p.id === parseInt(productId));
+            const product = products.find(p => p.id === parseInt(productId));
             if (product) {
                 product.price = price;
             }
@@ -556,7 +572,9 @@ export async function saveAllPrices() {
         modifiedPrices = {};
         renderPriceTable();
 
-        if (typeof window.renderProducts === 'function') {
+        if (typeof renderProducts === 'function') {
+            renderProducts();
+        } else if (typeof window.renderProducts === 'function') {
             window.renderProducts();
         }
 
@@ -569,7 +587,7 @@ export async function saveAllPrices() {
 }
 
 export async function deleteCustomProduct(productId) {
-    const product = window.products.find(p => p.id === productId);
+    const product = products.find(p => p.id === productId);
 
     if (!product || !product.custom) {
         showNotification('Errore: prodotto non valido!', 'error');
@@ -593,9 +611,9 @@ export async function deleteCustomProduct(productId) {
             return false;
         }
 
-        const productIndex = window.products.findIndex(p => p.id === productId);
+        const productIndex = products.findIndex(p => p.id === productId);
         if (productIndex !== -1) {
-            window.products.splice(productIndex, 1);
+            products.splice(productIndex, 1);
         }
 
         delete originalPrices[productId];
@@ -603,7 +621,9 @@ export async function deleteCustomProduct(productId) {
 
         renderPriceTable();
 
-        if (typeof window.renderProducts === 'function') {
+        if (typeof renderProducts === 'function') {
+            renderProducts();
+        } else if (typeof window.renderProducts === 'function') {
             window.renderProducts();
         }
 
