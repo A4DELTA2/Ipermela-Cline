@@ -3,7 +3,7 @@
  * Handles PDF and CSV export functionality
  */
 
-import { savedOrders, currentPreviewOrderId } from './state.js';
+import { savedOrders, setPreviewOrderId } from './state.js';
 import { showNotification } from '../ui.js';
 import { showPDFPreviewModal } from './dom.js';
 
@@ -47,15 +47,13 @@ export async function previewOrderPDF(orderId) {
             return;
         }
 
-        // Importa da dom.js dinamicamente o usa window global
-        // Qui usiamo la funzione esportata da dom.js
         const title = `Ordine #${order.id} - ${order.customer_name}`;
         
         // Aggiorna stato globale per altri bottoni nel modal
-        import('./state.js').then(m => m.setPreviewOrderId(orderId));
+        setPreviewOrderId(orderId);
         
         // Mostra modal
-        import('./dom.js').then(m => m.showPDFPreviewModal(blobUrl, title));
+        showPDFPreviewModal(blobUrl, title);
 
     } catch (err) {
         console.error('Errore preview PDF:', err);
