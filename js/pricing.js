@@ -1,33 +1,51 @@
 /**
  * Modulo Gestione Prezzi Personalizzati
  *
- * Gestisce tutti gli aspetti relativi ai prezzi personalizzati dei prodotti:
- * - Caricamento prezzi custom da Supabase
- * - Modifica e salvataggio prezzi
- * - Interfaccia di gestione prezzi
- * - Filtro e ricerca prodotti
- * - Reset prezzi
- *
  * @module pricing
- * @requires config - Per accesso a Supabase
- * @requires ui - Per notifiche utente
- * @requires products/state - Per accesso al catalogo prodotti
+ * @requires config
+ * @requires ui
+ * @requires products
  */
 
-import { supabase } from './config.js';
 import { showNotification } from './ui.js';
 import { userRole } from './auth.js';
 import { products } from './products/state.js';
 import { renderProducts } from './products/dom.js';
 
-// ===== VARIABILI ESPORTATE =====
+// Sub-modules
+import {
+    originalPrices,
+    modifiedPrices,
+    priceFilter,
+    priceSearchQuery,
+    setOriginalPrice,
+    setModifiedPrice,
+    removeModifiedPrice,
+    removeOriginalPrice,
+    resetModifiedPrices,
+    setPriceFilter,
+    setPriceSearchQuery
+} from './pricing/state.js';
 
-export let originalPrices = {};
-export let modifiedPrices = {};
-export let priceFilter = 'all';
-export let priceSearchQuery = '';
+import {
+    fetchProductPrices,
+    updateCustomProductPriceInDb,
+    upsertProductPriceInDb,
+    upsertMultipleProductPricesInDb,
+    deleteProductPriceFromDb,
+    deleteAllProductPricesFromDb,
+    deleteCustomProductFromDb
+} from './pricing/service.js';
 
-// ===== FUNZIONI ESPORTATE =====
+import {
+    togglePriceModal,
+    renderPriceTable
+} from './pricing/dom.js';
+
+// Re-export variables for backward compatibility or debugging
+export { originalPrices, modifiedPrices, priceFilter, priceSearchQuery };
+
+// ===== CONTROLLER FUNCTIONS =====
 
 /**
  * Configura i listener per la gestione prezzi
@@ -35,7 +53,6 @@ export let priceSearchQuery = '';
 export function setupPricingEventListeners() {
     const priceManagementBtn = document.getElementById('price-management-btn');
     if (priceManagementBtn) {
-        // userRole viene importato, ma per sicurezza passiamo una funzione che legge il valore corrente
         priceManagementBtn.addEventListener('click', () => openPriceManagement(window.userRole || userRole));
     }
 
@@ -75,27 +92,20 @@ export function setupPricingEventListeners() {
 }
 
 /**
- * Carica i prezzi personalizzati da Supabase
+ * Carica i prezzi personalizzati da Supabase e aggiorna lo stato
  */
 export async function loadCustomPrices() {
     try {
-        const { data, error } = await supabase
-            .from('product_prices')
-            .select('*');
+        const data = await fetchProductPrices();
 
-        if (error) {
-            console.error('Errore caricamento prezzi:', error);
-            return;
-        }
-
-        // Usa l'array importato products invece di window.products
+        // Inizializza i prezzi originali se non fatto
         products.forEach(p => {
             if (!originalPrices[p.id]) {
-                originalPrices[p.id] = p.price;
+                setOriginalPrice(p.id, p.price);
             }
         });
 
-        // Applica i prezzi personalizzati caricati
+        // Applica i prezzi personalizzati
         if (data && data.length > 0) {
             data.forEach(priceData => {
                 const product = products.find(p => p.id === priceData.product_id);
@@ -110,172 +120,207 @@ export async function loadCustomPrices() {
 }
 
 /**
- * Salva un prezzo personalizzato per un singolo prodotto
+ * Apre il modal di gestione prezzi
+ */
+export function openPriceManagement() {
+    const currentRole = window.userRole || userRole;
+
+    if (currentRole !== 'admin' && currentRole !== 'operator') {
+        showNotification('Non hai i permessi per modificare i prezzi', 'error');
+        return;
+    }
+
+    // Ricarica per sicurezza prima di aprire
+    loadCustomPrices().then(() => {
+        togglePriceModal(true);
+        renderPriceManagement();
+    });
+}
+
+/**
+ * Chiude il modal di gestione prezzi
+ */
+export function closePriceManagement() {
+    togglePriceModal(false);
+    setPriceFilter('all');
+    setPriceSearchQuery('');
+    resetModifiedPrices();
+}
+
+/**
+ * Alias per renderPriceTable
+ */
+export function renderPriceManagement() {
+    renderPriceTable();
+}
+
+/**
+ * Aggiorna il filtro di ricerca e re-renderizza
+ */
+export function filterPriceList(filterValue = 'all', searchValue = '') {
+    setPriceFilter(filterValue);
+    setPriceSearchQuery(searchValue);
+    renderPriceTable();
+}
+
+export function updatePriceSearch(searchValue) {
+    setPriceSearchQuery(searchValue);
+    renderPriceTable();
+}
+
+export function updatePriceFilter(filterValue) {
+    setPriceFilter(filterValue);
+    renderPriceTable();
+}
+
+/**
+ * Gestisce l'input di un nuovo prezzo (aggiorna stato locale)
+ */
+export function updatePriceInput(productId, value) {
+    const price = parseFloat(value);
+    if (!isNaN(price) && price >= 0) {
+        setModifiedPrice(productId, price);
+        renderPriceTable();
+    }
+}
+
+/**
+ * Salva il prezzo modificato per un singolo prodotto
  */
 export async function savePriceChange(productId, newPrice) {
     let finalPrice = newPrice;
 
-    // Se il prezzo non è fornito, leggi dall'input
+    // Se non passato, cerca in modifiedPrices o DOM
     if (finalPrice === undefined) {
-        const input = document.querySelector(`input[data-product-id="${productId}"]`);
-        if (input) {
-            const price = parseFloat(input.value);
-            if (!isNaN(price) && price >= 0) {
-                finalPrice = price;
-                modifiedPrices[productId] = price;
-            } else {
-                showNotification('Inserisci un prezzo valido!', 'error');
-                return false;
-            }
+        if (modifiedPrices[productId] !== undefined) {
+            finalPrice = modifiedPrices[productId];
+        } else {
+            const input = document.querySelector(`input[data-product-id="${productId}"]`);
+            if (input) finalPrice = parseFloat(input.value);
         }
     }
 
-    if (finalPrice === undefined || finalPrice < 0) {
+    if (finalPrice === undefined || isNaN(finalPrice) || finalPrice < 0) {
         showNotification('Inserisci un prezzo valido!', 'error');
         return false;
     }
 
     try {
         showNotification('Salvataggio prezzo...', 'info');
-
-        const currentUser = window.currentUser; // Usa window.currentUser per essere sicuri di avere l'ultimo stato
+        const currentUser = window.currentUser;
 
         if (!currentUser || !currentUser.id) {
-            showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
+            showNotification('Utente non autenticato', 'error');
             return false;
         }
 
         const product = products.find(p => p.id === productId);
-
         if (!product) {
-            showNotification('Errore: prodotto non trovato!', 'error');
+            showNotification('Prodotto non trovato', 'error');
             return false;
         }
-
-        let error = null;
 
         if (product.custom) {
-            const { error: customError } = await supabase
-                .from('custom_products')
-                .update({ price: finalPrice })
-                .eq('id', productId);
-            error = customError;
+            await updateCustomProductPriceInDb(productId, finalPrice);
         } else {
-            const { error: priceError } = await supabase
-                .from('product_prices')
-                .upsert({
-                    product_id: productId,
-                    custom_price: finalPrice,
-                    updated_by: currentUser.id
-                }, {
-                    onConflict: 'product_id'
-                });
-            error = priceError;
+            await upsertProductPriceInDb(productId, finalPrice, currentUser.id);
         }
 
-        if (error) {
-            showNotification(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`, 'error');
-            return false;
-        }
-
+        // Aggiorna stato locale
         product.price = finalPrice;
-        delete modifiedPrices[productId];
-        renderPriceManagement();
-
-        // Aggiorna la UI principale
-        if (typeof renderProducts === 'function') {
-            renderProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
-        }
+        removeModifiedPrice(productId);
+        
+        renderPriceTable();
+        refreshMainUI();
 
         showNotification('Prezzo aggiornato! ✓');
         return true;
     } catch (err) {
-        showNotification(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`, 'error');
+        showNotification(`Errore: ${err.message}`, 'error');
         return false;
     }
 }
 
 /**
- * Apre il modal di gestione prezzi
+ * Resetta il prezzo di un singolo prodotto all'originale
  */
-export function openPriceManagement() {
-    // Usa window.userRole per avere lo stato più recente
-    const currentRole = window.userRole || userRole;
-    console.log('💰 Tentativo apertura gestione prezzi. Ruolo corrente:', currentRole);
+export async function resetPrice(productId) {
+    if (!confirm('Ripristinare il prezzo originale?')) return false;
 
-    if (currentRole !== 'admin' && currentRole !== 'operator') {
-        console.error('❌ Permesso negato. Ruolo:', currentRole);
-        showNotification('Non hai i permessi per modificare i prezzi', 'error');
-        return;
+    try {
+        showNotification('Ripristino prezzo...', 'info');
+        
+        await deleteProductPriceFromDb(productId);
+
+        const product = products.find(p => p.id === productId);
+        if (product && originalPrices[productId]) {
+            product.price = originalPrices[productId];
+        }
+
+        removeModifiedPrice(productId);
+        renderPriceTable();
+        refreshMainUI();
+
+        showNotification('Prezzo ripristinato! ✓');
+        return true;
+    } catch (err) {
+        showNotification('Errore nel ripristino', 'error');
+        return false;
+    }
+}
+
+/**
+ * Salva tutti i prezzi modificati in una volta sola
+ */
+export async function saveAllPrices() {
+    const changes = Object.entries(modifiedPrices);
+    if (changes.length === 0) {
+        showNotification('Nessuna modifica da salvare', 'info');
+        return false;
     }
 
-    console.log('✅ Permesso concesso - Apertura modale prezzi');
-    showPriceManagementModal();
-}
+    if (!confirm(`Salvare ${changes.length} modifiche?`)) return false;
 
-/**
- * Chiude il modal di gestione prezzi e resetta i filtri
- */
-export function closePriceManagement() {
-    const section = document.getElementById('price-management-section');
-    if (section) {
-        section.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+    try {
+        showNotification('Salvataggio massivo...', 'info');
+        const currentUser = window.currentUser;
+
+        const updates = changes.map(([id, price]) => ({
+            product_id: parseInt(id),
+            custom_price: price,
+            updated_by: currentUser.id
+        }));
+
+        await upsertMultipleProductPricesInDb(updates);
+
+        // Aggiorna prodotti in memoria
+        changes.forEach(([id, price]) => {
+            const product = products.find(p => p.id === parseInt(id));
+            if (product) product.price = price;
+        });
+
+        resetModifiedPrices();
+        renderPriceTable();
+        refreshMainUI();
+
+        showNotification('Tutti i prezzi salvati! ✓');
+        return true;
+    } catch (err) {
+        showNotification(`Errore: ${err.message}`, 'error');
+        return false;
     }
-
-    priceFilter = 'all';
-    priceSearchQuery = '';
-    modifiedPrices = {};
-}
-
-/**
- * Renderizza il modal di gestione prezzi con la lista prodotti
- */
-export async function renderPriceManagement() {
-    renderPriceTable();
-}
-
-/**
- * Filtra la lista prezzi in base a categoria e query di ricerca
- */
-export function filterPriceList(filterValue = 'all', searchValue = '') {
-    priceFilter = filterValue;
-    priceSearchQuery = searchValue.toLowerCase();
-    renderPriceTable();
-}
-
-export function updatePriceSearch(searchValue) {
-    priceSearchQuery = searchValue.toLowerCase();
-    renderPriceTable();
-}
-
-export function updatePriceFilter(filterValue) {
-    priceFilter = filterValue;
-    renderPriceTable();
 }
 
 /**
  * Resetta TUTTI i prezzi ai valori originali
  */
 export async function resetAllPrices() {
-    if (!confirm('Ripristinare TUTTI i prezzi originali? Questa azione non può essere annullata!')) {
-        return false;
-    }
+    if (!confirm('Ripristinare TUTTI i prezzi originali? Irreversibile!')) return false;
 
     try {
-        showNotification('Ripristino prezzi...', 'info');
-
-        const { error } = await supabase
-            .from('product_prices')
-            .delete()
-            .neq('product_id', 0);
-
-        if (error) {
-            showNotification('Errore nel ripristino!', 'error');
-            return false;
-        }
+        showNotification('Ripristino totale...', 'info');
+        
+        await deleteAllProductPricesFromDb();
 
         products.forEach(product => {
             if (originalPrices[product.id]) {
@@ -283,19 +328,43 @@ export async function resetAllPrices() {
             }
         });
 
-        modifiedPrices = {};
+        resetModifiedPrices();
         renderPriceTable();
+        refreshMainUI();
 
-        if (typeof renderProducts === 'function') {
-            renderProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
-        }
-
-        showNotification('Tutti i prezzi ripristinati! ✓');
+        showNotification('Listino ripristinato! ✓');
         return true;
     } catch (err) {
-        showNotification('Errore nel ripristino!', 'error');
+        showNotification('Errore nel ripristino totale', 'error');
+        return false;
+    }
+}
+
+/**
+ * Elimina un prodotto custom
+ */
+export async function deleteCustomProduct(productId) {
+    if (!confirm('Eliminare definitivamente questo prodotto?')) return false;
+
+    try {
+        showNotification('Eliminazione...', 'info');
+        
+        await deleteCustomProductFromDb(productId);
+
+        // Rimuovi da array prodotti
+        const idx = products.findIndex(p => p.id === productId);
+        if (idx !== -1) products.splice(idx, 1);
+
+        removeOriginalPrice(productId);
+        removeModifiedPrice(productId);
+
+        renderPriceTable();
+        refreshMainUI();
+
+        showNotification('Prodotto eliminato! ✓');
+        return true;
+    } catch (err) {
+        showNotification(`Errore: ${err.message}`, 'error');
         return false;
     }
 }
@@ -304,340 +373,19 @@ export function getProductPrice(product) {
     return product.price || 0;
 }
 
-// ===== FUNZIONI INTERNE =====
-
-async function showPriceManagementModal() {
-    await loadCustomPrices();
-    const section = document.getElementById('price-management-section');
-    if (section) {
-        section.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        renderPriceTable();
+/**
+ * Helper per aggiornare la UI principale (griglia prodotti)
+ */
+function refreshMainUI() {
+    if (typeof renderProducts === 'function') {
+        renderProducts();
+    } else if (typeof window.renderProducts === 'function') {
+        window.renderProducts();
     }
 }
 
-function renderPriceTable() {
-    const tbody = document.getElementById('price-table-body');
-    if (!tbody) return;
+// ===== ESPORTAZIONE GLOBALE =====
 
-    if (!products || !Array.isArray(products) || products.length === 0) {
-        console.warn('⚠️ products non disponibile o vuoto');
-        tbody.innerHTML = `
-    <tr>
-        <td colspan="5" class="py-16 text-center">
-            <div class="flex flex-col items-center gap-3">
-                <svg class="w-16 h-16 text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p class="text-gray-500 font-semibold">Caricamento prodotti...</p>
-                <p class="text-sm text-gray-400">Attendi o ricarica la pagina</p>
-            </div>
-        </td>
-    </tr>
-`;
-        return;
-    }
-
-    let filteredProducts = products;
-
-    if (priceFilter !== 'all') {
-        filteredProducts = filteredProducts.filter(p => p.category === priceFilter);
-    }
-
-    if (priceSearchQuery) {
-        filteredProducts = filteredProducts.filter(p =>
-            p.name.toLowerCase().includes(priceSearchQuery)
-        );
-    }
-
-    if (filteredProducts.length === 0) {
-        tbody.innerHTML = `
-    <tr>
-        <td colspan="5" class="py-16 text-center">
-            <div class="flex flex-col items-center gap-3">
-                <svg class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <p class="text-gray-500 font-medium">Nessun prodotto trovato</p>
-                <p class="text-sm text-gray-400">Prova a modificare i filtri</p>
-            </div>
-        </td>
-    </tr>
-`;
-        return;
-    }
-
-    tbody.innerHTML = filteredProducts.map(product => {
-        const originalPrice = originalPrices[product.id] || product.price || 0;
-        const currentPrice = product.price || 0;
-        const pendingPrice = modifiedPrices[product.id];
-        const categoryInfo = getCategoryInfo(product.category);
-        const hasChanges = pendingPrice !== undefined;
-
-        return `
-    <tr data-product-id="${product.id}" class="group hover:bg-orange-50/30 transition-all duration-300 ${hasChanges ? 'bg-amber-50' : ''}">
-        <!-- Product Name with Icon -->
-        <td class="px-4 py-4">
-            <div class="flex items-center gap-3">
-                <div class="text-3xl">${product.icon}</div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-semibold text-gray-900">${product.name}</span>
-                        ${product.custom ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-info dark:bg-info-dark text-white">Personalizzato</span>' : ''}
-                    </div>
-                    ${hasChanges ? '<div class="text-xs text-amber-600 font-medium mt-1">● Modifiche in sospeso</div>' : ''}
-                </div>
-            </div>
-        </td>
-
-        <!-- Category Badge -->
-        <td class="px-4 py-4">
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${categoryInfo.color}">
-                ${categoryInfo.label}
-            </span>
-        </td>
-
-        <!-- Original Price -->
-        <td class="px-4 py-4">
-            <div class="flex items-center gap-2">
-                <span class="text-gray-400 line-through text-sm">€${originalPrice.toFixed(2)}</span>
-                ${originalPrice !== currentPrice ? '<span class="text-xs text-orange-600 font-medium">Modificato</span>' : ''}
-            </div>
-        </td>
-
-        <!-- Current Price Input -->
-        <td class="px-4 py-4">
-            <div class="relative inline-block">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span class="text-gray-500">€</span>
-                </div>
-                <input
-                    type="number"
-                    class="w-36 pl-8 pr-3 py-2.5 border-2 rounded-xl text-base font-semibold transition-all duration-300 focus:outline-none focus:ring-2 ${hasChanges ? 'border-apple-darkorange bg-amber-50 text-amber-900 focus:border-apple-darkorange focus:ring-apple-darkorange/20' : 'border-gray-200 text-gray-900 focus:border-brand-dark focus:ring-brand-dark/20'}"
-                    value="${pendingPrice !== undefined ? pendingPrice : currentPrice.toFixed(2)}"
-                    min="0"
-                    step="0.01"
-                    data-product-id="${product.id}"
-                    onchange="window.pricingModule.updatePriceInput(${product.id}, this.value)"
-                />
-            </div>
-        </td>
-
-        <!-- Actions -->
-        <td class="px-4 py-4">
-            <div class="flex items-center justify-center gap-2">
-                <button
-                    class="px-4 py-2 bg-[#5BC77A] text-white font-medium rounded-lg transition-all duration-300 hover:opacity-90 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                    onclick="window.pricingModule.savePriceChange(${product.id})"
-                    title="Salva prezzo"
-                >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span class="hidden sm:inline">Salva</span>
-                </button>
-                ${!product.custom ? `
-                <button
-                    class="px-3 py-2 bg-white border-2 border-gray-200 text-gray-600 font-medium rounded-lg transition-all duration-300 hover:border-brand-dark hover:bg-brand-dark hover:text-white hover:scale-105 active:scale-95"
-                    onclick="window.pricingModule.resetPrice(${product.id})"
-                    title="Ripristina prezzo originale"
-                >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                </button>
-                ` : `
-                <button
-                    class="px-3 py-2 bg-danger dark:bg-danger-dark text-white font-medium rounded-lg transition-all duration-300 hover:bg-red-700 hover:shadow-md hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                    onclick="window.pricingModule.deleteCustomProduct(${product.id})"
-                    title="Elimina prodotto personalizzato"
-                >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                    <span class="hidden sm:inline">Elimina</span>
-                </button>
-                `}
-            </div>
-        </td>
-    </tr>
-`;
-    }).join('');
-}
-
-function getCategoryInfo(category) {
-    const categories = {
-        'iphone': { label: 'iPhone', color: 'bg-purple-100 text-purple-700 border-purple-200' },
-        'mac': { label: 'Mac', color: 'bg-blue-100 text-blue-700 border-blue-200' },
-        'ipad': { label: 'iPad', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' },
-        'accessori': { label: 'Accessori', color: 'bg-green-100 text-green-700 border-green-200' }
-    };
-    return categories[category] || { label: category, color: 'bg-gray-100 text-gray-700 border-gray-200' };
-}
-
-export function updatePriceInput(productId, value) {
-    const price = parseFloat(value);
-    if (!isNaN(price) && price >= 0) {
-        modifiedPrices[productId] = price;
-        renderPriceTable();
-    }
-}
-
-export async function resetPrice(productId) {
-    if (!confirm('Ripristinare il prezzo originale per questo prodotto?')) {
-        return false;
-    }
-
-    try {
-        showNotification('Ripristino prezzo...', 'info');
-
-        const { error } = await supabase
-            .from('product_prices')
-            .delete()
-            .eq('product_id', productId);
-
-        if (error) {
-            showNotification('Errore nel ripristino!', 'error');
-            return false;
-        }
-
-        const product = products.find(p => p.id === productId);
-        if (product && originalPrices[productId]) {
-            product.price = originalPrices[productId];
-        }
-
-        delete modifiedPrices[productId];
-        renderPriceTable();
-
-        if (typeof renderProducts === 'function') {
-            renderProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
-        }
-
-        showNotification('Prezzo ripristinato! ✓');
-        return true;
-    } catch (err) {
-        showNotification('Errore nel ripristino!', 'error');
-        return false;
-    }
-}
-
-export async function saveAllPrices() {
-    const modifiedCount = Object.keys(modifiedPrices).length;
-
-    if (modifiedCount === 0) {
-        showNotification('Non ci sono modifiche da salvare!', 'error');
-        return false;
-    }
-
-    if (!confirm(`Salvare ${modifiedCount} modifiche ai prezzi?`)) {
-        return false;
-    }
-
-    try {
-        showNotification('Salvataggio modifiche...', 'info');
-
-        const currentUser = window.currentUser;
-
-        if (!currentUser || !currentUser.id) {
-            showNotification('Errore: utente non autenticato. Effettua nuovamente il login.', 'error');
-            return false;
-        }
-
-        const updates = Object.entries(modifiedPrices).map(([productId, price]) => ({
-            product_id: parseInt(productId),
-            custom_price: price,
-            updated_by: currentUser.id
-        }));
-
-        const { error } = await supabase
-            .from('product_prices')
-            .upsert(updates, {
-                onConflict: 'product_id'
-            });
-
-        if (error) {
-            showNotification(`Errore nel salvataggio: ${error.message || 'Errore sconosciuto'}`, 'error');
-            return false;
-        }
-
-        Object.entries(modifiedPrices).forEach(([productId, price]) => {
-            const product = products.find(p => p.id === parseInt(productId));
-            if (product) {
-                product.price = price;
-            }
-        });
-
-        modifiedPrices = {};
-        renderPriceTable();
-
-        if (typeof renderProducts === 'function') {
-            renderProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
-        }
-
-        showNotification(`${modifiedCount} prezzi aggiornati! ✓`);
-        return true;
-    } catch (err) {
-        showNotification(`Errore nel salvataggio: ${err.message || 'Errore sconosciuto'}`, 'error');
-        return false;
-    }
-}
-
-export async function deleteCustomProduct(productId) {
-    const product = products.find(p => p.id === productId);
-
-    if (!product || !product.custom) {
-        showNotification('Errore: prodotto non valido!', 'error');
-        return false;
-    }
-
-    if (!confirm(`Eliminare definitivamente "${product.name}"? Questa azione non può essere annullata!`)) {
-        return false;
-    }
-
-    try {
-        showNotification('Eliminazione prodotto...', 'info');
-
-        const { error } = await supabase
-            .from('custom_products')
-            .delete()
-            .eq('id', productId);
-
-        if (error) {
-            showNotification(`Errore nell'eliminazione: ${error.message || 'Errore sconosciuto'}`, 'error');
-            return false;
-        }
-
-        const productIndex = products.findIndex(p => p.id === productId);
-        if (productIndex !== -1) {
-            products.splice(productIndex, 1);
-        }
-
-        delete originalPrices[productId];
-        delete modifiedPrices[productId];
-
-        renderPriceTable();
-
-        if (typeof renderProducts === 'function') {
-            renderProducts();
-        } else if (typeof window.renderProducts === 'function') {
-            window.renderProducts();
-        }
-
-        showNotification('Prodotto eliminato! ✓', 'success');
-        return true;
-    } catch (err) {
-        showNotification(`Errore nell'eliminazione: ${err.message || 'Errore sconosciuto'}`, 'error');
-        return false;
-    }
-}
-
-// ===== ESPORTAZIONE MODULO GLOBALE =====
-
-// Rendi disponibili le funzioni anche globalmente per gli onclick inline
 if (typeof window !== 'undefined') {
     window.pricingModule = {
         openPriceManagement,
