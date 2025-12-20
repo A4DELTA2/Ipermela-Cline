@@ -55,10 +55,8 @@ export {
     toggleProductCard,
     selectProductColor,
     selectProductStorage,
-    // Configuration selectors logic needs to be exposed for onclick
-    selectChipVariant,
-    selectRamOption,
-    selectStorageOption
+    updatePriceDisplay,
+    updateConfigSelectors
 };
 
 /**
