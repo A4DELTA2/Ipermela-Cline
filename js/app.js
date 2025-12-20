@@ -6,6 +6,12 @@
 // Import configurazione
 import { supabase } from './config.js';
 
+// Import UI Components
+import { LoginScreen } from './components/LoginScreen.js';
+import { Header } from './components/Header.js';
+import { MainLayout } from './components/MainLayout.js';
+import { Modals } from './components/Modals.js';
+
 // Import autenticazione
 import {
     currentUser,
@@ -107,6 +113,23 @@ import {
  * Previene doppie inizializzazioni dal listener auth state change
  */
 let isAppInitialized = false;
+
+/**
+ * Renderizza l'intera applicazione nel DOM
+ */
+function renderApplication() {
+    const root = document.getElementById('root');
+    if (!root) return;
+
+    root.innerHTML = `
+        ${LoginScreen()}
+        <div id="app-container" class="container mx-auto px-4 py-6 max-w-7xl" style="display: none;">
+            ${Header()}
+            ${MainLayout()}
+        </div>
+        ${Modals()}
+    `;
+}
 
 /**
  * Inizializza l'applicazione dopo il login
@@ -483,23 +506,23 @@ function exposeGlobals() {
  * Inizializzazione al caricamento DOM
  */
 document.addEventListener('DOMContentLoaded', async () => {
-    // Inizializza stili notifiche
-    initNotificationStyles();
+    // 1. Render App Layout
+    renderApplication();
 
-    // Inizializza Dark Mode
+    // 2. Inizializza stili notifiche e dark mode
+    initNotificationStyles();
     initDarkMode();
 
-    // Espone variabili globalmente
+    // 3. Espone variabili globalmente
     exposeGlobals();
 
-    // Setup event listeners
+    // 4. Setup event listeners (ORA GLI ELEMENTI ESISTONO)
     setupEventListeners();
 
-    // Verifica autenticazione
+    // 5. Verifica autenticazione
     await checkAuth();
 
     // Listener per cambiamenti autenticazione
-    // 🔧 BUG FIX: Previene doppia inizializzazione con flag isAppInitialized
     supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_OUT') {
             isAppInitialized = false; // Reset flag al logout
