@@ -10,7 +10,7 @@
 import { showNotification } from './ui.js';
 import { userRole } from './auth.js';
 import { products } from './products/state.js';
-import { renderProducts } from './products/dom.js';
+import { renderProducts } from './products.js';
 
 // Sub-modules
 import {
