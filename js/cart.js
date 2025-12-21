@@ -237,40 +237,30 @@ export function clearCartSilent() {
 }
 
 /**
- * Renderizza il carrello nell'elemento DOM #cart-items
- * Mostra tutti gli articoli con controlli di quantità, oppure messaggio vuoto
- * Aggiorna anche i totali (subtotale, IVA, totale)
- *
- * @returns {void}
+ * Renderizza lo stato del carrello vuoto
+ * @returns {string} HTML per il carrello vuoto
  */
-export function renderCart() {
-    const cartItemsDiv = document.getElementById('cart-items');
-    if (!cartItemsDiv) return;
-
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartItemCount = document.getElementById('cart-item-count');
-    if (cartItemCount) {
-        cartItemCount.textContent = `${totalItems} ${totalItems === 1 ? 'articolo' : 'articoli'}`;
-    }
-
-    if (cart.length === 0) {
-        cartItemsDiv.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-12 text-center">
-                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <svg class="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                </div>
-                <p class="text-gray-500 font-medium mb-1">Carrello vuoto</p>
-                <p class="text-sm text-gray-400">Aggiungi prodotti per iniziare</p>
+function renderEmptyCart() {
+    return `
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
             </div>
-        `;
-        updateCartSummary(0, 0, 0);
-        updateCartBadge(cart);
-        return;
-    }
+            <p class="text-gray-500 font-medium mb-1">Carrello vuoto</p>
+            <p class="text-sm text-gray-400">Aggiungi prodotti per iniziare</p>
+        </div>
+    `;
+}
 
-    cartItemsDiv.innerHTML = cart.map(item => `
+/**
+ * Renderizza un singolo item del carrello
+ * @param {Object} item - Articolo del carrello
+ * @returns {string} HTML per l'item
+ */
+function renderCartItem(item) {
+    return `
         <div class="group relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border-2 border-gray-100 transition-all duration-300 hover:border-apple-blue hover:shadow-md">
             <!-- Remove button (absolute top-right) -->
             <button
@@ -331,8 +321,47 @@ export function renderCart() {
                 </button>
             </div>
         </div>
-    `).join('');
+    `;
+}
 
+/**
+ * Aggiorna il contatore articoli nel carrello
+ * @param {number} totalItems - Numero totale di articoli
+ */
+function updateCartItemCount(totalItems) {
+    const cartItemCount = document.getElementById('cart-item-count');
+    if (cartItemCount) {
+        cartItemCount.textContent = `${totalItems} ${totalItems === 1 ? 'articolo' : 'articoli'}`;
+    }
+}
+
+/**
+ * Renderizza il carrello nell'elemento DOM #cart-items
+ * Mostra tutti gli articoli con controlli di quantità, oppure messaggio vuoto
+ * Aggiorna anche i totali (subtotale, IVA, totale)
+ *
+ * @returns {void}
+ */
+export function renderCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    if (!cartItemsDiv) return;
+
+    // Update item count
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    updateCartItemCount(totalItems);
+
+    // Handle empty cart
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = renderEmptyCart();
+        updateCartSummary(0, 0, 0);
+        updateCartBadge(cart);
+        return;
+    }
+
+    // Render cart items
+    cartItemsDiv.innerHTML = cart.map(renderCartItem).join('');
+
+    // Update totals
     const { subtotal, tax, total } = calculateTotals(cart);
     updateCartSummary(subtotal, tax, total);
     updateCartBadge(cart);
