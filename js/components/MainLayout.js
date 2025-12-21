@@ -1,3 +1,5 @@
+import { IVA_DISPLAY } from '../config.js';
+
 export const MainLayout = () => `
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
@@ -179,7 +181,7 @@ export const MainLayout = () => `
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
                             </svg>
-                            IVA (22%)
+                            IVA (${IVA_DISPLAY})
                         </span>
                         <span id="tax" class="font-semibold text-gray-900">€0.00</span>
                     </div>

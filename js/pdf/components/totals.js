@@ -3,6 +3,7 @@
  */
 
 import { LAYOUT, STYLES } from '../config/index.js';
+import { IVA_MULTIPLIER, IVA_DISPLAY } from '../../config.js';
 
 export const TotalsComponent = {
     render(doc, data, startY) {
@@ -16,9 +17,8 @@ export const TotalsComponent = {
             return sum + (item.price * item.quantity);
         }, 0);
 
-        // Scorporo IVA: Imponibile = Totale / 1.22
-        const ivaRate = 0.22; // 22%
-        const subtotal = total / (1 + ivaRate); // Imponibile (senza IVA)
+        // Scorporo IVA: Imponibile = Totale / IVA_MULTIPLIER
+        const subtotal = total / IVA_MULTIPLIER; // Imponibile (senza IVA)
         const ivaAmount = total - subtotal;      // IVA scorporata
 
         // Subtotale (Imponibile)
@@ -30,8 +30,8 @@ export const TotalsComponent = {
         doc.text(`${subtotal.toFixed(2)} €`, xRight, currentY, { align: 'right' });
         currentY += lineHeight;
 
-        // IVA 22%
-        doc.text('IVA 22%:', startX, currentY);
+        // IVA
+        doc.text(`IVA ${IVA_DISPLAY}:`, startX, currentY);
         doc.text(`${ivaAmount.toFixed(2)} €`, xRight, currentY, { align: 'right' });
         currentY += lineHeight + 2;
 

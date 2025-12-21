@@ -3,17 +3,16 @@
  */
 
 import { LAYOUT, STYLES, CONSTANTS } from '../config/index.js';
+import { IVA_MULTIPLIER } from '../../config.js';
 
 export const ProductsTableComponent = {
     render(doc, data, startY) {
         const { margin } = LAYOUT.page;
 
         // Prepara dati tabella (prezzi sono IVA inclusa, scorporiamo per mostrare imponibile)
-        const IVA_RATE = 1.22; // 22%
-
         const tableData = data.items.map(item => {
             const priceWithVAT = item.price; // Prezzo IVA inclusa
-            const priceWithoutVAT = priceWithVAT / IVA_RATE; // Imponibile
+            const priceWithoutVAT = priceWithVAT / IVA_MULTIPLIER; // Imponibile
             const totalWithVAT = priceWithVAT * item.quantity; // Totale IVA inclusa
 
             return [

@@ -4,7 +4,7 @@
  */
 
 /**
- * Listino prezzi per storage (IVA INCLUSA 22%)
+ * Listino prezzi per storage (IVA INCLUSA - vedi config.js per il tasso)
  * @type {Object.<number, Object.<string, number>>}
  */
 export const productPricing = {

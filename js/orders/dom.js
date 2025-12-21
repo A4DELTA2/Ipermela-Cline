@@ -24,6 +24,7 @@ import {
 
 import { updateFiltersFromForm, getCurrentPeriodValue, resetAllFilters } from './filter.js';
 import { fetchOrders, fetchOrderById, updateItemStatus } from './service.js';
+import { IVA_DISPLAY } from '../config.js';
 
 // ============================================================================
 // MAIN CONTAINER
@@ -903,7 +904,7 @@ function renderOrderDetail(order) {
                             <span class="text-gray-900 dark:text-dark-text font-medium">${formattedSubtotal}</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-dark-muted">IVA (22%)</span>
+                            <span class="text-gray-500 dark:text-dark-muted">IVA (${IVA_DISPLAY})</span>
                             <span class="text-gray-900 dark:text-dark-text font-medium">${formattedTax}</span>
                         </div>
                         <div class="flex justify-between pt-3 border-t border-gray-100 dark:border-dark-border">

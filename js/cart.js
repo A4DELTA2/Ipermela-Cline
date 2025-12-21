@@ -3,6 +3,7 @@
  * Fornisce funzionalità per aggiungere, rimuovere, modificare e renderizzare articoli nel carrello
  */
 
+import { IVA_MULTIPLIER } from './config.js';
 import { showNotification } from './ui.js';
 import { updateCartBadge, scrollToCart } from './utils.js';
 
@@ -348,8 +349,8 @@ export function calculateCartTotals() {
     // Totale IVA inclusa (i prezzi sono già IVA inclusa)
     const totalIvaInclusa = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // Scorporo IVA: imponibile = totale / 1.22
-    const subtotal = totalIvaInclusa / 1.22;
+    // Scorporo IVA usando costante da config.js: imponibile = totale / IVA_MULTIPLIER
+    const subtotal = totalIvaInclusa / IVA_MULTIPLIER;
 
     // IVA = totale - imponibile
     const tax = totalIvaInclusa - subtotal;
