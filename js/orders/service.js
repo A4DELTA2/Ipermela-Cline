@@ -6,6 +6,7 @@
 import { supabase } from '../config.js';
 import { applyFiltersToQuery, filterOrdersByROACStatus, filterOrdersByProduct } from './filter.js';
 import { filters, setOrders, setPagination, pagination } from './state.js';
+import { notify } from '../shared/notifications.js';
 
 // ============================================================================
 // FETCH ORDERS
@@ -91,9 +92,7 @@ export async function fetchOrders(customFilters = null) {
     } catch (error) {
         console.error('[OrdersV2] Errore fetch ordini:', error);
         // Mostra errore all'utente
-        if (window.showNotification) {
-            window.showNotification('Errore nel caricamento ordini: ' + error.message, 'error');
-        }
+        notify.error('Errore nel caricamento ordini: ' + error.message);
         throw error;
     }
 }

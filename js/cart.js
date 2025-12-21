@@ -3,9 +3,9 @@
  * Fornisce funzionalità per aggiungere, rimuovere, modificare e renderizzare articoli nel carrello
  */
 
-import { IVA_MULTIPLIER } from './config.js';
 import { showNotification } from './ui.js';
 import { updateCartBadge, scrollToCart } from './utils.js';
+import { calculateTotals } from './shared/calculations.js';
 
 // ===== VARIABILI ESPORTATE =====
 
@@ -333,36 +333,9 @@ export function renderCart() {
         </div>
     `).join('');
 
-    const { subtotal, tax, total } = calculateCartTotals();
+    const { subtotal, tax, total } = calculateTotals(cart);
     updateCartSummary(subtotal, tax, total);
     updateCartBadge(cart);
-}
-
-/**
- * Calcola i totali del carrello scorporando l'IVA
- * IMPORTANTE: I prezzi nel carrello sono già IVA INCLUSA (22%)
- * Quindi dobbiamo scorporare l'IVA per mostrare imponibile + IVA separati
- *
- * @returns {Object} Oggetto con proprietà {subtotal, tax, total}
- */
-export function calculateCartTotals() {
-    // Totale IVA inclusa (i prezzi sono già IVA inclusa)
-    const totalIvaInclusa = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-    // Scorporo IVA usando costante da config.js: imponibile = totale / IVA_MULTIPLIER
-    const subtotal = totalIvaInclusa / IVA_MULTIPLIER;
-
-    // IVA = totale - imponibile
-    const tax = totalIvaInclusa - subtotal;
-
-    // Totale rimane uguale
-    const total = totalIvaInclusa;
-
-    return {
-        subtotal: parseFloat(subtotal.toFixed(2)),
-        tax: parseFloat(tax.toFixed(2)),
-        total: parseFloat(total.toFixed(2))
-    };
 }
 
 /**
@@ -394,7 +367,7 @@ export function updateCartSummary(subtotal, tax, total) {
  *   - total: Totale
  */
 export function getCartSummary() {
-    const { subtotal, tax, total } = calculateCartTotals();
+    const { subtotal, tax, total } = calculateTotals(cart);
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return {
