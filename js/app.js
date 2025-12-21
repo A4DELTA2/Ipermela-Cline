@@ -53,21 +53,7 @@ import {
     setupCartEventListeners
 } from './cart.js';
 
-import {
-    savedOrders,
-    renderSavedOrders,
-    openOrderModal,
-    closeOrderModal,
-    saveOrder,
-    deleteOrder,
-    exportOrderPDF,
-    exportOrdersToCSV,
-    previewOrderPDF,
-    loadOrderToCart,
-    closePDFPreview,
-    resetEditMode,
-    setupOrderEventListeners
-} from './orders.js';
+// Orders V1 rimosso - migrato a V2
 
 import {
     loadCustomPrices,
@@ -99,6 +85,14 @@ import {
     scrollToCart,
     updateCartBadge
 } from './utils.js';
+
+// Orders V2 Module
+import {
+    initOrdersV2,
+    openOrdersV2,
+    closeOrdersV2,
+    setupOrdersV2EventListeners
+} from './ordersv2.js';
 
 /**
  * Flag per tracciare se l'app è già stata inizializzata
@@ -144,7 +138,9 @@ async function initializeApp() {
         await loadCustomPrices();
         renderProducts();
         renderCart();
-        await renderSavedOrders();
+
+        // Inizializza Orders V2 (sostituisce renderSavedOrders)
+        initOrdersV2();
 
         // Marca come inizializzato solo dopo successo
         isAppInitialized = true;
@@ -166,9 +162,9 @@ function setupAllEventListeners() {
     setupAuthEventListeners();
     setupProductEventListeners();
     setupCartEventListeners();
-    setupOrderEventListeners();
     setupPricingEventListeners();
-    
+    setupOrdersV2EventListeners();
+
     // Inject dependencies for UI event listeners to avoid circular deps
     setupUIEventListeners({
         openPriceManagement: () => openPriceManagement(window.userRole)
@@ -214,25 +210,13 @@ function exposeGlobals() {
     window.increaseQuantity = increaseQuantity;
     window.decreaseQuantity = decreaseQuantity;
 
-    // Orders
-    window.savedOrders = savedOrders;
-    window.openOrderModal = openOrderModal;
-    window.closeOrderModal = closeOrderModal;
-    window.saveOrder = saveOrder;
-    window.deleteOrder = deleteOrder;
-    window.exportOrderPDF = exportOrderPDF;
-    window.renderSavedOrders = renderSavedOrders;
+    // Orders - Backward compatible aliases per onclick handlers legacy
+    // Redirect a Orders V2
+    window.openOrderModal = () => window.ordersV2.open();
+    window.closeOrderModal = () => window.ordersV2.close();
+    window.renderSavedOrders = async () => await window.ordersV2.open(true);
 
-    // Orders - New Features (exposed as window.orders object for ES Module scope)
-    window.orders = {
-        exportOrdersToCSV,
-        previewOrderPDF,
-        loadOrderToCart,
-        closePDFPreview,
-        exportOrderPDF,
-        deleteOrder,
-        resetEditMode
-    };
+    // Funzioni disponibili tramite window.ordersV2 (vedi sotto)
 
     // Pricing
     window.openPriceManagement = () => openPriceManagement(userRole);
@@ -260,6 +244,13 @@ function exposeGlobals() {
     // Utils
     window.scrollToAddProduct = scrollToAddProduct;
     window.scrollToCart = scrollToCart;
+
+    // Orders V2
+    window.ordersV2 = {
+        init: initOrdersV2,
+        open: openOrdersV2,
+        close: closeOrdersV2
+    };
 }
 
 /**

@@ -13,3 +13,5 @@ export const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON
 // Costanti applicazione
 export const IVA_RATE = 0.22; // 22%
 export const IVA_DISPLAY = '22%';
+export const IVA_MULTIPLIER = 1.22; // 1 + IVA_RATE (per calcolo totale da subtotal)
+export const IVA_DIVISOR = 1.22; // Per calcolo inverso (subtotal da totale IVA inclusa)
