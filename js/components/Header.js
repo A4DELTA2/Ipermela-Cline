@@ -11,6 +11,16 @@ export const Header = () => `
 
             <!-- Desktop Actions -->
             <div class="hidden md:flex items-center gap-2">
+                <!-- Orders Management -->
+                <button id="open-orders-v2-btn" title="Gestione Ordini"
+                    class="px-4 py-2.5 flex items-center gap-2 bg-brand text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand/30 hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                    <span class="hidden lg:inline">Ordini</span>
+                </button>
+
                 <!-- Price Management -->
                 <button id="price-management-btn" title="Gestione Prezzi"
                     class="hidden md:flex px-4 py-2.5 items-center gap-2 bg-warning dark:bg-warning-dark text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-warning/30 hover:-translate-y-0.5">
@@ -99,6 +109,18 @@ export const Header = () => `
             </div>
 
             <!-- Menu Items -->
+            <button
+                class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                data-action="open-orders">
+                <div class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                </div>
+                <span class="flex-1 text-left font-medium text-gray-900 dark:text-gray-100">Gestione Ordini</span>
+            </button>
+
             <button
                 class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
                 data-action="price-management">

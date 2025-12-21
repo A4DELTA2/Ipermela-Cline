@@ -60,6 +60,11 @@ function setupMobileMenu(callbacks) {
                 if (callbacks.openPriceManagement) {
                     callbacks.openPriceManagement();
                 }
+            } else if (action === 'open-orders') {
+                // Open Orders V2 module
+                if (window.ordersV2 && window.ordersV2.open) {
+                    window.ordersV2.open();
+                }
             } else if (action === 'quick-add') {
                 scrollToAddProduct();
             } else if (action === 'quick-cart') {

@@ -86,13 +86,13 @@ import {
     updateCartBadge
 } from './utils.js';
 
-// Orders V2 Module
+// Orders Module (ex V2, ora principale)
 import {
     initOrdersV2,
     openOrdersV2,
     closeOrdersV2,
     setupOrdersV2EventListeners
-} from './ordersv2.js';
+} from './orders.js';
 
 /**
  * Flag per tracciare se l'app è già stata inizializzata

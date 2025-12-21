@@ -12,6 +12,10 @@ module.exports = {
     'to-[#FFAC33]',
     'dark:from-[#FF9900]',
     'dark:to-[#FFAC33]',
+    'hidden',
+    'lg:block',
+    'lg:hidden',
+    'lg:flex',
   ],
   theme: {
     extend: {
