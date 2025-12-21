@@ -6,6 +6,7 @@
 import { showNotification } from './ui.js';
 import { updateCartBadge, scrollToCart } from './utils.js';
 import { calculateTotals } from './shared/calculations.js';
+import { renderEmptyCart as renderEmptyCartState } from './shared/emptyState.js';
 
 // ===== VARIABILI ESPORTATE =====
 
@@ -237,24 +238,6 @@ export function clearCartSilent() {
 }
 
 /**
- * Renderizza lo stato del carrello vuoto
- * @returns {string} HTML per il carrello vuoto
- */
-function renderEmptyCart() {
-    return `
-        <div class="flex flex-col items-center justify-center py-12 text-center">
-            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <svg class="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-            </div>
-            <p class="text-gray-500 font-medium mb-1">Carrello vuoto</p>
-            <p class="text-sm text-gray-400">Aggiungi prodotti per iniziare</p>
-        </div>
-    `;
-}
-
-/**
  * Renderizza un singolo item del carrello
  * @param {Object} item - Articolo del carrello
  * @returns {string} HTML per l'item
@@ -352,7 +335,7 @@ export function renderCart() {
 
     // Handle empty cart
     if (cart.length === 0) {
-        cartItemsDiv.innerHTML = renderEmptyCart();
+        cartItemsDiv.innerHTML = renderEmptyCartState();
         updateCartSummary(0, 0, 0);
         updateCartBadge(cart);
         return;

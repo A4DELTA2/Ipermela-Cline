@@ -5,6 +5,7 @@
 
 import { products } from '../products/state.js';
 import { originalPrices, modifiedPrices, priceFilter, priceSearchQuery } from './state.js';
+import { renderEmptyProducts } from '../shared/emptyState.js';
 
 /**
  * Mostra/Nasconde il modale di gestione prezzi
@@ -59,19 +60,7 @@ export function renderPriceTable() {
     }
 
     if (filteredProducts.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="5" class="py-16 text-center">
-                    <div class="flex flex-col items-center gap-3">
-                        <svg class="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 01-2-2V5a2 2 0 01-2-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <p class="text-gray-500 font-medium">Nessun prodotto trovato</p>
-                        <p class="text-sm text-gray-400">Prova a modificare i filtri</p>
-                    </div>
-                </td>
-            </tr>
-        `;
+        tbody.innerHTML = renderEmptyProducts(true);
         return;
     }
 

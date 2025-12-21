@@ -25,6 +25,7 @@ import {
 import { updateFiltersFromForm, getCurrentPeriodValue, resetAllFilters } from './filter.js';
 import { fetchOrders, fetchOrderById, updateItemStatus } from './service.js';
 import { IVA_DISPLAY } from '../config.js';
+import { renderEmptyOrders } from '../shared/emptyState.js';
 
 // ============================================================================
 // MAIN CONTAINER
@@ -314,7 +315,7 @@ function renderOrdersListWithState(ordersList, loading = false) {
     }
 
     if (!ordersList || ordersList.length === 0) {
-        container.innerHTML = renderEmptyState();
+        container.innerHTML = renderEmptyOrders();
         return;
     }
 
@@ -536,18 +537,6 @@ function renderLoadingState() {
         <div class="flex flex-col items-center justify-center py-12">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-brand"></div>
             <p class="mt-4 text-gray-500 dark:text-dark-muted">Caricamento ordini...</p>
-        </div>
-    `;
-}
-
-function renderEmptyState() {
-    return `
-        <div class="flex flex-col items-center justify-center py-12 bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-dark-border">
-            <svg class="w-16 h-16 text-gray-300 dark:text-dark-muted mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
-            <p class="text-gray-500 dark:text-dark-muted font-medium">Nessun ordine trovato</p>
-            <p class="text-sm text-gray-400 dark:text-dark-muted mt-1">Prova a modificare i filtri di ricerca</p>
         </div>
     `;
 }
