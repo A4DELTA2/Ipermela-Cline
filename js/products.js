@@ -37,7 +37,8 @@ import {
     selectProductColor,
     selectProductStorage,
     updatePriceDisplay,
-    updateConfigSelectors
+    updateConfigSelectors,
+    requestAIAdvice
 } from './products/dom.js';
 
 // Re-export state and functions for other modules
@@ -56,7 +57,8 @@ export {
     selectProductColor,
     selectProductStorage,
     updatePriceDisplay,
-    updateConfigSelectors
+    updateConfigSelectors,
+    requestAIAdvice
 };
 
 /**

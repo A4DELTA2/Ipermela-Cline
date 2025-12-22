@@ -6,6 +6,7 @@
 import { products, currentFilter, currentSubcategory, searchQuery } from './state.js';
 import { filterProductsList, calculateConfiguredPrice, getAvailableRamOptions, getAvailableStorageOptions, buildConfigSummary } from './logic.js';
 import { productPricing } from '../data.js';
+import { notify } from '../shared/notifications.js';
 
 /**
  * Renderizza la griglia dei prodotti
@@ -165,6 +166,17 @@ export function renderProductCard(product) {
                     </p>
                 </div>
                 ` : ''}
+
+                <button
+                    class="w-full py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mb-3"
+                    onclick="event.stopPropagation(); requestAIAdvice(${product.id})"
+                    id="ai-advisor-btn-${product.id}"
+                >
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <span>✨ AI Advisor</span>
+                </button>
 
                 <button class="w-full py-4 bg-catalog dark:bg-catalog-dark text-white font-bold rounded-xl hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -434,4 +446,127 @@ export function updateConfigSelectors(productId, selectorType) {
             }
         });
     }
+}
+
+/**
+ * Request AI advice for a product
+ * @param {number} productId - Product ID
+ */
+export async function requestAIAdvice(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) {
+        notify.error('Prodotto non trovato');
+        return;
+    }
+
+    const button = document.getElementById(`ai-advisor-btn-${productId}`);
+    if (!button) return;
+
+    // Save original content
+    const originalContent = button.innerHTML;
+
+    // Show loading state
+    button.disabled = true;
+    button.classList.add('opacity-75', 'cursor-not-allowed');
+    button.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Caricamento...</span>
+    `;
+
+    try {
+        // Import AI service dynamically
+        const { getProductAdvice } = await import('../ai/service.js');
+
+        // Get advice
+        const advice = await getProductAdvice(product);
+
+        // Show advice in modal
+        showAIAdviceModal(product.name, advice);
+
+    } catch (error) {
+        console.error('[AI Advisor] Error:', error);
+        // Error notification already shown by service
+    } finally {
+        // Restore button state
+        button.disabled = false;
+        button.classList.remove('opacity-75', 'cursor-not-allowed');
+        button.innerHTML = originalContent;
+    }
+}
+
+/**
+ * Show AI advice in a modal
+ * @param {string} productName - Product name
+ * @param {string} advice - AI advice text
+ */
+function showAIAdviceModal(productName, advice) {
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModal();
+    };
+
+    // Create modal content
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-white">AI Advisor</h3>
+                </div>
+                <button onclick="this.closest('.fixed').remove()" class="text-white hover:text-gray-200 transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="mb-4">
+                    <div class="inline-block bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                        ${productName}
+                    </div>
+                </div>
+                <div class="prose prose-lg dark:prose-invert max-w-none">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">${advice}</p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="bg-gray-50 dark:bg-gray-900 px-6 py-4 flex justify-end gap-3">
+                <button onclick="this.closest('.fixed').remove()" class="px-6 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 hover:shadow-lg">
+                    Chiudi
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Add to body with animation
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => {
+        modal.style.animation = 'fadeIn 0.2s ease-out';
+    });
+
+    // Close function
+    function closeModal() {
+        modal.style.animation = 'fadeOut 0.2s ease-out';
+        setTimeout(() => modal.remove(), 200);
+    }
+
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
 }
