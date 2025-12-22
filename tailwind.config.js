@@ -63,9 +63,9 @@ module.exports = {
           dark: '#5AAFFF',       // Blu brillante (DARK MODE)
         },
         warning: {
-          light: '##FFBD7A',      // Arancione pastello (DARK MODE)
-          DEFAULT: '#FFBD7A',      // Arancione pastello (DARK MODE)
-          dark: '#FFBD7A',      // Arancione pastello (DARK MODE)
+          light: '#FF9900',      // Arancione pastello (DARK MODE)
+          DEFAULT: '#FF9900',      // Arancione pastello (DARK MODE)
+          dark: '#FF9900',      // Arancione pastello (DARK MODE)
         },
         danger: {
           light: '#FFB3AD',      // Rosa pesca

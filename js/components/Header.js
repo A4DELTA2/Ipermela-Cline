@@ -23,7 +23,7 @@ export const Header = () => `
 
                 <!-- Price Management -->
                 <button id="price-management-btn" title="Gestione Prezzi"
-                    class="hidden md:flex px-4 py-2.5 items-center gap-2 bg-warning dark:bg-warning-dark text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-warning/30 hover:-translate-y-0.5">
+                    class="hidden md:flex px-4 py-2.5 items-center gap-2 bg-brand text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand/30 hover:-translate-y-0.5">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -68,7 +68,7 @@ export const Header = () => `
 
                 <!-- Logout -->
                 <button id="logout-btn"
-                    class="p-2.5 bg-apple-red text-white rounded-xl transition-all duration-300 hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-0.5"
+                    class="p-2.5 bg-danger dark:bg-danger-dark text-white rounded-xl transition-all duration-300 hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-0.5"
                     title="Logout">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -91,9 +91,9 @@ export const Header = () => `
         <div id="mobile-dropdown"
             class="hidden absolute top-20 right-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl min-w-[280px] overflow-hidden animate-slide-down z-50 border border-gray-200 dark:border-gray-700">
             <!-- User Info -->
-            <div class="px-5 py-4 bg-purple-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <div class="px-5 py-4 bg-gray-50 dark:bg-dark-elevated border-b border-gray-200 dark:border-dark-border">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-apple-purple rounded-xl flex items-center justify-center">
+                    <div class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -124,7 +124,7 @@ export const Header = () => `
             <button
                 class="w-full px-5 py-4 flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
                 data-action="price-management">
-                <div class="w-10 h-10 bg-warning dark:bg-warning-dark rounded-xl flex items-center justify-center">
+                <div class="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
                     <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />

@@ -37,6 +37,7 @@ import {
     selectRamOption,
     selectStorageOption,
     buildConfigSummary,
+    requestAIAdvice,
     setupProductEventListeners
 } from './products.js';
 
@@ -197,6 +198,9 @@ function exposeGlobals() {
     window.selectRamOption = selectRamOption;
     window.selectStorageOption = selectStorageOption;
     window.buildConfigSummary = buildConfigSummary;
+
+    // AI Advisor
+    window.requestAIAdvice = requestAIAdvice;
 
     // Cart
     window.cart = cart;
