@@ -247,11 +247,12 @@ function renderCartItem(item) {
         <div class="group relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border-2 border-gray-100 transition-all duration-300 hover:border-apple-blue hover:shadow-md">
             <!-- Remove button (absolute top-right) -->
             <button
-                class="absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-white border border-gray-200 text-gray-400 rounded-lg transition-all duration-300 hover:bg-apple-red hover:text-white hover:border-apple-red hover:scale-110 opacity-0 group-hover:opacity-100"
+                type="button"
+                class="btn btn-icon btn-danger absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-white border border-gray-200 text-gray-400 rounded-lg transition-all duration-300 hover:bg-apple-red hover:text-white hover:border-apple-red hover:scale-110 opacity-0 group-hover:opacity-100"
                 onclick="window.removeFromCart('${item.variantKey}')"
-                title="Rimuovi"
+                aria-label="Rimuovi ${item.displayName || item.name} dal carrello"
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
@@ -284,10 +285,12 @@ function renderCartItem(item) {
             <!-- Quantity Controls -->
             <div class="flex items-center gap-2">
                 <button
+                    type="button"
                     class="flex-1 h-9 flex items-center justify-center bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-bold transition-all duration-300 hover:border-apple-blue hover:bg-apple-blue hover:text-white active:scale-95"
                     onclick="window.decreaseQuantity('${item.variantKey}')"
+                    aria-label="Diminuisci quantità di ${item.displayName || item.name}"
                 >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4" />
                     </svg>
                 </button>
@@ -295,10 +298,12 @@ function renderCartItem(item) {
                     <span class="font-bold text-gray-900">${item.quantity}</span>
                 </div>
                 <button
+                    type="button"
                     class="flex-1 h-9 flex items-center justify-center bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-bold transition-all duration-300 hover:border-apple-blue hover:bg-apple-blue hover:text-white active:scale-95"
                     onclick="window.increaseQuantity('${item.variantKey}')"
+                    aria-label="Aumenta quantità di ${item.displayName || item.name}"
                 >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
                     </svg>
                 </button>

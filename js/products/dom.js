@@ -89,24 +89,26 @@ export function renderProductCard(product) {
             `}
 
             <!-- Right Side: Content -->
-            <div class="flex-1 p-4 flex flex-col justify-between relative">
-                <!-- Header: Title and Price -->
+            <div class="flex-1 p-4">
+                <!-- Header: Title and Price with Expand Button -->
                 <div class="flex justify-between items-start gap-2">
-                    <div>
+                    <!-- Left: Title and Colors -->
+                    <div class="flex-1 min-w-0">
                         <h3 class="font-bold text-gray-900 text-lg leading-tight line-clamp-2">${product.name}</h3>
                         ${hasColors ? `<p class="text-sm text-gray-500 mt-1">${product.colors.length} colori</p>` : ''}
                     </div>
-                    <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
-                </div>
-
-                <!-- Bottom: Expand Button -->
-                <div class="flex justify-end mt-auto">
-                    <button class="text-sm font-medium text-gray-400 hover:text-apple-blue transition-colors flex items-center gap-1 group-hover/text:text-apple-blue">
-                        <span>${hasColors || hasStorage || hasConfigurations ? 'personalizza' : 'vedi dettagli'}</span>
-                        <svg class="expand-arrow w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
+                    <!-- Right: Price and Expand Button -->
+                    <div class="flex flex-col items-end shrink-0">
+                        <div class="text-lg font-bold text-apple-blue whitespace-nowrap">€${currentPrice.toFixed(2)}</div>
+                        <button
+                            type="button"
+                            class="mt-1 text-sm font-medium text-gray-400 hover:text-apple-blue transition-colors flex items-center gap-1">
+                            <span>${hasColors || hasStorage || hasConfigurations ? 'personalizza' : 'vedi dettagli'}</span>
+                            <svg class="expand-arrow w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,21 +119,25 @@ export function renderProductCard(product) {
             <div class="pt-4 space-y-5">
 
                 ${hasColors ? `
-                <div>
-                    <label class="block text-sm font-semibold text-gray-800 mb-3">Colore</label>
+                <div role="group" aria-labelledby="color-label-${product.id}">
+                    <label id="color-label-${product.id}" class="block text-sm font-semibold text-gray-800 mb-3">Colore</label>
                     <div class="flex flex-wrap gap-3">
                         ${product.colors.map((color, index) => `
                         <button
+                            type="button"
+                            role="button"
                             class="color-swatch ${index === 0 ? 'selected' : ''} w-10 h-10 rounded-full border-2 border-gray-200 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-offset-2 transition-all shadow-sm"
                             style="background: ${color.gradient}"
-                            title="${color.name}"
+                            aria-label="${color.name}"
+                            aria-pressed="${index === 0 ? 'true' : 'false'}"
+                            tabindex="${index === 0 ? '0' : '-1'}"
                             onclick="event.stopPropagation(); selectProductColor(${product.id}, '${color.code}', '${color.imageUrl || product.imageUrl || ''}', '${color.name}')"
                         >
                             <span class="sr-only">${color.name}</span>
                         </button>
                         `).join('')}
                     </div>
-                    <p class="text-xs text-gray-500 mt-2 font-medium">Selezionato: <span class="text-gray-900" id="selected-color-${product.id}">${product.colors[0].name}</span></p>
+                    <p class="text-xs text-gray-500 mt-2 font-medium" role="status" aria-live="polite">Selezionato: <span class="text-gray-900" id="selected-color-${product.id}">${product.colors[0].name}</span></p>
                 </div>
                 ` : ''}
 
@@ -141,11 +147,12 @@ export function renderProductCard(product) {
                     <div class="flex flex-wrap gap-2">
                         ${product.storage.map((storage, index) => `
                         <button
+                            type="button"
                             data-storage-btn
                             ${index === 0 ? 'data-storage-selected="true"' : ''}
-                            class="px-4 py-2.5 border-2 ${index === 0 ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white shadow-md hover:shadow-lg' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
+                            class="btn px-4 py-2.5 border-2 ${index === 0 ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white shadow-md hover:shadow-lg' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'} rounded-xl font-medium text-sm transition-all duration-200"
                             onclick="event.stopPropagation(); selectProductStorage(${product.id}, this)"
-                        >
+                            aria-label="Seleziona ${storage} di archiviazione">
                             ${storage}
                         </button>
                         `).join('')}
@@ -156,34 +163,35 @@ export function renderProductCard(product) {
 
                 ${hasConfigurations ? `
                 ${renderConfigurationSelectors(product)}
-
-                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                    <p class="text-sm text-gray-600 font-medium flex items-start gap-2">
-                        <svg class="w-5 h-5 text-apple-blue shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span><span class="text-gray-900 font-semibold">Riepilogo:</span> ${buildConfigSummary(product)}</span>
-                    </p>
-                </div>
                 ` : ''}
 
-                <button
-                    class="w-full py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mb-3"
-                    onclick="event.stopPropagation(); requestAIAdvice(${product.id})"
-                    id="ai-advisor-btn-${product.id}"
-                >
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                    <span>✨ AI Advisor</span>
-                </button>
+                <div class="flex items-center gap-2 mb-3">
+                    <button
+                        type="button"
+                        class="btn btn-icon p-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 hover:shadow-lg hover:scale-110 active:scale-95"
+                        onclick="event.stopPropagation(); requestAIAdvice(${product.id})"
+                        id="ai-advisor-btn-${product.id}"
+                        aria-label="Richiedi consiglio AI per ${product.name}"
+                        title="✨ AI Advisor"
+                    >
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </button>
+                    <span class="text-xs text-gray-500">Consiglio AI</span>
+                </div>
 
-                <button class="w-full py-4 bg-catalog dark:bg-catalog-dark text-white font-bold rounded-xl hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button
+                    type="button"
+                    class="btn btn-primary w-full py-4 bg-catalog dark:bg-catalog-dark text-white font-bold rounded-xl hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                    onclick="event.stopPropagation(); ${hasConfigurations ? 'addConfiguredToCart' : 'addToCart'}(${product.id})"
+                    aria-label="Aggiungi ${product.name} al carrello${hasConfigurations ? ` - €${currentPrice.toFixed(2)}` : ''}"
+                >
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                     <span class="text-lg">Aggiungi al Carrello</span>
-                    ${hasConfigurations ? `<span class="bg-white/20 px-2 py-0.5 rounded text-sm font-semibold ml-1">€${currentPrice.toFixed(2)}</span>` : ''}
+                    ${hasConfigurations ? `<span class="bg-white/20 px-2 py-0.5 rounded text-sm font-semibold ml-1" aria-hidden="true">€${currentPrice.toFixed(2)}</span>` : ''}
                 </button>
             </div>
         </div>
@@ -271,13 +279,14 @@ export function renderConfigurationSelectors(product) {
                 const isSelected = storage.size === product.currentConfig.storage;
                 return `
                     <button
-                        class="config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
+                        type="button"
+                        class="btn config-btn px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all ${isSelected
                         ? 'border-catalog bg-catalog dark:bg-catalog-dark text-white'
                         : 'border-gray-200 bg-white text-gray-700 hover:border-catalog'
                     }"
                         onclick="event.stopPropagation(); selectStorageOption(${product.id}, '${storage.size}')"
                         data-storage="${storage.size}"
-                    >
+                        aria-label="Seleziona ${storage.size} di storage">
                         ${storage.size}
                         ${storage.priceAdjustment > 0 ? `<span class="text-xs ml-1">+€${storage.priceAdjustment}</span>` : ''}
                         ${storage.priceAdjustment < 0 ? `<span class="text-xs ml-1">-€${Math.abs(storage.priceAdjustment)}</span>` : ''}

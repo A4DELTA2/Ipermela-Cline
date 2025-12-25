@@ -12,6 +12,9 @@
     <!-- Custom CSS with Dark Mode Variables -->
     <link rel="stylesheet" href="styles.css">
 
+    <!-- Accessibility Stylesheet - WCAG 2.1 AA -->
+    <link rel="stylesheet" href="css/accessibility.css">
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -19,7 +22,13 @@
 
 <body class="bg-gray-100 dark:bg-dark-bg min-h-screen">
 
+    <!-- Skip Link - WCAG 2.1 Requirement (primo elemento focusabile) -->
+    <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
     <div id="root"></div>
+
+    <!-- Accessibility JavaScript - WCAG 2.1 AA -->
+    <script src="js/accessibility.js"></script>
 
     <!-- Generatore PDF (ES6 Module - nuovo sistema modulare) -->
     <script type="module" src="js/pdf/generator.js"></script>

@@ -5,10 +5,10 @@ export const MainLayout = () => `
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 
         <!-- Catalogo Prodotti (Full width su mobile, 2/3 su desktop) -->
-        <section class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6">
+        <section aria-labelledby="catalogo-heading" class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6">
             <!-- Header with title and search -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Catalogo Prodotti</h2>
+                <h2 id="catalogo-heading" class="text-2xl font-bold text-gray-900">Catalogo Prodotti</h2>
 
                 <!-- Search Bar -->
                 <div class="relative sm:w-80">
@@ -18,68 +18,102 @@ export const MainLayout = () => `
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
-                    <input type="text" id="search-input" placeholder="Cerca prodotti..."
+                    <input type="search" id="search-input" placeholder="Cerca prodotti..."
+                        aria-label="Cerca prodotti nel catalogo"
                         class="w-full pl-12 pr-4 py-2.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-sm transition-all duration-300 focus:outline-none focus:border-apple-blue focus:bg-white focus:shadow-lg focus:shadow-apple-blue/10" />
                 </div>
             </div>
 
             <!-- Category Filters -->
-            <div class="flex flex-wrap gap-2 mb-5">
+            <div role="group" aria-label="Filtra prodotti per categoria" class="flex flex-wrap gap-2 mb-5">
                 <button
-                    class="category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md active"
-                    data-category="all">
+                    type="button"
+                    class="btn category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md active"
+                    data-category="all"
+                    aria-label="Mostra tutti i prodotti"
+                    aria-pressed="true">
                     <span>Tutti</span>
                 </button>
                 <button
-                    class="category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
-                    data-category="iphone">
+                    type="button"
+                    class="btn category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
+                    data-category="iphone"
+                    aria-label="Mostra solo iPhone"
+                    aria-pressed="false">
                     <span>iPhone</span>
                 </button>
                 <button
-                    class="category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
-                    data-category="mac">
+                    type="button"
+                    class="btn category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
+                    data-category="mac"
+                    aria-label="Mostra solo Mac"
+                    aria-pressed="false">
                     <span>Mac</span>
                 </button>
                 <button
-                    class="category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
-                    data-category="ipad">
+                    type="button"
+                    class="btn category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
+                    data-category="ipad"
+                    aria-label="Mostra solo iPad"
+                    aria-pressed="false">
                     <span>iPad</span>
                 </button>
                 <button
-                    class="category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
-                    data-category="accessori">
+                    type="button"
+                    class="btn category-btn px-5 py-2.5 border-2 border-gray-200 bg-white rounded-xl font-medium text-sm text-gray-700 transition-all duration-300 hover:border-apple-blue hover:text-apple-blue hover:shadow-md"
+                    data-category="accessori"
+                    aria-label="Mostra solo Accessori"
+                    aria-pressed="false">
                     <span>Accessori</span>
                 </button>
             </div>
 
             <!-- Mac Subcategories -->
-            <div id="mac-subcategories" class="hidden p-4 mb-5 bg-blue-50 border-2 border-blue-200 rounded-xl">
+            <div id="mac-subcategories" class="hidden p-4 mb-5 bg-blue-50 border-2 border-blue-200 rounded-xl" role="region" aria-label="Filtri Mac per modello">
                 <div class="flex items-center gap-2 mb-3">
-                    <svg class="w-5 h-5 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-5 h-5 text-apple-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
                     <span class="text-sm font-semibold text-apple-blue">Filtra per modello:</span>
                 </div>
-                <div class="flex flex-wrap gap-2">
+                <div role="group" aria-label="Filtra Mac per modello" class="flex flex-wrap gap-2">
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md active"
-                        data-subcategory="all">Tutti i Mac</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md active"
+                        data-subcategory="all"
+                        aria-label="Mostra tutti i Mac"
+                        aria-pressed="true">Tutti i Mac</button>
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
-                        data-subcategory="macbook-air">MacBook Air</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
+                        data-subcategory="macbook-air"
+                        aria-label="Mostra solo MacBook Air"
+                        aria-pressed="false">MacBook Air</button>
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
-                        data-subcategory="macbook-pro">MacBook Pro</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
+                        data-subcategory="macbook-pro"
+                        aria-label="Mostra solo MacBook Pro"
+                        aria-pressed="false">MacBook Pro</button>
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
-                        data-subcategory="imac">iMac</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
+                        data-subcategory="imac"
+                        aria-label="Mostra solo iMac"
+                        aria-pressed="false">iMac</button>
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
-                        data-subcategory="mac-mini">Mac mini</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
+                        data-subcategory="mac-mini"
+                        aria-label="Mostra solo Mac mini"
+                        aria-pressed="false">Mac mini</button>
                     <button
-                        class="subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
-                        data-subcategory="mac-studio">Mac Studio</button>
+                        type="button"
+                        class="btn subcategory-btn px-4 py-2 border-2 border-blue-200 bg-white text-apple-blue rounded-lg font-medium text-sm transition-all duration-300 hover:bg-apple-blue hover:text-white hover:shadow-md"
+                        data-subcategory="mac-studio"
+                        aria-label="Mostra solo Mac Studio"
+                        aria-pressed="false">Mac Studio</button>
                 </div>
             </div>
 
@@ -141,7 +175,7 @@ export const MainLayout = () => `
         </section>
 
         <!-- Shopping Cart (1/3 width su desktop, sticky) -->
-        <section
+        <section aria-labelledby="cart-heading"
             class="cart-section lg:col-span-1 bg-white rounded-2xl shadow-lg overflow-hidden lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] flex flex-col">
             <!-- Cart Header -->
             <div class="bg-info dark:bg-info-dark p-6">
@@ -153,7 +187,7 @@ export const MainLayout = () => `
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold">Ordine Corrente</h2>
+                        <h2 id="cart-heading" class="text-xl font-bold">Ordine Corrente</h2>
                         <p class="text-sm text-white/80" id="cart-item-count">0 articoli</p>
                     </div>
                 </div>
@@ -195,17 +229,23 @@ export const MainLayout = () => `
 
                 <!-- Cart Actions -->
                 <div class="space-y-2">
-                    <button id="save-order-btn"
-                        class="w-full py-3.5 bg-info dark:bg-info-dark text-white font-semibold rounded-xl transition-all duration-300 hover:opacity-90 hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button
+                        id="save-order-btn"
+                        type="button"
+                        class="btn btn-primary w-full py-3.5 bg-info dark:bg-info-dark text-white font-semibold rounded-xl transition-all duration-300 hover:opacity-90 hover:shadow-xl hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                        aria-label="Salva ordine corrente">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 13l4 4L19 7" />
                         </svg>
                         <span>Salva Ordine</span>
                     </button>
-                    <button id="clear-cart-btn"
-                        class="w-full py-2.5 border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-medium rounded-xl transition-all duration-300 hover:border-danger hover:bg-danger dark:hover:bg-danger-dark hover:text-white flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button
+                        id="clear-cart-btn"
+                        type="button"
+                        class="btn w-full py-2.5 border-2 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-medium rounded-xl transition-all duration-300 hover:border-danger hover:bg-danger dark:hover:bg-danger-dark hover:text-white flex items-center justify-center gap-2"
+                        aria-label="Svuota carrello">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>

@@ -112,7 +112,9 @@ function renderApplication() {
         ${LoginScreen()}
         <div id="app-container" class="container mx-auto px-4 py-6 max-w-7xl" style="display: none;">
             ${Header()}
-            ${MainLayout()}
+            <main id="main-content" role="main" tabindex="-1">
+                ${MainLayout()}
+            </main>
         </div>
         ${Modals()}
     `;
