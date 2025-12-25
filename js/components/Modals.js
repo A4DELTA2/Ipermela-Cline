@@ -353,7 +353,7 @@ export const Modals = () => `
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" title="Torna su" aria-label="Torna su">
+    <button id="scroll-to-top" title="Scroll to top" aria-label="Scroll to top">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>

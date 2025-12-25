@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Snippets - Ipermela Store</title>
+    <link rel="stylesheet" href="../css/accessibility.css">
+</head>
+<body>
+
+<!-- ============================================
+     SKIP LINK - WCAG Requirement
+     Deve essere il primo elemento nel <body>
+     ============================================ -->
+<a href="#main-content" class="skip-link">
+    Salta al contenuto principale
+</a>
+
+<!-- ============================================
+     HTML5 SEMANTIC LANDMARKS
+     Screen readers usano questi per navigazione
+     ============================================ -->
+
+<!-- HEADER -->
+<header role="banner">
+    <nav role="navigation" aria-label="Menu principale">
+        <ul>
+            <li><a href="#catalogo">Catalogo</a></li>
+            <li><a href="#ordini">Ordini</a></li>
+            <li><a href="#magazzino">Magazzino</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<main id="main-content" role="main" tabindex="-1">
+    <!-- Il tuo contenuto principale qui -->
+
+    <!-- Sezioni con heading -->
+    <section aria-labelledby="catalogo-heading">
+        <h1 id="catalogo-heading">Catalogo Prodotti</h1>
+        <!-- Contenuto catalogo -->
+    </section>
+
+    <section aria-labelledby="ordini-heading">
+        <h2 id="ordini-heading">Gestione Ordini</h2>
+        <!-- Contenuto ordini -->
+    </section>
+
+    <!-- ============================================
+         ESEMPIO: MODAL ACCESSIBILE
+         ============================================ -->
+    <section aria-labelledby="modal-examples">
+        <h2 id="modal-examples">Esempio Modal Accessibile</h2>
+
+        <!-- Trigger Button -->
+        <button
+            type="button"
+            class="btn btn-primary"
+            onclick="openAccessibleModal('example-modal')">
+            Apri Modal
+        </button>
+
+        <!-- Modal Backdrop -->
+        <div class="modal-backdrop hidden" id="example-modal-backdrop">
+            <div
+                class="modal"
+                id="example-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="example-modal-title"
+                aria-describedby="example-modal-description">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h2 class="modal-title" id="example-modal-title">
+                        Titolo Modal
+                    </h2>
+                    <button
+                        type="button"
+                        class="modal-close"
+                        aria-label="Chiudi modal"
+                        onclick="closeAccessibleModal('example-modal')">
+                        &times;
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body" id="example-modal-description">
+                    <p>Contenuto del modal accessibile con focus trap.</p>
+
+                    <label for="modal-input" class="required">
+                        Campo Esempio
+                    </label>
+                    <input
+                        type="text"
+                        id="modal-input"
+                        name="modal-input"
+                        required
+                        aria-required="true">
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="closeAccessibleModal('example-modal')">
+                        Annulla
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary">
+                        Conferma
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         ESEMPIO: FORM ACCESSIBILE
+         ============================================ -->
+    <section aria-labelledby="form-examples">
+        <h2 id="form-examples">Esempio Form Accessibile</h2>
+
+        <form id="accessible-form" onsubmit="return validateAccessibleForm(event)">
+            <!-- Campo con label e validazione -->
+            <div class="form-group">
+                <label for="customer-name" class="required">
+                    Nome Cliente
+                </label>
+                <input
+                    type="text"
+                    id="customer-name"
+                    name="customer-name"
+                    required
+                    aria-required="true"
+                    aria-describedby="customer-name-help">
+                <span id="customer-name-help" class="field-help">
+                    Inserisci nome e cognome completi
+                </span>
+            </div>
+
+            <!-- Campo email con validazione -->
+            <div class="form-group">
+                <label for="customer-email" class="required">
+                    Email
+                </label>
+                <input
+                    type="email"
+                    id="customer-email"
+                    name="customer-email"
+                    required
+                    aria-required="true">
+            </div>
+
+            <!-- Select accessibile -->
+            <div class="form-group">
+                <label for="product-type">
+                    Tipo Prodotto
+                </label>
+                <select id="product-type" name="product-type">
+                    <option value="">-- Seleziona --</option>
+                    <option value="iphone">iPhone</option>
+                    <option value="ipad">iPad</option>
+                    <option value="mac">Mac</option>
+                    <option value="watch">Apple Watch</option>
+                </select>
+            </div>
+
+            <!-- Checkbox accessibile -->
+            <div class="form-group">
+                <label>
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        required
+                        aria-required="true">
+                    Accetto i termini e condizioni
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">
+                Invia Ordine
+            </button>
+        </form>
+    </section>
+
+    <!-- ============================================
+         ESEMPIO: COLOR SWATCHES ACCESSIBILI
+         ============================================ -->
+    <section aria-labelledby="color-examples">
+        <h2 id="color-examples">Esempio Color Swatches Accessibili</h2>
+
+        <div class="color-palette" role="group" aria-label="Seleziona colore iPhone">
+            <button
+                class="color-swatch"
+                type="button"
+                role="button"
+                aria-label="Cosmic Orange"
+                aria-pressed="false"
+                tabindex="0"
+                data-color="cosmic-orange"
+                style="background-color: #FF6B35;"
+                onclick="selectColor(this)">
+                <span class="sr-only">Cosmic Orange</span>
+            </button>
+
+            <button
+                class="color-swatch"
+                type="button"
+                role="button"
+                aria-label="Deep Blue"
+                aria-pressed="false"
+                tabindex="-1"
+                data-color="deep-blue"
+                style="background-color: #004E89;"
+                onclick="selectColor(this)">
+                <span class="sr-only">Deep Blue</span>
+            </button>
+
+            <button
+                class="color-swatch"
+                type="button"
+                role="button"
+                aria-label="Midnight Black"
+                aria-pressed="false"
+                tabindex="-1"
+                data-color="midnight-black"
+                style="background-color: #1A1A1A;"
+                onclick="selectColor(this)">
+                <span class="sr-only">Midnight Black</span>
+            </button>
+
+            <button
+                class="color-swatch"
+                type="button"
+                role="button"
+                aria-label="Silver White"
+                aria-pressed="false"
+                tabindex="-1"
+                data-color="silver-white"
+                style="background-color: #E8E8E8;"
+                onclick="selectColor(this)">
+                <span class="sr-only">Silver White</span>
+            </button>
+        </div>
+
+        <p id="selected-color-announcement" role="status" aria-live="polite" class="sr-only"></p>
+    </section>
+
+    <!-- ============================================
+         ESEMPIO: BADGES ACCESSIBILI
+         ============================================ -->
+    <section aria-labelledby="badge-examples">
+        <h2 id="badge-examples">Esempio Badges Accessibili</h2>
+
+        <!-- Badge Stock Available -->
+        <span class="badge badge-success" role="status">
+            <span aria-hidden="true">✓</span>
+            <span>Disponibile</span>
+            <span class="sr-only">(10 unità in stock)</span>
+        </span>
+
+        <!-- Badge Stock Low -->
+        <span class="badge badge-warning" role="status">
+            <span aria-hidden="true">⚠️</span>
+            <span>Stock Basso</span>
+            <span class="sr-only">(Solo 3 unità disponibili)</span>
+        </span>
+
+        <!-- Badge Stock Out -->
+        <span class="badge badge-danger" role="status">
+            <span aria-hidden="true">🔴</span>
+            <span>Esaurito</span>
+            <span class="sr-only">(Nessuna unità disponibile)</span>
+        </span>
+    </section>
+
+    <!-- ============================================
+         ESEMPIO: TABLE ACCESSIBILE
+         ============================================ -->
+    <section aria-labelledby="table-examples">
+        <h2 id="table-examples">Esempio Table Accessibile</h2>
+
+        <table role="table" aria-label="Lista ordini recenti">
+            <thead>
+                <tr>
+                    <th scope="col">ID Ordine</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Prodotto</th>
+                    <th scope="col">Quantità</th>
+                    <th scope="col">Stato</th>
+                    <th scope="col">Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ORD-001</td>
+                    <td>Mario Rossi</td>
+                    <td>iPhone 17 Pro</td>
+                    <td>2</td>
+                    <td>
+                        <span class="badge badge-success" role="status">
+                            Completato
+                        </span>
+                    </td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-primary"
+                            aria-label="Visualizza dettagli ordine ORD-001">
+                            Dettagli
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ORD-002</td>
+                    <td>Laura Bianchi</td>
+                    <td>iPad Air</td>
+                    <td>1</td>
+                    <td>
+                        <span class="badge badge-warning" role="status">
+                            In Lavorazione
+                        </span>
+                    </td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-primary"
+                            aria-label="Visualizza dettagli ordine ORD-002">
+                            Dettagli
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+    <p>&copy; 2025 Ipermela Store - Tutti i diritti riservati</p>
+</footer>
+
+<!-- ============================================
+     ARIA LIVE REGIONS
+     Create automaticamente da accessibility.js
+     ============================================ -->
+<div id="aria-announcements-polite"
+     role="status"
+     aria-live="polite"
+     aria-atomic="true"
+     class="sr-only">
+</div>
+
+<div id="aria-announcements-assertive"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     class="sr-only">
+</div>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script src="../js/accessibility.js"></script>
+
+<script>
+// Funzione per aprire modal accessibile
+function openAccessibleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    const backdrop = document.getElementById(`${modalId}-backdrop`);
+
+    // Mostra modal
+    backdrop.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+
+    // Crea focus trap
+    const focusTrap = new FocusTrap(modal);
+    focusTrap.activate();
+
+    // Abilita chiusura con ESC
+    const escapeHandler = KeyboardNavigationManager.enableModalEscapeClose(
+        modal,
+        () => closeAccessibleModal(modalId, focusTrap)
+    );
+
+    // Annuncia apertura modal
+    const modalTitle = modal.querySelector('.modal-title');
+    if (modalTitle) {
+        window.ariaAnnouncer.announcePolite(
+            `Modal aperto: ${modalTitle.textContent}`
+        );
+    }
+
+    // Salva focus trap per cleanup
+    modal.focusTrap = focusTrap;
+}
+
+// Funzione per chiudere modal
+function closeAccessibleModal(modalId, focusTrap) {
+    const modal = document.getElementById(modalId);
+    const backdrop = document.getElementById(`${modalId}-backdrop`);
+
+    // Nascondi modal
+    backdrop.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+
+    // Disattiva focus trap
+    const trap = focusTrap || modal.focusTrap;
+    if (trap) {
+        trap.deactivate();
+    }
+
+    // Annuncia chiusura
+    window.ariaAnnouncer.announcePolite('Modal chiuso');
+}
+
+// Funzione per validare form
+function validateAccessibleForm(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('accessible-form');
+    const isValid = FormAccessibilityManager.validateForm(form);
+
+    if (isValid) {
+        window.ariaAnnouncer.announcePolite('Form inviato con successo');
+        // Qui invia il form
+    }
+
+    return false;
+}
+
+// Funzione per selezionare colore
+function selectColor(button) {
+    // Deseleziona tutti
+    const allSwatches = button.parentElement.querySelectorAll('.color-swatch');
+    allSwatches.forEach(swatch => {
+        swatch.setAttribute('aria-pressed', 'false');
+        swatch.classList.remove('selected');
+        swatch.setAttribute('tabindex', '-1');
+    });
+
+    // Seleziona corrente
+    button.setAttribute('aria-pressed', 'true');
+    button.classList.add('selected');
+    button.setAttribute('tabindex', '0');
+
+    // Annuncia selezione
+    const colorName = button.getAttribute('aria-label');
+    window.ariaAnnouncer.announcePolite(`Colore selezionato: ${colorName}`);
+
+    // Aggiorna anche elemento status visibile
+    const announcement = document.getElementById('selected-color-announcement');
+    if (announcement) {
+        announcement.textContent = `Colore selezionato: ${colorName}`;
+    }
+}
+
+// Utility per verificare contrasti
+console.log('=== CONTRAST CHECKER UTILITY ===');
+console.log('Usa ContrastChecker per verificare contrasti:');
+console.log('ContrastChecker.getContrastRatio("#0056b3", "#ffffff")');
+console.log('ContrastChecker.passesWCAG_AA(5.2, "normal")');
+</script>
+
+</body>
+</html>

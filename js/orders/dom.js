@@ -42,21 +42,29 @@ export function renderOrdersModule() {
     }
 
     container.innerHTML = `
-        <div class="min-h-screen bg-gray-50 dark:bg-dark-bg">
+        <div class="min-h-screen bg-gray-50 dark:bg-dark-bg" role="dialog" aria-modal="true" aria-labelledby="orders-v2-heading">
             <!-- Header -->
             <div class="bg-white dark:bg-dark-card border-b border-gray-200 dark:border-dark-border sticky top-0 z-40">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
                         <div class="flex items-center gap-3">
-                            <button id="orders-v2-back-btn" class="p-2 hover:bg-gray-100 dark:hover:bg-dark-elevated rounded-lg transition-colors">
-                                <svg class="w-5 h-5 text-gray-600 dark:text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button
+                                id="orders-v2-back-btn"
+                                type="button"
+                                class="btn btn-icon p-2 hover:bg-gray-100 dark:hover:bg-dark-elevated rounded-lg transition-colors"
+                                aria-label="Torna al catalogo">
+                                <svg class="w-5 h-5 text-gray-600 dark:text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                 </svg>
                             </button>
-                            <h1 class="text-xl font-semibold text-gray-900 dark:text-dark-text">Gestione Ordini</h1>
+                            <h1 id="orders-v2-heading" class="text-xl font-semibold text-gray-900 dark:text-dark-text">Gestione Ordini</h1>
                         </div>
-                        <button id="orders-v2-refresh-btn" class="p-2 hover:bg-gray-100 dark:hover:bg-dark-elevated rounded-lg transition-colors" title="Aggiorna">
-                            <svg class="w-5 h-5 text-gray-600 dark:text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button
+                            id="orders-v2-refresh-btn"
+                            type="button"
+                            class="btn btn-icon p-2 hover:bg-gray-100 dark:hover:bg-dark-elevated rounded-lg transition-colors"
+                            aria-label="Aggiorna lista ordini">
+                            <svg class="w-5 h-5 text-gray-600 dark:text-dark-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
                         </button>
@@ -1299,6 +1307,9 @@ async function backToList() {
 // MODULE VISIBILITY
 // ============================================================================
 
+// Store FocusTrap instance globally for this module
+let ordersModuleFocusTrap = null;
+
 /**
  * Mostra il modulo Orders V2
  */
@@ -1317,6 +1328,22 @@ export function showOrdersV2Module() {
     if (mainContent) mainContent.style.display = 'none';
 
     renderOrdersModule();
+
+    // Accessibility: Focus trap activation
+    if (typeof window.FocusTrap !== 'undefined') {
+        ordersModuleFocusTrap = new window.FocusTrap(module);
+        ordersModuleFocusTrap.activate();
+    }
+
+    // Accessibility: ESC key to close
+    if (typeof window.KeyboardNavigationManager !== 'undefined') {
+        window.KeyboardNavigationManager.enableModalEscapeClose(module, hideOrdersV2Module);
+    }
+
+    // Accessibility: ARIA announcement
+    if (typeof window.ariaAnnouncer !== 'undefined') {
+        window.ariaAnnouncer.announcePolite('Modulo Gestione Ordini aperto');
+    }
 }
 
 /**
@@ -1325,6 +1352,17 @@ export function showOrdersV2Module() {
 export function hideOrdersV2Module() {
     const module = document.getElementById('orders-v2-module');
     const mainContent = document.getElementById('app-container');
+
+    // Accessibility: Deactivate focus trap
+    if (ordersModuleFocusTrap) {
+        ordersModuleFocusTrap.deactivate();
+        ordersModuleFocusTrap = null;
+    }
+
+    // Accessibility: ARIA announcement
+    if (typeof window.ariaAnnouncer !== 'undefined') {
+        window.ariaAnnouncer.announcePolite('Modulo Gestione Ordini chiuso');
+    }
 
     if (module) module.classList.add('hidden');
     if (mainContent) mainContent.style.display = '';
